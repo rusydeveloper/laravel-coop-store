@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Business;
+use App\Category;
 use App\Product;
 use App\Order;
 use App\Payment;
@@ -69,9 +70,30 @@ class ApiController extends Controller
 
     public function product()
     {
-        $products = Product::All();
+        $products = Product::paginate(50);
 
         return response()->json($products);
+    }
+
+    public function productCategory($id)
+    {
+        $products = Product::where('category_id', $id)->paginate(50);
+
+        return response()->json($products);
+    }
+
+    public function productSearch($search)
+    {
+        $products = Product::where('name', 'LIKE', "%{$search}%")->paginate(50);
+
+        return response()->json($products);
+    }
+
+    public function category()
+    {
+        $categories = Category::orderBy("name")->get();
+
+        return response()->json($categories);
     }
 
     public function tenantProduct(Product $product, $unique_id)

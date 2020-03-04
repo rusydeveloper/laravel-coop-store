@@ -46,6 +46,11 @@ Route::get('cashier/report/invoice/{unique_id}', 'ApiController@cashierReportInv
 Route::post('cashierPayment', 'ApiController@cashierPayment');
 
 Route::get('/product', 'ApiController@product')->name('api_product');
+Route::get('/product/category/{id}', 'ApiController@productCategory')->name('api_product_category');
+Route::get('/product/search/{search}', 'ApiController@productSearch')->name('api_product_search');
+
+Route::get('/category', 'ApiController@category')->name('api_category');
+
 // Route::get('/product/{unique_id}', 'ApiController@productDetail');
 Route::post('/order/add', 'ApiController@add_order')->name('api_add_order');
 
