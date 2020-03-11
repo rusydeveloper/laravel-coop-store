@@ -14,20 +14,20 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-Route::group(['middleware' => ['auth:api']], function () {
-Route::get('/user', 'ApiController@user')->name('api_user');
-Route::get('/business', 'ApiController@business')->name('api_user');
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+// Route::group(['middleware' => ['auth:api']], function () {
+// Route::get('/user', 'ApiController@user')->name('api_user');
+// Route::get('/business', 'ApiController@business')->name('api_user');
 
-Route::get('/invoice', 'ApiController@invoice')->name('api_invoice');
-Route::get('/order', 'ApiController@order')->name('api_order');
+// Route::get('/invoice', 'ApiController@invoice')->name('api_invoice');
+// Route::get('/order', 'ApiController@order')->name('api_order');
 
 
-});
+// });
 
-Route::post('/login', 'ApiController@login');
+// Route::post('/login', 'ApiController@login');
 
 Route::get('/product/{unique_id}', 'ApiController@tenantProduct');
 Route::get('/invoice/{unique_id}', 'ApiController@tenantInvoice');
@@ -61,3 +61,23 @@ Route::post('/testuser', 'ApiController@testuser');
 Route::post('/testpost', 'ApiController@testpost')->name('api_testpost');
 Route::post('/testrespond', 'ApiController@testrespond');
 Route::post('/testrequest', 'ApiController@testrequest');
+
+
+Route::group([
+    'prefix' => 'auth'
+], function () {
+    Route::post('login', 'AuthController@login');
+    Route::post('signup', 'AuthController@signup');
+
+
+  
+    Route::group([
+      'middleware' => 'auth:api'
+    ], function() {
+        Route::get('test', 'AuthController@testAPInew');
+        Route::get('logout', 'AuthController@logout');
+    });
+});
+
+Route::get('logout', 'AuthController@logout');
+Route::get('user', 'AuthController@user');

@@ -107,14 +107,7 @@
                         <a class="nav-link" href="{{ route('cart') }}">
                             <span class="fa fa-cutlery"
                                 style="font-size:26px; color: white;padding: 0px 15px; background-color: #4A959C; padding: 5px 5px; border-radius: 5px">
-                                @if(!empty(Cart::count()))
-                                <span class="badge badge-success"
-                                    style="background-color:#4A959C; font-family: 'Raleway' !important; font-size: 16pt;">
-                                    {{Cart::count()}}
-                                </span>
-                                <!-- <p style="font-family: 'Raleway'; font-size: 12pt">selesai</p> -->
 
-                                @endif
                             </span>
                         </a>
                         @guest
