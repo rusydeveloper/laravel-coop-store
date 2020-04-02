@@ -18,6 +18,10 @@ class CreateInvoicesTable extends Migration
             $table->integer('user_id')->nullable();
             $table->integer('business_id')->nullable();
             $table->text('customer')->nullable();
+            $table->text('customer_name')->nullable();
+            $table->text('customer_phone')->nullable();
+            $table->text('customer_address')->nullable();
+            $table->text('customer_payment_choice')->nullable();
             $table->string('status')->default('order');
             $table->string('payment')->nullable();
             $table->bigInteger('amount')->nullable();

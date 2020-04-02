@@ -18,12 +18,16 @@ class CreateProductsTable extends Migration
             $table->integer('user_id');
             $table->integer('business_id');
             $table->integer('category_id')->nullable();
+            $table->string('barcode')->nullable();
             $table->string('name');
+            $table->string('type')->nullable();
             $table->string('category')->nullable();
             $table->string('subcategory')->nullable();
             $table->string('tag')->nullable();
             $table->text('description')->nullable();
             $table->bigInteger('price');
+            $table->bigInteger('buying_price')->nullable();
+            $table->integer('stock')->default(0);
             $table->string('status')->default('available');
             $table->string('image')->default('default_product.png');
             $table->text('info_1')->nullable();

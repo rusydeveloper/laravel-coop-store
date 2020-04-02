@@ -79,5 +79,8 @@ Route::group([
     });
 });
 
+Route::post('order/submit', 'OrderController@submit');
+Route::get('order/test', 'OrderController@test');
+
 Route::get('logout', 'AuthController@logout');
 Route::get('user', 'AuthController@user');

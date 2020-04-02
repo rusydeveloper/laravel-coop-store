@@ -502,6 +502,7 @@ class AdminController extends Controller
     public function order()
     {
         $orders = Order::all()->sortByDesc('created_at');
+        
         return view('admins.order', compact('orders'));
     }
 

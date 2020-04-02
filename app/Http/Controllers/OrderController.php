@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Order;
 use App\Invoice;
 use App\Product;
+use App\Test;
 use Cart;
 
 use Illuminate\Http\Request;
@@ -180,5 +181,75 @@ class OrderController extends Controller
         return view('carts.complete', compact('booking_code'));
     }
 
-    
+    public function submit(Request $request)
+    {
+        $date = date_create();
+        $unix_timestamp = date_timestamp_get($date);
+        $cart = $request->item;
+        
+        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789';
+        $booking_code = '';
+        $random_string_length = 5;
+         $max = strlen($characters) - 1;
+         for ($i = 0; $i < $random_string_length; $i++) {
+              $booking_code .= $characters[mt_rand(0, $max)];
+         };
+
+        $invoice_description = '';
+
+        foreach ($cart as $item) {
+            $order =  new Order;
+            $order->status = 'order';
+            $order->product_id = $item["id"]; 
+            
+            $product = Product::where('id', $item["id"])->first();
+           
+
+            $order->quantity = 1; 
+            $order->price = $item["price"];
+            
+            // //owner
+            $order->user_id = $item["user_id"];
+            $order->business_id = $item["business_id"];
+
+            // //customer info
+            $order->customer_name = $request->checkoutInput["name"];
+            $order->customer_phone = $request->checkoutInput["phone"];
+            $order->customer_address = $request->checkoutInput["address"];
+            $order->customer_payment_choice = $request->checkoutInput["paymentMethod"];
+
+            $order->booking_id = $booking_code;
+            $order->unique_id = $unix_timestamp; 
+            $order->save();
+            $invoice_description .="1 pc ".$item["name"]."; ";
+        }
+
+        $invoice =  new Invoice;
+        $invoice->status = 'unpaid';
+        $invoice->customer_name = $request->checkoutInput["name"];
+        $invoice->customer_phone = $request->checkoutInput["phone"];
+        $invoice->customer_address = $request->checkoutInput["address"];
+        $invoice->customer_payment_choice = $request->checkoutInput["paymentMethod"];
+        $invoice->amount = $request->totalAmount;
+        $invoice->quantity = $request->totalItem;
+        $invoice->unique_id = $unix_timestamp;
+        $invoice->booking_id = $booking_code;
+        $invoice->description = $invoice_description;
+        $invoice->save();
+
+        return response()->json([
+            'message' => 'success '
+        ]);
+        
+    }
+
+    public function test(Request $request)
+    {
+        $test =  new Test;
+        $test->info =  $request->getContent();
+        $test->save();
+        return response()->json([
+            'message' => 'success '
+        ]);
+    }
 }

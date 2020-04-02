@@ -21,9 +21,11 @@ class CreateOrdersTable extends Migration
             $table->integer('package_id')->nullable();
             $table->string('status')->default('order');
             $table->integer('payment_id')->nullable();
-            $table->string('guest_name')->nullable();
-            $table->string('guest_email')->nullable();
-            $table->string('guest_phone')->nullable();
+            $table->string('customer_name')->nullable();
+            $table->string('customer_email')->nullable();
+            $table->string('customer_phone')->nullable();
+            $table->string('customer_address')->nullable();
+            $table->string('customer_payment_choice')->nullable();
             $table->integer('quantity')->nullable();
             $table->bigInteger('price')->nullable();
             $table->text('description')->nullable();
