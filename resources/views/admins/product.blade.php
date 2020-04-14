@@ -7,6 +7,17 @@
             <div class="card">
                 <div class="card-header">
                     <span class="fa fa-cutlery"></span> Product
+                    <form action="/admin/product/search" method="POST" role="search">
+                        {{ csrf_field() }}
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="q" placeholder="Cari Produk"> <span
+                                class="input-group-btn">
+                                <button type="submit" class="btn btn-default">
+                                    <span class="fa fa-search"></span> Cari
+                                </button>
+                            </span>
+                        </div>
+                    </form>
                     <a href="/admin/product/create">
                         <button class="btn btn-primary btn-md pull-right">+ Tambah</button>
                     </a>
@@ -22,24 +33,24 @@
                         {{ session('danger') }}
                     </div>
                     @endif
-                    <table class="table table-striped table-hover" style="font-size: 10pt">
-                        <thead>
-                            <tr>
-                                <th>Picture</th>
-                                <th>Name</th>
-                                <th>Price</th>
-                                <th>Status</th>
-                                <th>Business</th>
-                                <th>Owner</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
+                    <table class="table table-striped table-hover table-responsive" style="font-size: 10pt">
+                        <tr>
+                            <td colspan="7">{{$products->links()}}</td>
+                        </tr>
+                        <tr>
+                            <th>Picture</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Owner</th>
+                            <th>Action</th>
+                        </tr>
                         <tbody>
                             @forelse($products as $item)
                             <tr>
                                 <td>
                                     @if(!empty($item->picture->first()->name))
-                                    <img src="{{asset('storage/products/'.$item->picture->first()->name)}}"
+                                    <img src="{{asset('storage/products/'.$item->picture->first()["name"])}}"
                                         alt="no picture" width="75" height="75">
                                     @else
                                     <img src="{{asset('storage/products/product_default.jpg')}}" alt="no picture"
@@ -57,8 +68,10 @@
                                     <span class="badge badge-danger">{{$item->status}}</span>
                                     @endif
                                 </td>
-                                <td>{{$item->business->name}}</td>
-                                <td>{{$item->user->name}}</td>
+                                <td>
+                                    <b>{{$item->business->name}}</b>
+                                    {{$item->user->name}}
+                                </td>
                                 <td>
                                     <form method="POST" action="/admin/product/edit" enctype="multipart/form-data">
                                         {{ csrf_field() }}
@@ -99,7 +112,13 @@
                                 <td></td>
                             </tr>
                             @endforelse
+                            <tr>
+                                <td colspan="7">{{$products->links()}}</td>
+                            </tr>
                         </tbody>
+
+
+
                     </table>
 
                 </div>

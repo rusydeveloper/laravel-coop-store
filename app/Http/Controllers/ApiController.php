@@ -71,6 +71,9 @@ class ApiController extends Controller
     public function product()
     {
         $products = Product::paginate(50);
+        // $products = Product::All()->first()->picture->first();
+
+        
 
         return response()->json($products);
     }

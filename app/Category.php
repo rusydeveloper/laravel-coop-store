@@ -12,6 +12,8 @@ class Category extends Model
         'unique_id', 
         'name',
         'status',
+        'parent',
+        'image',
         'description',
     ];
     public function user(){
