@@ -20,6 +20,8 @@ class CreateCategoriesTable extends Migration
             $table->integer('business_id');
             $table->string('name');
             $table->string('status');
+            $table->string('parent')->nullable();
+            $table->string('image')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
         });
