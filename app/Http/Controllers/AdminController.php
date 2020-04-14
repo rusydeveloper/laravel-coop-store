@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Route;
 use App\User;
 use App\Business;
 use App\Category;
@@ -12,6 +13,7 @@ use App\Payment;
 use App\Report;
 use App\Picture;
 use App\Invoice;
+
 use DB;
 use DateTime;
 
@@ -346,6 +348,16 @@ class AdminController extends Controller
         $products = Product::orderBy('created_at','DESC')->paginate(50);
 
         return view('admins.product', compact('products'));
+    }
+
+    public function product_search(Request $request)
+    {
+        $q = $request->q;
+            $products = Product::orderBy('created_at','DESC')->where('name','LIKE','%'.$q.'%')->get();
+            if(count($products) > 0)
+                return view('admins.products.search', compact('products'));
+            else 
+            return view('admins.products.search')->with('products', $products)->with('danger', 'Nama produk tidak ada, coba kata kunci lain');
     }
 
     public function product_create()

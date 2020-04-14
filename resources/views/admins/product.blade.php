@@ -7,7 +7,17 @@
             <div class="card">
                 <div class="card-header">
                     <span class="fa fa-cutlery"></span> Product
-
+                    <form action="/admin/product/search" method="POST" role="search">
+                        {{ csrf_field() }}
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="q" placeholder="Cari Produk"> <span
+                                class="input-group-btn">
+                                <button type="submit" class="btn btn-default">
+                                    <span class="fa fa-search"></span> Cari
+                                </button>
+                            </span>
+                        </div>
+                    </form>
                     <a href="/admin/product/create">
                         <button class="btn btn-primary btn-md pull-right">+ Tambah</button>
                     </a>
@@ -24,16 +34,17 @@
                     </div>
                     @endif
                     <table class="table table-striped table-hover table-responsive" style="font-size: 10pt">
-                        <thead>
-                            <tr>
-                                <th>Picture</th>
-                                <th>Name</th>
-                                <th>Price</th>
-                                <th>Status</th>
-                                <th>Owner</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
+                        <tr>
+                            <td colspan="7">{{$products->links()}}</td>
+                        </tr>
+                        <tr>
+                            <th>Picture</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Owner</th>
+                            <th>Action</th>
+                        </tr>
                         <tbody>
                             @forelse($products as $item)
                             <tr>
@@ -101,10 +112,13 @@
                                 <td></td>
                             </tr>
                             @endforelse
+                            <tr>
+                                <td colspan="7">{{$products->links()}}</td>
+                            </tr>
                         </tbody>
 
 
-                        {{$products->links()}}
+
                     </table>
 
                 </div>
