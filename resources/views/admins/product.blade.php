@@ -7,6 +7,7 @@
             <div class="card">
                 <div class="card-header">
                     <span class="fa fa-cutlery"></span> Product
+
                     <a href="/admin/product/create">
                         <button class="btn btn-primary btn-md pull-right">+ Tambah</button>
                     </a>
@@ -22,14 +23,13 @@
                         {{ session('danger') }}
                     </div>
                     @endif
-                    <table class="table table-striped table-hover" style="font-size: 10pt">
+                    <table class="table table-striped table-hover table-responsive" style="font-size: 10pt">
                         <thead>
                             <tr>
                                 <th>Picture</th>
                                 <th>Name</th>
                                 <th>Price</th>
                                 <th>Status</th>
-                                <th>Business</th>
                                 <th>Owner</th>
                                 <th>Action</th>
                             </tr>
@@ -57,8 +57,10 @@
                                     <span class="badge badge-danger">{{$item->status}}</span>
                                     @endif
                                 </td>
-                                <td>{{$item->business->name}}</td>
-                                <td>{{$item->user->name}}</td>
+                                <td>
+                                    <b>{{$item->business->name}}</b>
+                                    {{$item->user->name}}
+                                </td>
                                 <td>
                                     <form method="POST" action="/admin/product/edit" enctype="multipart/form-data">
                                         {{ csrf_field() }}
@@ -100,6 +102,9 @@
                             </tr>
                             @endforelse
                         </tbody>
+
+
+                        {{$products->links()}}
                     </table>
 
                 </div>
