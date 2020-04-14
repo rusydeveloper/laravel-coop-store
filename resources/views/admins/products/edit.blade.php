@@ -114,6 +114,19 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">Display Picture</label>
+                            <div class="col-md-6" style="text-align: center">
+                                <div class="img-container" style="padding:20px">
+                                    <input type="file" name="picture_file" value="">
+                                </div>
+                                <div>
+                                    <p>Default Picture</p>
+                                    <img src="{{asset('storage/products/product_default.jpg')}}" alt="no picture"
+                                        width="200">
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

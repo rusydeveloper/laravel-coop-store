@@ -14,6 +14,7 @@ use App\Report;
 use App\Picture;
 use App\Invoice;
 
+
 use DB;
 use DateTime;
 
@@ -21,6 +22,7 @@ use Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+use File;
 class AdminController extends Controller
 {
     public function index()
@@ -402,10 +404,11 @@ class AdminController extends Controller
             if ($extension_bp ==='jpeg' || $extension_bp ==='jpg' || $extension_bp ==='JPG' || $extension_bp ==='JPEG' || $extension_bp ==='PNG' || $extension_bp ==='png') {
 
         //FILE NAMING AND SAVING SETTINGS
-                $file_name_custom_bp = 'warman_bp_'.$product->user_id.'_'.$product->id.'_'.$unix_timestamp.'.'.$extension_bp;
-
+                // $file_name_custom_bp = 'warman_bp_'.$product->user_id.'_'.$product->id.'_'.$unix_timestamp.'.'.$extension_bp;
+                $file_name_custom_pp = $request->picture_file->getClientOriginalName();
         // SAVING PROFILE PICTURE FILES
                 $path_bp = $request->file('picture_file')->storeAs('public/products', $file_name_custom_bp);
+                
 
                 $picture = new Picture;
                 $picture->user_id = $product->user_id;
@@ -466,37 +469,48 @@ class AdminController extends Controller
         $product->description = $request->description;
 
 
-        // //=====UPLOADING IMAGE=====
-        // // CHECK IF FILE GALLERY IS EXIST
-        // if ($request->hasFile('picture_file')) {
-        //     $date = date_create();
-        //     $unix_timestamp = date_timestamp_get($date);
+        //=====UPLOADING IMAGE=====
+        // CHECK IF FILE GALLERY IS EXIST
+        if ($request->hasFile('picture_file')) {
+            $date = date_create();
+            $unix_timestamp = date_timestamp_get($date);
 
-        // // PICTURES
-        //     $extension_pp = $request->picture_file->extension();
+        // PICTURES
+            $extension_pp = $request->picture_file->extension();
 
-        // // CHECK IF FILE IS A PICTURE
-        //     if ($extension_pp ==='jpeg' || $extension_pp ==='jpg' || $extension_pp ==='JPG' || $extension_pp ==='JPEG' || $extension_pp ==='PNG' || $extension_pp ==='png') {
+        // CHECK IF FILE IS A PICTURE
+            if ($extension_pp ==='jpeg' || $extension_pp ==='jpg' || $extension_pp ==='JPG' || $extension_pp ==='JPEG' || $extension_pp ==='PNG' || $extension_pp ==='png') {
 
-        // //FILE NAMING AND SAVING SETTINGS
-        //         $file_name_custom_pp = 'warman_pp_'.$product->user_id.'_'.$product->id.'_'.$unix_timestamp.'.'.$extension_pp;
+        //FILE NAMING AND SAVING SETTINGS
+                // $file_name_custom_pp = 'warman_pp_'.$product->user_id.'_'.$product->id.'_'.$unix_timestamp.'.'.$extension_pp;
 
-        // // SAVING PROFILE PICTURE FILES
-        //         $path_pp = $request->file('picture_file')->storeAs('public/products', $file_name_custom_pp);
+                $file_name_custom_pp = $request->picture_file->getClientOriginalName();
 
-        //         $picture = new Picture;
-        //         $picture->user_id = $product->user_id;
-        //         $picture->business_id = $product->business_id;
-        //         $picture->product_id = $product->id;
-        //         $picture->category = 'product picture';
-        //         $picture->name = $file_name_custom_pp;
-        //         $picture->save();
+        // SAVING PROFILE PICTURE FILES
+                $path_pp = $request->file('picture_file')->storeAs('public/products', $file_name_custom_pp);
 
-        //     }else{
-        //         return redirect()->route('admin_product')->with('error', 'File Gambar Product Anda Bukan Berupa Gambar.', 'Silahkan ulangi tambah project!');
+
+                $picture = new Picture;
+                $picture->user_id = $product->user_id;
+                $picture->business_id = $product->business_id;
+                $picture->product_id = $product->id;
+                $picture->category = 'product picture';
+                $picture->name = $file_name_custom_pp;
+                $picture->save();
+
+            }else{
+                return redirect()->route('admin_product')->with('error', 'File Gambar Product Anda Bukan Berupa Gambar.', 'Silahkan ulangi edit produk!');
                 
-        //     }
-        // }
+            }
+        }
+        // $product->image = base64_encode(File::get($path_pp));
+        // $product->image = base64_encode(File::get("http://127.0.0.1:8000/storage/products/".$file_name_custom_pp));
+        // $product->image = base64_encode("http://127.0.0.1:8000/storage/products/".$file_name_custom_pp);
+        $product->image = "storage/products/".$file_name_custom_pp;
+
+
+        
+
         $product->save();
 
         

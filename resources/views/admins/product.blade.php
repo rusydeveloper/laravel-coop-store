@@ -50,7 +50,7 @@
                             <tr>
                                 <td>
                                     @if(!empty($item->picture->first()->name))
-                                    <img src="{{asset('storage/products/'.$item->picture->first()->name)}}"
+                                    <img src="{{asset('storage/products/'.$item->picture->first()["name"])}}"
                                         alt="no picture" width="75" height="75">
                                     @else
                                     <img src="{{asset('storage/products/product_default.jpg')}}" alt="no picture"
