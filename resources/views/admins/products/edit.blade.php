@@ -30,7 +30,7 @@
                             <div class="col-md-6">
                                 <select id="owner" name="owner"
                                     class="form-control{{ $errors->has('owner') ? ' is-invalid' : '' }}">
-                                    <option value="{{$product->business->id}}" selected>
+                                    <option value="{{$product->business["id"]}}" selected>
                                         {{$product->business->name}}</option>
                                     @forelse($businesses as $item)
                                     <option value="{{$item->id}}">{{$item->name}}</option>
