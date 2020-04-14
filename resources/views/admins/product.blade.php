@@ -69,8 +69,8 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <b>{{$item->business->name}}</b>
-                                    {{$item->user->name}}
+                                    <b>{{$item->business["name"]}}</b>
+                                    {{$item->user["name"]}}
                                 </td>
                                 <td>
                                     <form method="POST" action="/admin/product/edit" enctype="multipart/form-data">
