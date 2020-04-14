@@ -30,6 +30,8 @@ class CreateProductsTable extends Migration
             $table->integer('stock')->default(0);
             $table->string('status')->default('available');
             $table->string('image')->default('default_product.png');
+            $table->string('priority')->nullable();
+            $table->string('promo')->nullable();
             $table->text('info_1')->nullable();
             $table->text('info_2')->nullable();
             $table->text('info_3')->nullable();

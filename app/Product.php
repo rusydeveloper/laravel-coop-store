@@ -23,6 +23,8 @@ class Product extends Model
         'buying_price',
         'stock',
         'status',
+        'promo',
+        'priority',
         'info_1',
         'info_2',
         'info_3',
