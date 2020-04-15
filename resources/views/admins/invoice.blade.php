@@ -55,7 +55,8 @@
                                         @forelse($invoices_unpaid as $item)
                                         <tr>
                                             <td>{{$item->unique_id}}</td>
-                                            <td>{{$item->customer}}</td>
+                                            <td>{{$item->customer_name}}<br />{{$item->customer_phone}}<br />{{$item->customer_address}}
+                                            </td>
                                             <td>{{date('d-M-Y H:i:s', strtotime($item->created_at))}}</td>
                                             <td>{{$item->booking_id}}</td>
                                             <td>
@@ -111,6 +112,8 @@
                                     <thead>
                                         <tr>
                                             <th>Kode Invoice</th>
+                                            <th>Customer</th>
+
                                             <th>Created At</th>
                                             <th>Kode Booking</th>
                                             <th>Status</th>
@@ -123,6 +126,8 @@
                                         @forelse($invoices_paid as $item)
                                         <tr>
                                             <td>{{$item->unique_id}}</td>
+                                            <td>{{$item->customer_name}}<br />{{$item->customer_phone}}<br />{{$item->customer_address}}
+                                            </td>
                                             <td>{{date('d-M-Y H:i:s', strtotime($item->created_at))}}</td>
                                             <td>{{$item->booking_id}}</td>
                                             <td>

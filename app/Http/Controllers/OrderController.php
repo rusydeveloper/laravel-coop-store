@@ -232,6 +232,8 @@ class OrderController extends Controller
         $invoice->customer_payment_choice = $request->checkoutInput["paymentMethod"];
         $invoice->amount = $request->totalAmount;
         $invoice->quantity = $request->totalItem;
+        $invoice->user_id = $product->user_id;
+        $invoice->business_id = $product->business_id;
         $invoice->unique_id = $unix_timestamp;
         $invoice->booking_id = $booking_code;
         $invoice->description = $invoice_description;

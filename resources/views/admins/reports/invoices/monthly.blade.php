@@ -105,7 +105,7 @@
                 </div>
                 <div class="card-body">
                     <input type="text" class="input-search" id="searchTenantName" onkeyup="searchTenant()"
-                        placeholder="Nama Tenant" title="Nama Tenant">
+                        placeholder="Nama Suppllier" title="Nama Suppllier">
                     <table id="tenantTable" class="table table-responsive table-striped table-hover"
                         style="font-size: 10pt">
                         <tr>
@@ -114,7 +114,7 @@
                         </tr>
                         @foreach ($invoices_groupBy_tenant as $key => $value)
                         <tr>
-                            <td>{{ App\User::find($key)->get() }} ({{ App\User::find($key)->name }})
+                            <td>{{ App\User::find($key)->business->first()->name }} ({{ App\User::find($key)->name }})
                             </td>
                             <td style="text-align: right">{{ number_format($value,0,",",".")}}</td>
 
@@ -124,10 +124,7 @@
                             <td>Total</td>
                             <td style="text-align: right">
                                 {{number_format($invoices->where('status', 'paid')->sum('amount'),0,",",".")}}</td>
-                            <td style="text-align: right">
-                                {{number_format($invoices->where('status', 'paid')->sum('amount')*0.75,0,",",".")}}</td>
-                            <td style="text-align: right">
-                                {{number_format($invoices->where('status', 'paid')->sum('amount')*0.25,0,",",".")}}</td>
+
                         </tr>
 
 
@@ -161,7 +158,7 @@
                     <table id="invoiceTable" class="table table-striped table-hover" style="font-size: 10pt">
                         <thead>
                             <tr>
-                                <th>Nama Tenant dan Nama Usaha</th>
+                                <th>Nama Supplier dan Nama Usaha</th>
                                 <th>Created At</th>
                                 <th>Kode Booking</th>
                                 <th>Status</th>

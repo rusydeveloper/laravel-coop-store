@@ -768,7 +768,15 @@ class AdminController extends Controller
         if ($category == 'order') {
             $orders = Order::whereMonth('created_at', '=', $month_report)->whereYear('created_at', '=', $year_report)->get()->sortByDesc('created_at');
             
-
+            $group = 'day(created_at)';
+            $group_in = 'sum(quantity) as sum,'.$group;
+            $subgroup= Order::groupBy($group)
+            ->selectRaw($group_in)
+            ->where([
+                ['status', 'paid']])
+            ->whereMonth('created_at', '=', $month_report)
+            ->whereYear('created_at', '=', $year_report)
+            ->pluck('sum',$group);
 
             // return $subgroup;
             return view('admins.reports.orders.monthly', compact('orders', 'month_report', 'year_report', 'monthName', 'subgroup'));
