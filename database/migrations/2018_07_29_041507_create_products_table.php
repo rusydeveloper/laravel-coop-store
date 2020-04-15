@@ -21,8 +21,8 @@ class CreateProductsTable extends Migration
             $table->string('barcode')->nullable();
             $table->string('name');
             $table->string('type')->nullable();
-            $table->string('category')->nullable();
-            $table->string('subcategory')->nullable();
+            $table->integer('category')->nullable();
+            $table->integer('subcategory')->nullable();
             $table->string('tag')->nullable();
             $table->text('description')->nullable();
             $table->bigInteger('price');
