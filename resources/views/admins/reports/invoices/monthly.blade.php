@@ -111,16 +111,13 @@
                         <tr>
                             <td class="table-head-sort" onclick="sortTable(0)">Nama</td>
                             <td class="table-head-sort" onclick="sortTable(1)">Jumlah</td>
-                            <td class="table-head-sort" onclick="sortTable(2)">Hasil Tenant (75%)</td>
-                            <td class="table-head-sort" onclick="sortTable(3)">Hasil Nectico (25%)</td>
                         </tr>
                         @foreach ($invoices_groupBy_tenant as $key => $value)
                         <tr>
-                            <td>{{ App\User::find($key)->business->first()->name }} ({{ App\User::find($key)->name }})
+                            <td>{{ App\User::find($key)->get() }} ({{ App\User::find($key)->name }})
                             </td>
                             <td style="text-align: right">{{ number_format($value,0,",",".")}}</td>
-                            <td style="text-align: right">{{ number_format($value*0.75,0,",",".")}}</td>
-                            <td style="text-align: right">{{ number_format($value*0.25,0,",",".")}}</td>
+
                         </tr>
                         @endforeach
                         <tr>
