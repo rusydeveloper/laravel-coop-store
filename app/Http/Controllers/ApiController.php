@@ -94,7 +94,7 @@ class ApiController extends Controller
 
     public function category()
     {
-        $categories = Category::where('parent', '0')->orderBy("name")->get();
+        $categories = Category::where('parent', '0')->orderBy("id")->get();
 
         return response()->json($categories);
     }
