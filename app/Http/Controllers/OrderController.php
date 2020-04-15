@@ -226,6 +226,7 @@ class OrderController extends Controller
 
         $invoice =  new Invoice;
         $invoice->status = 'unpaid';
+        $invoice->customer = $request->checkoutInput["cooperative"];
         $invoice->customer_name = $request->checkoutInput["name"];
         $invoice->customer_phone = $request->checkoutInput["phone"];
         $invoice->customer_address = $request->checkoutInput["address"];
