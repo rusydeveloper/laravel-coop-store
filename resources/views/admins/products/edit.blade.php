@@ -120,6 +120,7 @@
                                 <div class="img-container" style="padding:20px">
                                     <input type="file" name="picture_file" value="">
                                 </div>
+                                <span><img src="/{{$product->image}}" /></span>
                                 <div>
                                     <p>Default Picture</p>
                                     <img src="{{asset('storage/products/product_default.jpg')}}" alt="no picture"
