@@ -347,7 +347,8 @@ class AdminController extends Controller
 
     public function product()
     {
-        $products = Product::orderBy('created_at','DESC')->paginate(50);
+        // $products = Product::orderBy('created_at','DESC')->paginate(50);
+        $products = Product::orderBy('name','ASC')->paginate(50);
 
         return view('admins.product', compact('products'));
     }
