@@ -56,7 +56,7 @@
                                         width="75" height="75">
 
                                     @endif
-
+                                    {{$item->image}}
                                 </td>
                                 <td>{{$item->name}}</td>
                                 <td>{{number_format($item->price,0,",",".")}}</td>
