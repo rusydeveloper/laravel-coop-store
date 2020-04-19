@@ -205,8 +205,8 @@ class OrderController extends Controller
             $product = Product::where('id', $item["id"])->first();
            
 
-            $order->quantity = 1; 
-            $order->price = $item["price"];
+            $order->quantity = $item["totalSubitem"]; 
+            $order->price = $item["totalSubamount"];
             
             // //owner
             $order->user_id = $item["user_id"];
@@ -221,7 +221,7 @@ class OrderController extends Controller
             $order->booking_id = $booking_code;
             $order->unique_id = $unix_timestamp; 
             $order->save();
-            $invoice_description .="1 pc ".$item["name"]."; ";
+            $invoice_description .=$item["totalSubitem"]." pcs ".$item["name"]."; ";
         }
 
         $invoice =  new Invoice;
