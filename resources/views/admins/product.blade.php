@@ -56,6 +56,7 @@
                                         width="75" height="75">
 
                                     @endif
+                                    <br>
                                     {{$item->image}}
                                 </td>
                                 <td>{{$item->name}}</td>
