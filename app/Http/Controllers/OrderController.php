@@ -221,7 +221,7 @@ class OrderController extends Controller
             $order->booking_id = $booking_code;
             $order->unique_id = $unix_timestamp; 
             $order->save();
-            $invoice_description .=$item["totalSubitem"]." pcs ".$item["name"]."; ";
+            $invoice_description .=$item["name"]." ".$item["totalSubitem"]." pcs x Rp ".$item["buying_price"]." = Rp ".$item["totalSubamount"]."; ";
         }
 
         $invoice =  new Invoice;
