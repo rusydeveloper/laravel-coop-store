@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Business;
 use App\Category;
+use App\Campaign;
+
 use App\Product;
 use App\Order;
 use App\Payment;
@@ -467,6 +469,12 @@ class ApiController extends Controller
         return response()->json($invoices);
     }
 
+    public function campaigns()
+    {
+        $campaigns = Campaign::with(['product', 'business', 'user'])->get(); 
+        return response()->json($campaigns);
+    }
+
 
 
 // =====================UNUSED=============UNUSED==============UNUSED=============UNUSED=============
@@ -541,11 +549,9 @@ public function posts()
 
 public function testuser(Request $request){
     $user = User::All()->first();
-    // $requestData = $request->email;
-    // $email = $requestData;
-    // $user = User::where('email', $email)->first();
+   
     return response()->json($user);
-    // return response()->json($user);
+    
 }
 
 public function testrespond(Request $request){
@@ -571,18 +577,6 @@ public function testrequest(Request $request){
 
     return response()->json($data);
 
-
-    // ============= NEW SOLUTION (DOESNT WORK) =============
-
-    // $content_info_request = json_decode($request->getContent());
-    // return $content_info_request;
-
-// json_decode() 
-    // $test = new Test;
-    // $test->info = $content_info_request;
-    // $test->save();
-
-    // return Response::json($request);
 
 }
 

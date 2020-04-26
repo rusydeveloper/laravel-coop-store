@@ -181,15 +181,16 @@
 
         <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="{{route('admin_user')}}"><span class="fa fa-user"></span> User</a>
-            <a href="{{route('admin_business')}}"><span class="fa fa-briefcase"></span> Business</a>
-            <a href="{{route('admin_invoice_discount')}}"><span class="fa fa-percent"></span> Discount</a>
-            <a href="{{route('admin_category')}}"><span class="fa fa-circle-o"></span> Category</a>
-            <a href="{{route('admin_product')}}"><span class="fa fa-cutlery"></span> Product</a>
-            <a href="{{route('admin_order')}}"><span class="fa fa-shopping-basket"></span> Order</a>
-            <a href="{{route('admin_invoice')}}"><span class="fa fa-clone"></span> Invoice</a>
-            <a href="{{route('admin_payment')}}"><span class="fa fa-credit-card"></span> Payment</a>
-            <a href="{{route('admin_report')}}"><span class="fa fa-pie-chart"></span> Report</a>
+            <a href="{{route('admin_user')}}"><span class="fa fa-user"></span> Pengguna</a>
+            <a href="{{route('admin_business')}}"><span class="fa fa-briefcase"></span> Perusahaan</a>
+            <a href="{{route('admin_invoice_discount')}}"><span class="fa fa-percent"></span> Diskon</a>
+            <a href="{{route('admin_category')}}"><span class="fa fa-circle-o"></span> Kategori</a>
+            <a href="{{route('admin_product')}}"><span class="fa fa-cutlery"></span> Produk</a>
+            <a href="{{route('admin_campaign')}}"><span class="fa fa-tasks"></span> Campaign</a>
+            <a href="{{route('admin_order')}}"><span class="fa fa-shopping-basket"></span> Pesanan</a>
+            <a href="{{route('admin_invoice')}}"><span class="fa fa-clone"></span> Tagihan</a>
+            <a href="{{route('admin_payment')}}"><span class="fa fa-credit-card"></span> Pembayaran</a>
+            <a href="{{route('admin_report')}}"><span class="fa fa-pie-chart"></span> Laporan</a>
         </div>
 
         <main class="py-4 main">

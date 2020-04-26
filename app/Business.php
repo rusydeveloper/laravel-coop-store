@@ -32,6 +32,10 @@ class Business extends Model
         return $this->hasMany(Product::class);
     }
 
+    public function business(){
+        return $this->hasMany(Business::class);
+    }
+
     public function picture(){
         return $this->hasMany(Picture::class);
     }

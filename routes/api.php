@@ -50,6 +50,9 @@ Route::get('/product/category/{id}', 'ApiController@productCategory')->name('api
 Route::get('/product/search/{search}', 'ApiController@productSearch')->name('api_product_search');
 
 Route::get('/category', 'ApiController@category')->name('api_category');
+Route::get('/campaigns', 'ApiController@campaigns');
+
+
 
 // Route::get('/product/{unique_id}', 'ApiController@productDetail');
 Route::post('/order/add', 'ApiController@add_order')->name('api_add_order');
@@ -61,8 +64,7 @@ Route::post('/testuser', 'ApiController@testuser');
 Route::post('/testpost', 'ApiController@testpost')->name('api_testpost');
 Route::post('/testrespond', 'ApiController@testrespond');
 Route::post('/testrequest', 'ApiController@testrequest');
-
-
+Route::post('/posts', 'ApiController@posts');
 Route::group([
     'prefix' => 'auth'
 ], function () {

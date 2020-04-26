@@ -7,6 +7,7 @@ use Illuminate\Routing\Route;
 use App\User;
 use App\Business;
 use App\Category;
+use App\Campaign;
 use App\Product;
 use App\Order;
 use App\Payment;
@@ -565,6 +566,11 @@ class AdminController extends Controller
         foreach ($orders as $item) {
             $item->status = 'paid';
             $item->save();
+
+            $campaign = Campaign::where('id', $item->campaign_id)->first();
+            $campaign->amount_ordered += $item->price;
+            $campaign->quantity_ordered += $item->quantity;
+            $campaign->save();
         }
         return redirect()->route('admin_invoice')->with('danger', 'Invoice berhasil di paid.');
     }

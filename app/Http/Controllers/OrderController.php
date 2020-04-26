@@ -207,16 +207,20 @@ class OrderController extends Controller
 
             $order->quantity = $item["totalSubitem"]; 
             $order->price = $item["totalSubamount"];
+            //campaign info
+            $order->campaign_id = $item["campaign_id"];
             
-            // //owner
+            //owner
             $order->user_id = $item["user_id"];
             $order->business_id = $item["business_id"];
 
-            // //customer info
+            //customer info
             $order->customer_name = $request->checkoutInput["name"];
             $order->customer_phone = $request->checkoutInput["phone"];
             $order->customer_address = $request->checkoutInput["address"];
             $order->customer_payment_choice = $request->checkoutInput["paymentMethod"];
+            
+            
 
             $order->booking_id = $booking_code;
             $order->unique_id = $unix_timestamp; 

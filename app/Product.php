@@ -54,4 +54,8 @@ class Product extends Model
     {
         return $this->belongsToMany('App\Package');
     }
+
+    public function campaign(){
+        return $this->hasMany(Campaign::class);
+    }
 }
