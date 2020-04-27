@@ -57,7 +57,6 @@ class CampaignController extends Controller
         $unix_timestamp = date_timestamp_get($date);
 
         $product = Product::where('unique_id', $request->product_id)->first();
-        
 
         $campaign = New Campaign;
         $campaign->unique_id = $unix_timestamp;
@@ -77,23 +76,24 @@ class CampaignController extends Controller
         return redirect()->route('admin_campaign')->with('status', 'Campaign berhasil dibuat.');
     }
 
-    public function campaign_edit(Product $product, Request $request)
+    public function campaign_edit(Campaign $campaign, Request $request)
     {
+
+        // return $request->unique_id;
         $businesses = Business::All();
-        $product = Product::where('unique_id', $request->unique_id)->first();
+        $products = Product::All();
+        $campaign = Campaign::where('unique_id', $request->unique_id)->first();
+        // return $campaign;
         
-        $users = User::all(); 
-        $pictures = Picture::where('product_id', $product->id)->get();
-        
-        return view('admins.products.edit', compact('product', 'users', 'pictures', 'businesses'));
+        return view('admins.campaigns.edit', compact('campaign','businesses', 'products'));
     }
 
     public function campaign_activate(Request $request)
     {
-        $product = Product::where('unique_id', $request->unique_id)->first();
-        $product->status = "active";
-        $product->save();
-        return redirect()->route('admin_product')->with('status', 'Product berhasil di aktivasi.');
+        $campaign = Campaign::where('unique_id', $request->unique_id)->first();
+        $campaign->status = "active";
+        $campaign->save();
+        return redirect()->route('admin_campaign')->with('status', 'Product berhasil di aktivasi.');
     }
 
     public function campaign_deactivate(Request $request)
@@ -106,23 +106,31 @@ class CampaignController extends Controller
 
     public function campaign_update(Request $request)
     {
+        $product = Product::where('unique_id', $request->product_id)->first();
+        $campaign = Campaign::where('unique_id', $request->unique_id)->first();
 
-        $product = Product::where('unique_id', $request->unique_id)->first();
-        $business = Business::where('id', $request->owner)->first();
-        
-        $product->name = $request->name;
-        $product->business_id = $request->owner;
-        $product->user_id = $business->user_id;
-        $product->price = $request->price;
-        $product->category = $request->category;
-        
-        $product->status = $request->status;
-        $product->description = $request->description;
+        $campaign->product_id = $product->id;
+        $campaign->user_id = $product->user["id"];
+        $campaign->business_id = $product->business["id"];
+        $campaign->title = $request->title;
+        $campaign->status = $request->status;
+        $campaign->product_initial_price = $request->product_initial_price;
+        $campaign->product_tiering_price_1 = $request->product_tiering_price_1;
+        $campaign->product_tiering_quota_1 = $request->product_tiering_quota_1;
+        $campaign->product_tiering_max = $request->product_tiering_max;
 
-        $product->save();
+        if($request->start_at != ""){
+            
+            $campaign->start_at = $request->start_at;
+        }
 
+        if($request->end_at != ""){
+            $campaign->end_at = $request->end_at;
+        }
         
-        return redirect()->route('admin_product')->with('status', 'Product berhasil diedit.');
+        $campaign->save();
+
+        return redirect()->route('admin_campaign')->with('status', 'Campaign berhasil diedit.');
     }
 
     public function campaign_delete(Product $product, Request $request)

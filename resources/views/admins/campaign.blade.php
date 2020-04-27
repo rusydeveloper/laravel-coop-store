@@ -51,7 +51,16 @@
                         <tbody>
                             @forelse($campaigns as $item)
                             <tr>
-                                <td>{{$item->product["name"]}} <b>{{$item->business["name"]}}</b>
+                                <td>
+                                    @if(!empty($item->product["image"]))
+                                    <img src="/{{$item->product["image"]}}" alt="no picture" width="75" height="75">
+                                    @else
+                                    <img src="{{asset('storage/products/product_default.jpg')}}" alt="no picture"
+                                        width="75" height="75">
+
+                                    @endif
+                                    <br>
+                                    {{$item->product["name"]}} <b>{{$item->business["name"]}}</b>
                                     {{$item->user["name"]}}</td>
                                 <td>
                                     @if($item->status == 'active')
@@ -72,7 +81,7 @@
                                     {{number_format($item->quantity_ordered,0,",",".")}}
                                 </td>
                                 <td>
-                                    {{number_format($item->amount_ordered,0,",",".")}}/
+                                    {{number_format($item->quantity_ordered,0,",",".")}}/
                                     {{number_format($item->product_tiering_quota_1,0,",",".")}}
                                 </td>
                                 <td>
