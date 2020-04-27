@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\User;
+use App\Business;
+use App\Test;
 class AuthController extends Controller
 {
     /**
@@ -18,6 +20,19 @@ class AuthController extends Controller
      */
     public function signup(Request $request)
     {
+
+        $content = $request->getContent();
+
+    // $array = explode('=', $content);
+    // $data_info = $array[1];
+    // $data_info = str_replace("%20"," ",$array[1]);
+    // $data_info = str_replace("%40","@",$data_info);
+
+    $test = new Test;
+    $test->info = $content;
+    $test->save();
+
+
         $date = date_create();
         $unix_timestamp = date_timestamp_get($date);
         $request->validate([
@@ -34,9 +49,52 @@ class AuthController extends Controller
             'unique_id' => $unix_timestamp,
         ]);
         $user->save();
+
+        $business = New Business;
+        $business->user_id = $user->id;
+        $business->name = $request->cooperative;
+        $business->status = "active";
+        $business->address = $request->address;
+        $business->description = 'Baru Mendaftar';
+        $business->category = 'koperasi';
+        $business->country = 'Indonesia';
+        $business->unique_id = $unix_timestamp;
+        $business->save();
+
+        
+
+        // return response()->json([
+        //     'message' => 'Successfully created user!'
+        // ], 201);
+        $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|string',
+            'remember_me' => 'boolean'
+        ]);
+
+
+        $credentials = request(['email', 'password']);
+        
+        if(!Auth::attempt($credentials))
+            return response()->json([
+                'message' => 'Unauthorized'
+            ], 401);
+        $user = $request->user();
+
+        $tokenResult = $user->createToken('Personal Access Token');
+        $token = $tokenResult->token;
+        
+            $token->expires_at = Carbon::now()->addWeeks(1);
+        $token->save();
+        
         return response()->json([
-            'message' => 'Successfully created user!'
-        ], 201);
+            'access_token' => 'Bearer '. $tokenResult->accessToken,
+            'user' => $user,
+            'token_type' => 'Bearer',
+            'expires_at' => Carbon::parse(
+                $tokenResult->token->expires_at
+            )->toDateTimeString()
+        ]);
     }
   
     /**
@@ -51,22 +109,28 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+
+        
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
             'remember_me' => 'boolean'
         ]);
         $credentials = request(['email', 'password']);
+        
         if(!Auth::attempt($credentials))
             return response()->json([
                 'message' => 'Unauthorized'
             ], 401);
         $user = $request->user();
+
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
+        
         if ($request->remember_me)
             $token->expires_at = Carbon::now()->addWeeks(1);
         $token->save();
+        
         return response()->json([
             'access_token' => 'Bearer '. $tokenResult->accessToken,
             'user' => $user,

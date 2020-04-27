@@ -204,7 +204,6 @@ class OrderController extends Controller
             
             $product = Product::where('id', $item["id"])->first();
            
-
             $order->quantity = $item["totalSubitem"]; 
             $order->price = $item["totalSubamount"];
             //campaign info
