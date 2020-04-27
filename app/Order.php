@@ -10,6 +10,7 @@ class Order extends Model
         'user_id', 
         'business_id', 
         'product_id',
+        'invoice_id',
         'package_id', 
         'status',
         'payment_id',
@@ -49,4 +50,8 @@ class Order extends Model
    public function payment(){
         return $this->belongsTo(Payment::class);
    }
+
+   public function invoice(){
+     return $this->belongsTo(Invoice::class);
+}
 }

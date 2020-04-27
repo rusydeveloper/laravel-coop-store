@@ -197,36 +197,6 @@ class OrderController extends Controller
 
         $invoice_description = '';
 
-        foreach ($cart as $item) {
-            $order =  new Order;
-            $order->status = 'order';
-            $order->product_id = $item["id"]; 
-            
-            $product = Product::where('id', $item["id"])->first();
-           
-            $order->quantity = $item["totalSubitem"]; 
-            $order->price = $item["totalSubamount"];
-            //campaign info
-            $order->campaign_id = $item["campaign_id"];
-            
-            //owner
-            $order->user_id = $item["user_id"];
-            $order->business_id = $item["business_id"];
-
-            //customer info
-            $order->customer_name = $request->checkoutInput["name"];
-            $order->customer_phone = $request->checkoutInput["phone"];
-            $order->customer_address = $request->checkoutInput["address"];
-            $order->customer_payment_choice = $request->checkoutInput["paymentMethod"];
-            
-            
-
-            $order->booking_id = $booking_code;
-            $order->unique_id = $unix_timestamp; 
-            $order->save();
-            $invoice_description .=$item["name"]." ".$item["totalSubitem"]." pcs x Rp ".$item["buying_price"]." = Rp ".$item["totalSubamount"]."; ";
-        }
-
         $invoice =  new Invoice;
         $invoice->status = 'unpaid';
         $invoice->customer = $request->checkoutInput["cooperative"];
@@ -242,6 +212,39 @@ class OrderController extends Controller
         $invoice->booking_id = $booking_code;
         $invoice->description = $invoice_description;
         $invoice->save();
+
+        foreach ($cart as $item) {
+            $order =  new Order;
+            $order->status = 'order';
+            $order->product_id = $item["id"]; 
+            
+            $product = Product::where('id', $item["id"])->first();
+           
+            $order->quantity = $item["totalSubitem"]; 
+            $order->price = $item["totalSubamount"];
+            //campaign info
+            $order->campaign_id = $item["campaign_id"];
+            
+            //owner of order (customer)
+            $order->user_id = $request->checkoutInput["user_id"];
+            $order->business_id = $request->checkoutInput["business_id"];
+
+            //invoice
+            $order->invoice_id = $invoice->id;
+
+            //customer info
+            $order->customer_name = $request->checkoutInput["name"];
+            $order->customer_phone = $request->checkoutInput["phone"];
+            $order->customer_address = $request->checkoutInput["address"];
+            $order->customer_payment_choice = $request->checkoutInput["paymentMethod"];
+            
+            $order->booking_id = $booking_code;
+            $order->unique_id = $unix_timestamp; 
+            $order->save();
+            $invoice_description .=$item["name"]." ".$item["totalSubitem"]." pcs x Rp ".$item["buying_price"]." = Rp ".$item["totalSubamount"]."; ";
+        }
+
+        
 
         return response()->json([
             'message' => 'success '

@@ -20,19 +20,6 @@ class AuthController extends Controller
      */
     public function signup(Request $request)
     {
-
-        $content = $request->getContent();
-
-    // $array = explode('=', $content);
-    // $data_info = $array[1];
-    // $data_info = str_replace("%20"," ",$array[1]);
-    // $data_info = str_replace("%40","@",$data_info);
-
-    $test = new Test;
-    $test->info = $content;
-    $test->save();
-
-
         $date = date_create();
         $unix_timestamp = date_timestamp_get($date);
         $request->validate([
@@ -81,6 +68,8 @@ class AuthController extends Controller
             ], 401);
         $user = $request->user();
 
+        $business = Business::where('user_id', $user->id)->first();
+
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
         
@@ -90,6 +79,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => 'Bearer '. $tokenResult->accessToken,
             'user' => $user,
+            'business' => $business,
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse(
                 $tokenResult->token->expires_at
@@ -130,10 +120,13 @@ class AuthController extends Controller
         if ($request->remember_me)
             $token->expires_at = Carbon::now()->addWeeks(1);
         $token->save();
+
+        $business = Business::where('user_id', $user->id)->first();
         
         return response()->json([
             'access_token' => 'Bearer '. $tokenResult->accessToken,
             'user' => $user,
+            'business' => $business,
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse(
                 $tokenResult->token->expires_at
