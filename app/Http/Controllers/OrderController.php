@@ -206,11 +206,11 @@ class OrderController extends Controller
         $invoice->customer_payment_choice = $request->checkoutInput["paymentMethod"];
         $invoice->amount = $request->totalAmount;
         $invoice->quantity = $request->totalItem;
-        $invoice->user_id = $product->user_id;
-        $invoice->business_id = $product->business_id;
+        $invoice->user_id = $request->checkoutInput["user_id"];
+        $invoice->business_id = $request->checkoutInput["business_id"];
         $invoice->unique_id = $unix_timestamp;
         $invoice->booking_id = $booking_code;
-        $invoice->description = $invoice_description;
+        
         $invoice->save();
 
         foreach ($cart as $item) {
@@ -243,7 +243,8 @@ class OrderController extends Controller
             $order->save();
             $invoice_description .=$item["name"]." ".$item["totalSubitem"]." pcs x Rp ".$item["buying_price"]." = Rp ".$item["totalSubamount"]."; ";
         }
-
+        $invoice->description = $invoice_description;
+        $invoice->save();
         
 
         return response()->json([

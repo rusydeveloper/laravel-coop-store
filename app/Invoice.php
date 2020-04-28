@@ -29,4 +29,8 @@ class Invoice extends Model
    public function business(){
         return $this->belongsTo(Business::class);
    }
+
+   public function invoice(){
+    return $this->hasMany(Invoice::class);
+}
 }
