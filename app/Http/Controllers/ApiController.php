@@ -476,6 +476,18 @@ class ApiController extends Controller
     }
 
 
+    public function invoice()
+    {
+        $invoices = Invoice::orderBy('created_at','DESC')->with('order.product')->get();
+        return response()->json($invoices);
+    }
+
+    public function invoiceUser($user_id)
+    {
+        $invoices = Invoice::orderBy('created_at','DESC')->where('user_id', $user_id)->with('order.product')->get();
+        return response()->json($invoices);
+    }
+
 
 // =====================UNUSED=============UNUSED==============UNUSED=============UNUSED=============
 // =====================UNUSED=============UNUSED==============UNUSED=============UNUSED=============
@@ -496,11 +508,11 @@ class ApiController extends Controller
         return response()->json($businesses);
     }
 
-    public function invoice()
-    {
-        $invoices = Invoice::all()->sortByDesc('created_at');
-        return response()->json($invoices);
-    }
+    // public function invoice()
+    // {
+    //     $invoices = Invoice::all()->sortByDesc('created_at');
+    //     return response()->json($invoices);
+    // }
 
     public function order()
     {

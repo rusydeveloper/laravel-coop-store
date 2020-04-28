@@ -30,7 +30,7 @@ class Invoice extends Model
         return $this->belongsTo(Business::class);
    }
 
-   public function invoice(){
-    return $this->hasMany(Invoice::class);
+   public function order(){
+    return $this->hasMany(Order::class);
 }
 }

@@ -50,6 +50,14 @@ class User extends Authenticatable
     public function invoice(){
         return $this->hasMany(Invoice::class);
     }
+
+    public function wallet(){
+        return $this->hasOne(Wallet::class);
+    }
+
+    public function wallethistory(){
+        return $this->hasMany(WalletHistory::class);
+    }
     
 
 }
