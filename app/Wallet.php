@@ -10,6 +10,7 @@ class Wallet extends Model
         'unique_id', 
         'user_id', 
         'business_id',
+        'status',
         'balance'
     ];
 

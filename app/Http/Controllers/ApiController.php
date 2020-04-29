@@ -14,6 +14,8 @@ use App\Payment;
 use App\Report;
 use App\Picture;
 use App\Invoice;
+use App\Wallet;
+
 use App\Test;
 use Response;
 use Carbon\Carbon;
@@ -486,6 +488,12 @@ class ApiController extends Controller
     {
         $invoices = Invoice::orderBy('created_at','DESC')->where('user_id', $user_id)->with('order.product')->get();
         return response()->json($invoices);
+    }
+
+    public function checkWallet(Wallet $wallet, $user_id)
+    {   
+    $wallet = Wallet::where('user_id', $user_id)->first();
+    return response()->json($wallet);
     }
 
 

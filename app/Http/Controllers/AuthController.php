@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\User;
 use App\Business;
+use App\Wallet;
+use App\WalletHistory;
 use App\Test;
 class AuthController extends Controller
 {
@@ -75,11 +77,37 @@ class AuthController extends Controller
         
             $token->expires_at = Carbon::now()->addWeeks(1);
         $token->save();
+
+
+        //Create wallet
+        $wallet = New Wallet;
+        $wallet->unique_id = $unix_timestamp;
+        $wallet->business_id = $business->id;
+        $wallet->user_id = $user->id;
+        $wallet->status = "active";
+        $wallet->balance = 0;
+        $wallet->save();
+
+        //Create wallet history
+        $walletHistory = New WalletHistory;
+        $walletHistory->unique_id = $unix_timestamp;
+        $walletHistory->business_id = $business->id;
+        $walletHistory->user_id = $user->id;
+        $walletHistory->wallet_id = $wallet->id;
+        $walletHistory->status = "success";
+        $walletHistory->type = "NEW ACCOUNT";
+        $walletHistory->amount = 0;
+        $walletHistory->description = "Pembuatan Account Kredit";
+        $walletHistory->save();
+
+        $wallet = Wallet::where('business_id', $business->id)->first();
+
         
         return response()->json([
             'access_token' => 'Bearer '. $tokenResult->accessToken,
             'user' => $user,
             'business' => $business,
+            'wallet' => $wallet,
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse(
                 $tokenResult->token->expires_at
@@ -99,8 +127,6 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-
-        
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
@@ -122,11 +148,13 @@ class AuthController extends Controller
         $token->save();
 
         $business = Business::where('user_id', $user->id)->first();
+        $wallet = Wallet::where('business_id', $business->id)->first();
         
         return response()->json([
             'access_token' => 'Bearer '. $tokenResult->accessToken,
             'user' => $user,
             'business' => $business,
+            'wallet' => $wallet,
             'token_type' => 'Bearer',
             'expires_at' => Carbon::parse(
                 $tokenResult->token->expires_at

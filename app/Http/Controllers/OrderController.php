@@ -6,6 +6,10 @@ use App\Order;
 use App\Invoice;
 use App\Product;
 use App\Test;
+use App\Wallet;
+use App\WalletHistory;
+
+
 use Cart;
 
 use Illuminate\Http\Request;
@@ -197,6 +201,8 @@ class OrderController extends Controller
 
         $invoice_description = '';
 
+        $finalInvoiceAmount = $request->totalAmount + $request->uniqueNumber-$request->walletBalance;
+
         $invoice =  new Invoice;
         $invoice->status = 'unpaid';
         $invoice->customer = $request->checkoutInput["cooperative"];
@@ -204,7 +210,7 @@ class OrderController extends Controller
         $invoice->customer_phone = $request->checkoutInput["phone"];
         $invoice->customer_address = $request->checkoutInput["address"];
         $invoice->customer_payment_choice = $request->checkoutInput["paymentMethod"];
-        $invoice->amount = $request->totalAmount;
+        $invoice->amount = $finalInvoiceAmount;
         $invoice->quantity = $request->totalItem;
         $invoice->user_id = $request->checkoutInput["user_id"];
         $invoice->business_id = $request->checkoutInput["business_id"];
@@ -245,7 +251,24 @@ class OrderController extends Controller
         }
         $invoice->description = $invoice_description;
         $invoice->save();
+
+        //Update wallet balance
+        $wallet = Wallet::where('business_id', $request->checkoutInput["business_id"])->first();
+        $wallet->balance -= $request->walletBalance;
+        $wallet->save();
+
+        //Record wallet transaction
         
+        $walletHistory = new WalletHistory;
+        $walletHistory->unique_id = $unix_timestamp;
+        $walletHistory->business_id = $request->checkoutInput["business_id"];
+        $walletHistory->user_id = $request->checkoutInput["user_id"];
+        $walletHistory->wallet_id = $wallet->id;
+        $walletHistory->status = "success";
+        $walletHistory->type = "PAY";
+        $walletHistory->amount = $request->walletBalance;
+        $walletHistory->description = "Pembayaran belanja online";
+        $walletHistory->save();
 
         return response()->json([
             'message' => 'success '

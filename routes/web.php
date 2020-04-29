@@ -63,7 +63,7 @@ Route::group(['middleware' => ['auth']], function () {
 			Route::post('/product/delete', 'AdminController@product_delete');
 			Route::post('/product/activate', 'AdminController@product_activate');
 			Route::post('/product/deactivate', 'AdminController@product_deactivate');
-
+//CAMPAIGN
 			Route::get('/campaign', 'CampaignController@campaign')->name('admin_campaign');
 			Route::get('/campaign/create', 'CampaignController@campaign_create');
 			Route::post('/campaign/edit', 'CampaignController@campaign_edit');
@@ -73,6 +73,10 @@ Route::group(['middleware' => ['auth']], function () {
 			Route::post('/campaign/delete', 'CampaignController@campaign_delete');
 			Route::post('/campaign/activate', 'CampaignController@campaign_activate');
 			Route::post('/campaign/deactivate', 'CampaignController@campaign_deactivate');
+//WALLET
+			Route::get('/wallet', 'WalletController@wallet')->name('admin_wallet');
+			Route::post('/wallet/edit', 'WalletController@wallet_edit');
+			Route::post('/wallet/update', 'WalletController@wallet_update');
 
 			Route::get('/package', 'AdminController@package')->name('admin_package');
 			Route::get('/package/create', 'AdminController@package');

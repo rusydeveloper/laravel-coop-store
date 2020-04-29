@@ -18,6 +18,7 @@ class CreateWalletsTable extends Migration
             $table->string('unique_id');
             $table->integer('business_id');
             $table->integer('user_id');
+            $table->string('status');
             $table->integer('balance');
             $table->timestamps();
         });

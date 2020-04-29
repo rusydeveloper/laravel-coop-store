@@ -190,6 +190,7 @@
             <a href="{{route('admin_order')}}"><span class="fa fa-shopping-basket"></span> Pesanan</a>
             <a href="{{route('admin_invoice')}}"><span class="fa fa-clone"></span> Tagihan</a>
             <a href="{{route('admin_payment')}}"><span class="fa fa-credit-card"></span> Pembayaran</a>
+            <a href="{{route('admin_wallet')}}"><span class="fa fa-money"></span> Dompet</a>
             <a href="{{route('admin_report')}}"><span class="fa fa-pie-chart"></span> Laporan</a>
         </div>
 

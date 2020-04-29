@@ -55,6 +55,8 @@ Route::get('/campaigns', 'ApiController@campaigns');
 Route::get('/invoice', 'ApiController@invoice')->name('api_invoice');
 Route::get('/invoice/user/{user_id}', 'ApiController@invoiceUser')->name('api_invoice_user');
 
+Route::get('/wallet/user/{user_id}', 'ApiController@checkWallet')->name('api_wallet_user');
+
 
 // Route::get('/product/{unique_id}', 'ApiController@productDetail');
 Route::post('/order/add', 'ApiController@add_order')->name('api_add_order');

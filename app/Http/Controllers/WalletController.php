@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Wallet;
+use App\WalletHistory;
 use Illuminate\Http\Request;
 
 class WalletController extends Controller
@@ -12,9 +13,11 @@ class WalletController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function wallet()
     {
-        //
+        $wallets = Wallet::orderBy('created_at','DESC')->paginate(50);
+
+        return view('admins.wallet', compact('wallets'));
     }
 
     /**
@@ -46,7 +49,7 @@ class WalletController extends Controller
      */
     public function show(Wallet $wallet)
     {
-        //
+        
     }
 
     /**
@@ -55,9 +58,12 @@ class WalletController extends Controller
      * @param  \App\Wallet  $wallet
      * @return \Illuminate\Http\Response
      */
-    public function edit(Wallet $wallet)
+    public function wallet_edit(Wallet $wallet, Request $request)
     {
-        //
+
+        $wallet = Wallet::where('unique_id', $request->unique_id)->first();
+        
+        return view('admins.wallets.edit', compact('wallet'));
     }
 
     /**
@@ -67,9 +73,38 @@ class WalletController extends Controller
      * @param  \App\Wallet  $wallet
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Wallet $wallet)
+    public function wallet_update(Request $request, Wallet $wallet)
     {
-        //
+        $date = date_create();
+        $unix_timestamp = date_timestamp_get($date);
+
+        $wallet = Wallet::where('unique_id', $request->unique_id)->first();
+        $wallet->status = $request->status;
+
+        $description = "";
+        
+        if($request->method=="TOP UP"){
+            $wallet->balance += $request->amount;
+            $description = "Penambahan saldo oleh Admin";
+        }elseif($request->method=="WITHDRAW"){
+            $wallet->balance -= $request->amount;
+            $description = "Pengurangan saldo oleh Admin";
+        }
+        $wallet->save();
+
+        $walletHistory = New WalletHistory;
+        $walletHistory->unique_id = $unix_timestamp;
+        $walletHistory->business_id = $wallet->business_id;
+        $walletHistory->user_id = $wallet->user_id;
+        $walletHistory->wallet_id = $wallet->id;
+        $walletHistory->status = "success";
+        $walletHistory->type = $request->method;
+        $walletHistory->amount = $request->amount;
+        $walletHistory->description = $description;
+        $walletHistory->save();
+
+        return redirect()->route('admin_wallet')->with('status', 'Transaksi Dompet berhasil .');
+
     }
 
     /**
