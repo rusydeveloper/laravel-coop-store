@@ -69,6 +69,7 @@
                         <thead>
                             <tr class="text-center">
                                 <th>Name</th>
+                                <th>Supplier</th>
                                 <th>Price</th>
                                 <th>Quantity</th>
                                 <th>Total</th>
@@ -81,6 +82,7 @@
                             @forelse($orders as $item)
                             <tr>
                                 <td>{{$item->product->name}}</td>
+                                <td>{{$item->product->business->name}}</td>
                                 <td style="text-align: right">{{number_format($item->product->buying_price,0,",",".")}}
                                 </td>
                                 <td class="text-center">{{$item->quantity}}</td>
