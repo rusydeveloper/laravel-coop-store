@@ -59,45 +59,6 @@
     </div>
     <hr>
 
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                    <span class="fa fa-clone"></span> Rekap
-                </div>
-                <div class="card-body">
-                    <table class="table table-responsive table-striped table-hover" style="font-size: 10pt">
-                        <tr>
-                            <td>Nama</td>
-                            <td>Jumlah</td>
-                            <td>Hasil Tenant (75%)</td>
-                            <td>Hasil Nectico (25%)</td>
-                        </tr>
-                        @foreach ($invoices_groupBy_tenant as $key => $value)
-                        <tr>
-                            <td>{{ App\User::find($key)->business->first()->name }} ({{ App\User::find($key)->name }})
-                            </td>
-                            <td style="text-align: right">{{ number_format($value,0,",",".")}}</td>
-                            <td style="text-align: right">{{ number_format($value*0.75,0,",",".")}}</td>
-                            <td style="text-align: right">{{ number_format($value*0.25,0,",",".")}}</td>
-                        </tr>
-                        @endforeach
-                        <tr>
-                            <td>Total</td>
-                            <td style="text-align: right">
-                                {{number_format($invoices->where('status', 'paid')->sum('amount'),0,",",".")}}</td>
-                            <td style="text-align: right">
-                                {{number_format($invoices->where('status', 'paid')->sum('amount')*0.75,0,",",".")}}</td>
-                            <td style="text-align: right">
-                                {{number_format($invoices->where('status', 'paid')->sum('amount')*0.25,0,",",".")}}</td>
-                        </tr>
-
-
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <hr>
 
