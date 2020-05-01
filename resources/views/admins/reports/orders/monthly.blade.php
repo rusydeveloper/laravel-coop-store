@@ -1,4 +1,4 @@
-@extends('layouts.admin') 
+@extends('layouts.admin')
 @section('content')
 <div class="container">
     <div class="row justify-content-center text-center">
@@ -118,7 +118,8 @@
                             @forelse($orders as $item)
                             <tr>
                                 <td>{{$item->product->name}}</td>
-                                <td style="text-align: right">{{number_format($item->product->price,0,",",".")}}</td>
+                                <td style="text-align: right">{{number_format($item->product->buying_price,0,",",".")}}
+                                </td>
                                 <td class="text-center">{{$item->quantity}}</td>
                                 <td style="text-align: right">{{number_format($item->price,0,",",".")}}</td>
                                 <td class="text-center">
