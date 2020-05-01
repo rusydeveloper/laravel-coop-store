@@ -67,51 +67,52 @@
                     @endif
                     <table class="table table-striped table-hover" style="font-size: 10pt">
                         <thead>
-                          <tr class="text-center">
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Total</th>
-                            <th>Status</th>
-                            <th>Created At</th>
-                            
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($orders as $item)
-                      <tr>
-                        <td>{{$item->product->name}}</td>
-                        <td style="text-align: right">{{number_format($item->product->price,0,",",".")}}</td>
-                        <td class="text-center">{{$item->quantity}}</td>
-                        <td style="text-align: right">{{number_format($item->price,0,",",".")}}</td>
-                        <td class="text-center">
-                        @if($item->status == 'order')
-                            <span class="badge badge-danger">{{$item->status}}</span>
-                            @else
-                            <span class="badge badge-secondary">{{$item->status}}</span>
-                            @endif
-                        </td>
-                        <td class="text-center">
-                            {{date('d-M-Y H:i:s', strtotime($item->created_at))}}
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td>Data Kosong</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    @endforelse
-                    
-                </tbody>
-            </table>
+                            <tr class="text-center">
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Created At</th>
 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($orders as $item)
+                            <tr>
+                                <td>{{$item->product->name}}</td>
+                                <td style="text-align: right">{{number_format($item->product->buying_price,0,",",".")}}
+                                </td>
+                                <td class="text-center">{{$item->quantity}}</td>
+                                <td style="text-align: right">{{number_format($item->price,0,",",".")}}</td>
+                                <td class="text-center">
+                                    @if($item->status == 'order')
+                                    <span class="badge badge-danger">{{$item->status}}</span>
+                                    @else
+                                    <span class="badge badge-secondary">{{$item->status}}</span>
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    {{date('d-M-Y H:i:s', strtotime($item->created_at))}}
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>Data Kosong</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            @endforelse
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
         </div>
     </div>
-</div>
-</div>
 </div>
 @endsection
