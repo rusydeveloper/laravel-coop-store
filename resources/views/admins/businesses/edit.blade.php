@@ -2,13 +2,14 @@
 
 @section('content')
 <style type="text/css">
-.card-body{
-    font-size: 12pt;
-    text-align: left
-}
+    .card-body {
+        font-size: 12pt;
+        text-align: left
+    }
 </style>
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
@@ -19,7 +20,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Edit Business</div>
+                <div class="card-header">Edit Perusahaan</div>
                 <div class="card-body">
                     <form method="POST" action="/admin/business/update" enctype="multipart/form-data">
                         {{ csrf_field() }}
@@ -28,9 +29,11 @@
                             <div class="col-md-12" style="text-align: center">
                                 <div class="img-container">
                                     @empty($picture)
-                                     <img src="{{asset('storage/businesses/business_default.jpg')}}" alt="no picture" width="200">
+                                    <img src="{{asset('storage/businesses/business_default.jpg')}}" alt="no picture"
+                                        width="200">
                                     @else
-                                   <img src="{{asset('storage/businesses/'.$picture->name)}}" alt="no picture" width="200" height="200">
+                                    <img src="{{asset('storage/businesses/'.$picture->name)}}" alt="no picture"
+                                        width="200" height="200">
                                     @endempty
                                     <br><br>
                                     <p><b>Edit Picture</b></p>
@@ -42,7 +45,8 @@
                             <label for="owner" class="col-md-4 col-form-label text-md-right">Business Owner</label>
 
                             <div class="col-md-6">
-                                <select id="owner" name="owner" class="form-control{{ $errors->has('owner') ? ' is-invalid' : '' }}">
+                                <select id="owner" name="owner"
+                                    class="form-control{{ $errors->has('owner') ? ' is-invalid' : '' }}">
                                     <option value="{{$business->user->id}}">{{$business->user->name}}</option>
                                     @forelse($users as $item)
                                     <option value="{{$item->id}}">{{$item->name}}</option>
@@ -61,7 +65,8 @@
                         <div class="form-group row">
                             <label for="status" class="col-md-4 col-form-label text-md-right">Status</label>
                             <div class="col-md-6">
-                                <select id="status" name="status" class="form-control{{ $errors->has('status') ? ' is-invalid' : '' }}">
+                                <select id="status" name="status"
+                                    class="form-control{{ $errors->has('status') ? ' is-invalid' : '' }}">
                                     <option value="{{$business->status}}" selected>{{$business->status}}</option>
                                     <option value="active">Active</option>
                                     <option value="non active">Non Active</option>
@@ -73,12 +78,14 @@
                                 @endif
                             </div>
                         </div>
-                        
+
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">Business Name</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{$business->name}}" required>
+                                <input id="name" type="text"
+                                    class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name"
+                                    value="{{$business->name}}" required>
 
                                 @if ($errors->has('name'))
                                 <span class="invalid-feedback" role="alert">
@@ -91,7 +98,9 @@
                         <div class="form-group row">
                             <label for="contact" class="col-md-4 col-form-label text-md-right">Phone Number</label>
                             <div class="col-md-6">
-                                <input id="contact" type="text" class="form-control{{ $errors->has('contact') ? ' is-invalid' : '' }}" name="contact"  value="{{$business->contact}}" required>
+                                <input id="contact" type="text"
+                                    class="form-control{{ $errors->has('contact') ? ' is-invalid' : '' }}"
+                                    name="contact" value="{{$business->contact}}" required>
                                 @if ($errors->has('contact'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('contact') }}</strong>
@@ -101,22 +110,15 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="category" class="col-md-4 col-form-label text-md-right">Restaurant Category</label>
+                            <label for="category" class="col-md-4 col-form-label text-md-right">Restaurant
+                                Category</label>
 
                             <div class="col-md-6">
-                                <select id="category" name="category" class="form-control{{ $errors->has('category') ? ' is-invalid' : '' }}">
-                                     <option value="{{$business->category}}" selected>{{$business->category}}</option>
-                                    <option value="Indonesian">Indonesia</option>
-                                    <option value="West">West</option>
-                                    <option value="European">European</option>
-                                    <option value="Asian">Asian</option>
-                                    <option value="Thailand">Thailand</option>
-                                    <option value="Japanese">Japanese</option>
-                                    <option value="Korean">Korean</option>
-                                    <option value="Vietnamese">Vietnamese</option>
-                                    <option value="Mediterranean">Arabic</option>
-                                    <option value="Italian">Italian</option>
-                                    <option value="Campuran">Campuran</option>
+                                <select id="category" name="category"
+                                    class="form-control{{ $errors->has('category') ? ' is-invalid' : '' }}">
+                                    <option value="{{$business->category}}" selected>{{$business->category}}</option>
+                                    <option value="koperasi">Koperasi</option>
+                                    <option value="supplier">Supplier</option>
                                 </select>
 
                                 @if ($errors->has('category'))
@@ -126,28 +128,33 @@
                                 @endif
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <label for="description" class="col-form-label text-md-right">Description</label>
-                            <textarea class="form-control" rows="2" id="description" name="description" required>{{$business->description}}</textarea>
+                            <textarea class="form-control" rows="2" id="description" name="description"
+                                required>{{$business->description}}</textarea>
                         </div>
                         <fieldset>
                             <legend>Location</legend>
                             <div class="form-group">
                                 <label for="address">Address</label>
-                                <textarea class="form-control" rows="2" id="address" name="address" required>{{$business->address}}</textarea>
+                                <textarea class="form-control" rows="2" id="address" name="address"
+                                    required>{{$business->address}}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="village">Village (Kelurahan)</label>
-                                <input type="text" name="village" class="form-control" id="village" value="{{$business->village}}" required>
+                                <input type="text" name="village" class="form-control" id="village"
+                                    value="{{$business->village}}" required>
                             </div>
                             <div class="form-group">
                                 <label for="district">District (Kecamatan)</label>
-                                <input type="text" name="district" class="form-control" id="district" value="{{$business->district}}" required>
+                                <input type="text" name="district" class="form-control" id="district"
+                                    value="{{$business->district}}" required>
                             </div>
                             <div class="form-group">
                                 <label for="city">City</label>
-                                <select id="city" name="city"  type="text" class="form-control" data-show-subtext="true" data-live-search="true" data-size="5" autofocus required>
+                                <select id="city" name="city" type="text" class="form-control" data-show-subtext="true"
+                                    data-live-search="true" data-size="5" autofocus required>
                                     <option value="{{$business->city}}">{{$business->city}}</option>
                                     <option value="Bandung">Bandung</option>
                                     <option value="Jakarta Utara">Jakarta Utara</option>
@@ -273,7 +280,8 @@
                                     <option value="Cameroon">Cameroon</option>
                                     <option value="Canada">Canada</option>
                                     <option value="Caruban">Caruban</option>
-                                    <option value="Central African Republic (CAR)">Central African Republic (CAR)</option>
+                                    <option value="Central African Republic (CAR)">Central African Republic (CAR)
+                                    </option>
                                     <option value="Chad">Chad</option>
                                     <option value="Chile">Chile</option>
                                     <option value="China">China</option>
@@ -298,7 +306,8 @@
                                     <option value="Daik">Daik</option>
                                     <option value="Deiyai">Deiyai</option>
                                     <option value="Demak">Demak</option>
-                                    <option value="Democratic Republic of theCongo">Democratic Republic of theCongo</option>
+                                    <option value="Democratic Republic of theCongo">Democratic Republic of theCongo
+                                    </option>
                                     <option value="Denmark">Denmark</option>
                                     <option value="Denpasar">Denpasar</option>
                                     <option value="Denpasar">Denpasar</option>
@@ -654,7 +663,8 @@
                                     <option value="Sabang">Sabang</option>
                                     <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
                                     <option value="Saint Lucia">Saint Lucia</option>
-                                    <option value="Saint Vincent and the Grenadines">Saint Vincent and the Grenadines</option>
+                                    <option value="Saint Vincent and the Grenadines">Saint Vincent and the Grenadines
+                                    </option>
                                     <option value="Salak">Salak</option>
                                     <option value="Salatiga">Salatiga</option>
                                     <option value="Samarinda">Samarinda</option>
@@ -750,7 +760,8 @@
                                     <option value="Surakarta">Surakarta</option>
                                     <option value="Suriname">Suriname</option>
                                     <option value="Suwawa">Suwawa</option>
-                                    <option value="Swaziland (renamed to Eswatini)">Swaziland (renamed to Eswatini)</option>
+                                    <option value="Swaziland (renamed to Eswatini)">Swaziland (renamed to Eswatini)
+                                    </option>
                                     <option value="Sweden">Sweden</option>
                                     <option value="Switzerland">Switzerland</option>
                                     <option value="Syria">Syria</option>
@@ -771,8 +782,10 @@
                                     <option value="Tangerang Selatan">Tangerang Selatan</option>
                                     <option value="Tanjung">Tanjung</option>
                                     <option value="Tanjung (Nusa Tenggara Barat)">Tanjung (Nusa Tenggara Barat)</option>
-                                    <option value="Tanjung Balai (Sumatera Utara)">Tanjung Balai (Sumatera Utara)</option>
-                                    <option value="Tanjung Balai Karimun (Kepulauan Riau)">Tanjung Balai Karimun (Kepulauan Riau)</option>
+                                    <option value="Tanjung Balai (Sumatera Utara)">Tanjung Balai (Sumatera Utara)
+                                    </option>
+                                    <option value="Tanjung Balai Karimun (Kepulauan Riau)">Tanjung Balai
+                                        Karimun (Kepulauan Riau)</option>
                                     <option value="Tanjung Enim">Tanjung Enim</option>
                                     <option value="Tanjung Pandan">Tanjung Pandan</option>
                                     <option value="Tanjung Pinang">Tanjung Pinang</option>
@@ -784,8 +797,10 @@
                                     <option value="Tarempa">Tarempa</option>
                                     <option value="Tarutung">Tarutung</option>
                                     <option value="Tasikmalaya">Tasikmalaya</option>
-                                    <option value="Tebing Tinggi (Sumatera Selatan)">Tebing Tinggi (Sumatera Selatan)</option>
-                                    <option value="Tebing Tinggi (Sumatera Utara)">Tebing Tinggi (Sumatera Utara)</option>
+                                    <option value="Tebing Tinggi (Sumatera Selatan)">Tebing Tinggi (Sumatera Selatan)
+                                    </option>
+                                    <option value="Tebing Tinggi (Sumatera Utara)">Tebing Tinggi (Sumatera Utara)
+                                    </option>
                                     <option value="Tegal">Tegal</option>
                                     <option value="Teluk Bintuni">Teluk Bintuni</option>
                                     <option value="Teluk Dalam">Teluk Dalam</option>
@@ -825,7 +840,8 @@
                                     <option value="Ungaran">Ungaran</option>
                                     <option value="United Arab Emirates (UAE)">United Arab Emirates (UAE)</option>
                                     <option value="United Kingdom (UK)">United Kingdom (UK)</option>
-                                    <option value="United States of America (USA)">United States of America (USA)</option>
+                                    <option value="United States of America (USA)">United States of America (USA)
+                                    </option>
                                     <option value="Uruguay">Uruguay</option>
                                     <option value="Uzbekistan">Uzbekistan</option>
                                     <option value="Vanuatu">Vanuatu</option>
@@ -855,7 +871,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="province">Province</label>
-                                <select id="province" name="province" class="form-control{{ $errors->has('province') ? ' is-invalid' : '' }}">
+                                <select id="province" name="province"
+                                    class="form-control{{ $errors->has('province') ? ' is-invalid' : '' }}">
                                     <option value="{{$business->province}}" selected>{{$business->province}}</option>
                                     <option value="Jawa Barat">Jawa Barat</option>
                                     <option value="Aceh">Aceh</option>
@@ -899,10 +916,10 @@
                                 </div>
                             </div>
 
-                        </form>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    @endsection
+</div>
+@endsection

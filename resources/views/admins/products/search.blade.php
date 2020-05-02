@@ -6,7 +6,7 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <span class="fa fa-cutlery"></span> Product
+          <span class="fa fa-cubes"></span> Product
           <form action="/admin/product/search" method="POST" role="search">
             {{ csrf_field() }}
             <div class="input-group">
@@ -56,7 +56,7 @@
 
                 </td>
                 <td>{{$item->name}}</td>
-                <td>{{number_format($item->price,0,",",".")}}</td>
+                <td>{{number_format($item->buying_price,0,",",".")}}</td>
                 <td>
                   @if($item->status == 'active')
                   <span class="badge badge-success">{{$item->status}}</span>

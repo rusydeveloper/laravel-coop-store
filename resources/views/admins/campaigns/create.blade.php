@@ -33,6 +33,7 @@
                                     </option>
                                     @forelse($products as $item)
                                     <option value="{{$item->unique_id}}">{{$item->business["name"]}} - {{$item->name}}
+                                        - Rp {{number_format($item->buying_price,0,",",".")}}
                                     </option>
                                     @empty
                                     <option value="">Silahkan Buat Produk terlebih dahulu</option>

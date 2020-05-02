@@ -38,7 +38,7 @@
                             @forelse($orders as $item)
                             <tr>
                                 <td>{{$item->product["name"]}}</td>
-                                <td>{{number_format($item->product["price"],0,",",".")}}</td>
+                                <td>{{number_format($item->product["buying_price"],0,",",".")}}</td>
                                 <td>{{$item->quantity}}</td>
                                 <td>{{number_format($item->price,0,",",".")}}</td>
                                 <td>

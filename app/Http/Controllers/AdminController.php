@@ -430,13 +430,16 @@ class AdminController extends Controller
 
     public function product_edit(Product $product, Request $request)
     {
-        $businesses = Business::All();
+        $businesses = Business::where('category','supplier')->get();
+        $categories = Category::where('parent','!=' ,0)->get();
         $product = Product::where('unique_id', $request->unique_id)->first();
         
-        $users = User::all(); 
+        $users = User::where('role','supplier')->get(); 
         $pictures = Picture::where('product_id', $product->id)->get();
+        // return $categories;
+        // return $product->category;
         
-        return view('admins.products.edit', compact('product', 'users', 'pictures', 'businesses'));
+        return view('admins.products.edit', compact('product', 'users', 'pictures', 'businesses', 'categories'));
     }
 
     public function product_activate(Request $request)
@@ -465,7 +468,8 @@ class AdminController extends Controller
         $product->business_id = $request->owner;
         $product->user_id = $business->user_id;
         $product->price = $request->price;
-        $product->category = $request->category;
+        $product->category_id = $request->subcategory;
+        $product->subcategory = $request->subcategory;
         
         $product->status = $request->status;
         $product->description = $request->description;
@@ -485,7 +489,7 @@ class AdminController extends Controller
 
         //FILE NAMING AND SAVING SETTINGS
                 // $file_name_custom_pp = 'warman_pp_'.$product->user_id.'_'.$product->id.'_'.$unix_timestamp.'.'.$extension_pp;
-
+                $file_name_custom_pp ="";
                 $file_name_custom_pp = $request->picture_file->getClientOriginalName();
 
         // SAVING PROFILE PICTURE FILES
@@ -508,7 +512,7 @@ class AdminController extends Controller
         // $product->image = base64_encode(File::get($path_pp));
         // $product->image = base64_encode(File::get("http://127.0.0.1:8000/storage/products/".$file_name_custom_pp));
         // $product->image = base64_encode("http://127.0.0.1:8000/storage/products/".$file_name_custom_pp);
-        $product->image = "storage/products/".$file_name_custom_pp;
+        // $product->image = "storage/products/".$file_name_custom_pp;
 
 
         

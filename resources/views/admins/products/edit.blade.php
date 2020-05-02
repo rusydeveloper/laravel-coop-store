@@ -94,18 +94,14 @@
                             <div class="col-md-6">
                                 <select id="subcategory" name="subcategory"
                                     class="form-control{{ $errors->has('category') ? ' is-invalid' : '' }}">
-                                    <option value="{{$product->subcategory}}" selected>{{$product->subcategory}}
+                                    <option value="{{$product->category_id}}" selected>{{$product->category["name"]}}
                                     </option>
-                                    <option value="Indonesian">Indonesia</option>
-                                    <option value="West">West</option>
-                                    <option value="European">European</option>
-                                    <option value="Asian">Asian</option>
-                                    <option value="Thailand">Thailand</option>
-                                    <option value="Japanese">Japanese</option>
-                                    <option value="Korean">Korean</option>
-                                    <option value="Vietnamese">Vietnamese</option>
-                                    <option value="Mediterranean">Arabic</option>
-                                    <option value="Italian">Italian</option>
+                                    @forelse($categories as $item)
+                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                    @empty
+                                    <option value="" selected>List Kategori
+                                    </option>
+                                    @endforelse
                                 </select>
                                 @if ($errors->has('category'))
                                 <span class="invalid-feedback" role="alert">
