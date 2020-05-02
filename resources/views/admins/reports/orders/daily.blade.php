@@ -50,9 +50,7 @@
             <div class="card">
                 <div class="card-header">
                     <span class="fa fa-shopping-basket"></span>Laporan Order
-                    <!-- <a href="/admin/user/add">
-                    <button class="btn btn-primary btn-md pull-right">+ Tambah</button>
-                    </a> -->
+
                 </div>
 
                 <div class="card-body">
@@ -65,6 +63,52 @@
                         {{ session('danger') }}
                     </div>
                     @endif
+                    <p>Pengelompokan per produk yang <b>sudah dibayar</b></p>
+                    <table class="table table-striped table-hover" style="font-size: 10pt">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Name</th>
+                                <th>Pemilik</th>
+                                <th>Harga Satuan</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($orders_groupBy_product as $item)
+                            <tr>
+                                <td>{{App\Product::find($item->product_id)->name}}</td>
+                                <td>{{App\Product::find($item->product_id)->business["name"]}} -
+                                    {{App\Product::find($item->product_id)->user["name"]}}</td>
+
+                                <td style="text-align: right">
+                                    {{number_format(App\Product::find($item->product_id)->buying_price,0,",",".")}}</td>
+                                <td style="text-align: right">{{number_format($item->quantity,0,",",".")}}</td>
+                                <td style="text-align: right">{{number_format($item->sum,0,",",".")}}</td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="5">Data Kosong</td>
+
+                            </tr>
+                            @endforelse
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="card-body">
+                    @if (session('status'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('status') }}
+                    </div>
+                    @elseif (session('danger'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ session('danger') }}
+                    </div>
+                    @endif
+                    <p>Rincian pemesanan</p>
                     <table class="table table-striped table-hover" style="font-size: 10pt">
                         <thead>
                             <tr class="text-center">

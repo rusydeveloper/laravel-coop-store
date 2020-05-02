@@ -22,7 +22,7 @@
                         {{ session('danger') }}
                     </div>
                     @endif
-                    <table class="table table-striped table-hover" style="font-size: 10pt">
+                    <table class="table table-striped table-hover table-responsive" style="font-size: 10pt">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -52,18 +52,27 @@
                                     {{date('d-M-Y H:i:s', strtotime($item->created_at))}}
                                 </td>
                                 <td>
-                                    <form method="POST" action="/admin/user/edit" enctype="multipart/form-data">
-                                        {{ csrf_field() }}
-                                        <input type="hidden" name="user_id" value="id">
-                                        <button class="btn btn-warning btn-sm btn-space"
-                                            style="float: left;">edit</button>
-                                    </form>
+                                    <div class="flex-container">
+                                        <div>
+                                            <form method="POST" action="/admin/user/edit" enctype="multipart/form-data">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="user_id" value="id">
+                                                <button class="btn btn-warning btn-sm btn-space"
+                                                    style="float: left;">edit</button>
+                                            </form>
+                                        </div>
+                                        <div>
+                                            <form method="POST" action="/admin/user/delete"
+                                                enctype="multipart/form-data">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="user_id" value="id">
+                                                <button class="btn btn-warning btn-sm btn-space">hapus</button>
+                                            </form>
+                                        </div>
+                                    </div>
 
-                                    <form method="POST" action="/admin/user/delete" enctype="multipart/form-data">
-                                        {{ csrf_field() }}
-                                        <input type="hidden" name="user_id" value="id">
-                                        <button class="btn btn-warning btn-sm btn-space">hapus</button>
-                                    </form>
+
+
                                 </td>
                             </tr>
                             @empty

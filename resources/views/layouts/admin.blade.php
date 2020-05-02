@@ -52,10 +52,10 @@
             height: 100%;
             width: 0px;
             position: fixed;
-            z-index: 1;
+            z-index: 99;
             top: 0;
             left: 0;
-            background-color: #4A959C;
+            background-color: #0074b7;
             overflow-x: hidden;
             padding-top: 30px;
 
@@ -118,6 +118,21 @@
         .table-head-sort:hover {
             cursor: pointer;
             background-color: orange
+        }
+
+        #main {
+            transition: margin-left .5s;
+            padding: 16px;
+        }
+
+        .flex-container {
+            display: flex;
+            flex-wrap: nowrap;
+        }
+
+        .flex-container>div {
+            margin: 5px;
+            text-align: center;
         }
     </style>
 </head>
@@ -185,7 +200,7 @@
             <a href="{{route('admin_business')}}"><span class="fa fa-briefcase"></span> Perusahaan</a>
             <a href="{{route('admin_invoice_discount')}}"><span class="fa fa-percent"></span> Diskon</a>
             <a href="{{route('admin_category')}}"><span class="fa fa-circle-o"></span> Kategori</a>
-            <a href="{{route('admin_product')}}"><span class="fa fa-cutlery"></span> Produk</a>
+            <a href="{{route('admin_product')}}"><span class="fa fa-cubes"></span> Produk</a>
             <a href="{{route('admin_campaign')}}"><span class="fa fa-tasks"></span> Campaign</a>
             <a href="{{route('admin_order')}}"><span class="fa fa-shopping-basket"></span> Pesanan</a>
             <a href="{{route('admin_invoice')}}"><span class="fa fa-clone"></span> Tagihan</a>
@@ -199,12 +214,25 @@
         </main>
     </div>
     <script>
-        function openNav() {
-  document.getElementById("mySidenav").style.width = "180px";
+        //         function openNav() {
+//   document.getElementById("mySidenav").style.width = "180px";
+// }
+
+// function closeNav() {
+//   document.getElementById("mySidenav").style.width = "0";
+// }
+
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+  document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
 }
 
+/* Set the width of the side navigation to 0 and the left margin of the page content to 0, and the background color of body to white */
 function closeNav() {
   document.getElementById("mySidenav").style.width = "0";
+  document.getElementById("main").style.marginLeft = "0";
+  document.body.style.backgroundColor = "white";
 }
     </script>
 </body>

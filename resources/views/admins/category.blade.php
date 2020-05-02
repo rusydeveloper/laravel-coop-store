@@ -8,7 +8,7 @@
                 <div class="card-header">
                     <span class="fa fa-circle-o"></span> Category
                     <a href="/admin/category/create">
-                    <button class="btn btn-primary btn-md pull-right">+ Tambah</button>
+                        <button class="btn btn-primary btn-md pull-right">+ Tambah</button>
                     </a>
                 </div>
 
@@ -22,59 +22,70 @@
                         {{ session('danger') }}
                     </div>
                     @endif
-                    <table class="table table-striped table-hover" style="font-size: 10pt">
+                    <table class="table table-striped table-hover table-responsive" style="font-size: 10pt">
                         <thead>
-                          <tr>
-                            <th>Name</th>
-                            <th>Status</th>
-                            <th>Description</th>
-                            <th>Owner</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($categories as $item)
-                      <tr>
-                        
-                        <td>{{$item->name}}</td>
-                        <td>
-                                @if($item->status == 'active')
-                                <span class="badge badge-success">{{$item->status}}</span>
-                                @else
-                                <span class="badge badge-danger">{{$item->status}}</span>
-                                @endif
-                        </td>
-                        <td>{{$item->description}}</td>
-                        <td>{{$item->business->name}}</td>
-                        <td>
-                            <form method="POST" action="/admin/category/edit" enctype="multipart/form-data">
-                            {{ csrf_field() }}
-                            <input type="hidden" name="unique_id" value="{{$item->unique_id}}">
-                            <button class="btn btn-warning btn-sm btn-space" style="float: left;">edit</button>
-                            </form>
+                            <tr>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>Description</th>
+                                <th>Owner</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($categories as $item)
+                            <tr>
 
-                            <form method="POST" action="/admin/category/delete" enctype="multipart/form-data">
-                            {{ csrf_field() }}
-                            <input type="hidden" name="unique_id" value="{{$item->unique_id}}">
-                            <button class="btn btn-warning btn-sm btn-space">hapus</button>
-                            </form>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td>Data Kosong</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
+                                <td>{{$item->name}}</td>
+                                <td>
+                                    @if($item->status == 'active')
+                                    <span class="badge badge-success">{{$item->status}}</span>
+                                    @else
+                                    <span class="badge badge-danger">{{$item->status}}</span>
+                                    @endif
+                                </td>
+                                <td>{{$item->description}}</td>
+                                <td>{{$item->business->name}}</td>
+                                <td>
+                                    <div class="flex-container">
+                                        <div>
+                                            <form method="POST" action="/admin/category/edit"
+                                                enctype="multipart/form-data">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="unique_id" value="{{$item->unique_id}}">
+                                                <button class="btn btn-warning btn-sm btn-space"
+                                                    style="float: left;">edit</button>
+                                            </form>
+                                        </div>
+                                        <div>
+                                            <form method="POST" action="/admin/category/delete"
+                                                enctype="multipart/form-data">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="unique_id" value="{{$item->unique_id}}">
+                                                <button class="btn btn-warning btn-sm btn-space">hapus</button>
+                                            </form>
+                                        </div>
+                                    </div>
 
+
+
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td>Data Kosong</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
         </div>
     </div>
-</div>
-</div>
 </div>
 @endsection

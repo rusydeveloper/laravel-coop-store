@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <span class="fa fa-cutlery"></span> Product
+                    <span class="fa fa-cubes"></span> Product
                     <form action="/admin/product/search" method="POST" role="search">
                         {{ csrf_field() }}
                         <div class="input-group">
@@ -60,7 +60,7 @@
                                     {{$item->image}}
                                 </td>
                                 <td>{{$item->name}}</td>
-                                <td>{{number_format($item->price,0,",",".")}}</td>
+                                <td>{{number_format($item->buying_price,0,",",".")}}</td>
                                 <td>
                                     @if($item->status == 'active')
                                     <span class="badge badge-success">{{$item->status}}</span>
@@ -73,29 +73,37 @@
                                     {{$item->user["name"]}}
                                 </td>
                                 <td>
-                                    <form method="POST" action="/admin/product/edit" enctype="multipart/form-data">
-                                        {{ csrf_field() }}
-                                        <input type="hidden" name="unique_id" value="{{$item->unique_id}}">
-                                        <button class="btn btn-warning btn-sm btn-space"
-                                            style="float: left;">edit</button>
-                                    </form>
-                                    @if($item->status == 'active')
-                                    <form method="POST" action="/admin/product/deactivate"
-                                        enctype="multipart/form-data">
-                                        {{ csrf_field() }}
-                                        <input type="hidden" name="unique_id" value="{{$item->unique_id}}">
-                                        <button class="btn btn-danger btn-sm btn-space" style="float: left;">non
-                                            aktifkan</button>
-                                    </form>
-                                    @else
-                                    <form method="POST" action="/admin/product/activate" enctype="multipart/form-data">
-                                        {{ csrf_field() }}
-                                        <input type="hidden" name="unique_id" value="{{$item->unique_id}}">
-                                        <button class="btn btn-success btn-sm btn-space"
-                                            style="float: left;">aktivasi</button>
-                                    </form>
+                                    <div class="flex-container">
+                                        <div>
+                                            <form method="POST" action="/admin/product/edit"
+                                                enctype="multipart/form-data">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="unique_id" value="{{$item->unique_id}}">
+                                                <button class="btn btn-warning btn-sm btn-space"
+                                                    style="float: left;">edit</button>
+                                            </form>
+                                        </div>
+                                        <div>@if($item->status == 'active')
+                                            <form method="POST" action="/admin/product/deactivate"
+                                                enctype="multipart/form-data">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="unique_id" value="{{$item->unique_id}}">
+                                                <button class="btn btn-danger btn-sm btn-space" style="float: left;">non
+                                                    aktifkan</button>
+                                            </form>
+                                            @else
+                                            <form method="POST" action="/admin/product/activate"
+                                                enctype="multipart/form-data">
+                                                {{ csrf_field() }}
+                                                <input type="hidden" name="unique_id" value="{{$item->unique_id}}">
+                                                <button class="btn btn-success btn-sm btn-space"
+                                                    style="float: left;">aktivasi</button>
+                                            </form>
 
-                                    @endif
+                                            @endif</div>
+                                    </div>
+
+
 
 
 

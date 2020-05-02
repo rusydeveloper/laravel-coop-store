@@ -48,29 +48,30 @@
                 </td>
 
                 <td>
-                  <form method="POST" action="/admin/wallet/edit" enctype="multipart/form-data">
-                    {{ csrf_field() }}
-                    <input type="hidden" name="unique_id" value="{{$item->unique_id}}">
-                    <button class="btn btn-warning btn-sm btn-space" style="float: left;">transaksi</button>
-                  </form>
-                  @if($item->status == 'active')
-                  <form method="POST" action="/admin/wallet/deactivate" enctype="multipart/form-data">
-                    {{ csrf_field() }}
-                    <input type="hidden" name="unique_id" value="{{$item->unique_id}}">
-                    <button class="btn btn-danger btn-sm btn-space" style="float: left;">non
-                      aktifkan</button>
-                  </form>
-                  @else
-                  <form method="POST" action="/admin/wallet/activate" enctype="multipart/form-data">
-                    {{ csrf_field() }}
-                    <input type="hidden" name="unique_id" value="{{$item->unique_id}}">
-                    <button class="btn btn-success btn-sm btn-space" style="float: left;">aktivasi</button>
-                  </form>
+                  <div class="flex-container">
+                    <div>
+                      <form method="POST" action="/admin/wallet/edit" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="unique_id" value="{{$item->unique_id}}">
+                        <button class="btn btn-warning btn-sm btn-space" style="float: left;">transaksi</button>
+                      </form>
+                    </div>
+                    <div> @if($item->status == 'active')
+                      <form method="POST" action="/admin/wallet/deactivate" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="unique_id" value="{{$item->unique_id}}">
+                        <button class="btn btn-danger btn-sm btn-space" style="float: left;">non
+                          aktifkan</button>
+                      </form>
+                      @else
+                      <form method="POST" action="/admin/wallet/activate" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="unique_id" value="{{$item->unique_id}}">
+                        <button class="btn btn-success btn-sm btn-space" style="float: left;">aktivasi</button>
+                      </form>
 
-                  @endif
-
-
-
+                      @endif</div>
+                  </div>
                 </td>
               </tr>
               @empty

@@ -19,9 +19,7 @@
             <div class="card">
                 <div class="card-header">
                     <span class="fa fa-pie-chart"></span> Report
-                    <a href="/admin/user/add">
-                        <!-- <button class="btn btn-primary btn-md pull-right">+ Tambah</button> -->
-                    </a>
+
                 </div>
 
                 <div class="card-body">

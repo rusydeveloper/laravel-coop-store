@@ -67,7 +67,7 @@
 
         .main-background {
             background-size: cover;
-            background-image: url('{{ asset("/img/default/main_bg_filter.png") }}');
+            background-image: url('{{ asset("/img/default/bulk-store-aisle_how-to-buy-in-bulk.jpg") }}');
             /* -webkit-filter: blur(5px);
   -moz-filter: blur(5px);
   -o-filter: blur(5px);
@@ -105,7 +105,7 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         <a class="nav-link" href="{{ route('cart') }}">
-                            <span class="fa fa-cutlery"
+                            <span class="fa fa-cubes"
                                 style="font-size:26px; color: white;padding: 0px 15px; background-color: #4A959C; padding: 5px 5px; border-radius: 5px">
 
                             </span>

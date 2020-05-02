@@ -1,4 +1,4 @@
-@extends('layouts.admin') 
+@extends('layouts.admin')
 @section('content')
 <div class="container">
   <div class="row justify-content-center">
@@ -21,7 +21,7 @@
             {{ session('danger') }}
           </div>
           @endif
-          <table class="table table-striped table-hover" style="font-size: 10pt">
+          <table class="table table-striped table-hover table-responsive" style="font-size: 10pt">
             <thead>
               <tr>
                 <th>Kode Invoice</th>

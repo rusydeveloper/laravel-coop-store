@@ -577,7 +577,7 @@ class AdminController extends Controller
 
     public function admin_invoice_discount()
     {
-        $invoices = Invoice::where('status','waiting approval')->orderBy('created_at','DSC')->get();
+        $invoices = Invoice::where('status','waiting approval')->orderBy('created_at','DESC')->get();
         return view('admins.discount', compact('invoices'));
     }
 
@@ -664,6 +664,11 @@ class AdminController extends Controller
         $category = $request->category;
         
         $date_report =  $request->date_report;
+
+        $group_user = 'user_id';
+        $group_product = 'product_id';
+            $group_in_user = 'sum(amount) as sum,'.$group_user;
+            $group_in_product = 'sum(price) as sum,sum(quantity) as quantity,'.$group_product;
         
         if ($category == 'order') {
            
@@ -676,9 +681,17 @@ class AdminController extends Controller
                 }
                 $item->save();
             }
+
+            $orders_groupBy_product= Order::whereDate('created_at', '=', date('Y-m-d H:i:s', strtotime($date_report)))->groupBy($group_product)->selectRaw($group_in_product)
+            ->orderByRaw('sum DESC')
+            ->where([
+                ['status', 'paid']])
+                ->get()
+            ;
+
             
             
-            return view('admins.reports.orders.daily', compact('orders', 'date_report'));
+            return view('admins.reports.orders.daily', compact('orders', 'date_report', 'orders_groupBy_product'));
         }elseif ($category == 'revenue') {
             $invoices = Invoice::whereDate('created_at', '=', date('Y-m-d H:i:s', strtotime($date_report)))->get()->sortByDesc('created_at');
 
@@ -723,13 +736,14 @@ class AdminController extends Controller
         
         $date_report_start = Carbon\Carbon::createFromDate($year_request, $month_request, $day_request)->startOfWeek()->toDateString();
         $date_report_end = Carbon\Carbon::createFromDate($year_request, $month_request, $day_request)->endOfWeek()->toDateString();
+
+        $group_user = 'user_id';
+        $group_product = 'product_id';
+            $group_in_user = 'sum(amount) as sum,'.$group_user;
+            $group_in_product = 'sum(price) as sum,sum(quantity) as quantity,'.$group_product;
         
         
         $category = $request->category;
-        
-        
-
-        
         
         $monthNum  = $month;
         $dateObj   = DateTime::createFromFormat('!m', $monthNum);
@@ -747,14 +761,20 @@ class AdminController extends Controller
 
         if ($category == 'order') {
             $orders = Order::whereDate('created_at', '>=', date('Y-m-d H:i:s', strtotime($date_report_start)))->whereDate('created_at', '<=', date('Y-m-d H:i:s', strtotime($date_report_end)))->get()->sortByDesc('created_at');
+
+            $orders_groupBy_product= Order::whereDate('created_at', '>=', date('Y-m-d H:i:s', strtotime($date_report_start)))->whereDate('created_at', '<=', date('Y-m-d H:i:s', strtotime($date_report_end)))->groupBy($group_product)
+            ->selectRaw($group_in_product)
+            ->orderByRaw('sum DESC')
+            ->where([
+                ['status', 'paid']])
+                ->get()
+            ;
             
-            return view('admins.reports.orders.periodic', compact('orders', 'date_report_start', 'date_report_end'));
+            return view('admins.reports.orders.periodic', compact('orders', 'date_report_start', 'date_report_end','orders_groupBy_product'));
         }elseif ($category == 'revenue') {
             $invoices = Invoice::whereDate('created_at', '>=', date('Y-m-d H:i:s', strtotime($date_report_start)))->whereDate('created_at', '<=', date('Y-m-d H:i:s', strtotime($date_report_end)))->get()->sortByDesc('created_at');
             return view('admins.reports.invoices.periodic', compact('invoices', 'date_report_start', 'date_report_end', 'invoices_groupBy_tenant'));
         }
-
-        
     }
 
     public function report_monthly(Request $request)

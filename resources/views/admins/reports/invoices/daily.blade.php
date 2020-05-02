@@ -58,18 +58,12 @@
         </div>
     </div>
     <hr>
-
-
     <hr>
-
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <span class="fa fa-clone"></span> Rincian Tagihan
-                    <!-- <a href="/admin/user/add">
-                    <button class="btn btn-primary btn-md pull-right">+ Tambah</button>
-                </a> -->
                 </div>
 
                 <div class="card-body">
@@ -110,15 +104,9 @@
                                     @endif
                                 </td>
                                 <td style="text-align: right">
-                                    <!-- <form method="POST" action="/admin/user/edit" enctype="multipart/form-data">
-                            {{ csrf_field() }}
-                            <input type="hidden" name="user_id" value="id">
-                            <button class="btn btn-warning btn-sm btn-space" style="float: left;">edit</button>
-                        </form> -->
                                     {{number_format($item->amount,0,",",".")}}
                                 </td>
                                 <td>{{$item->description}}</td>
-
                             </tr>
                             @empty
                             <tr>
@@ -127,10 +115,8 @@
                                 <td>Data Kosong</td>
                                 <td></td>
                                 <td></td>
-
                             </tr>
                             @endforelse
-
                         </tbody>
                     </table>
 
