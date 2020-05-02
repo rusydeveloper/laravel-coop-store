@@ -33,6 +33,7 @@ class AuthController extends Controller
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
+            'role' => 'cooperative',
             'password' => bcrypt($request->password),
             'phone' => $request->phone,
             'unique_id' => $unix_timestamp,
