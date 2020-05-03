@@ -16,6 +16,7 @@ use App\Picture;
 use App\Invoice;
 
 
+
 use DB;
 use DateTime;
 
@@ -665,19 +666,22 @@ class AdminController extends Controller
 
     public function report_daily(Request $request)
     {
+       
         $category = $request->category;
         
         $date_report =  $request->date_report;
 
         $group_user = 'user_id';
         $group_product = 'product_id';
+        $group_supplier = 'supplier_id';
+
             $group_in_user = 'sum(amount) as sum,'.$group_user;
             $group_in_product = 'sum(price) as sum,sum(quantity) as quantity,'.$group_product;
+            $group_in_supplier = 'sum(price) as sum,sum(quantity) as quantity,'.$group_supplier;
         
         if ($category == 'order') {
-           
             $orders = Order::whereDate('created_at', '=', date('Y-m-d H:i:s', strtotime($date_report)))->get()->sortByDesc('created_at');
-
+            
             foreach ($orders as $item) {
                 if(Invoice::where('booking_id', $item->booking_id)->first()->status=='paid'){
                     $item->status = 'paid';
@@ -685,7 +689,6 @@ class AdminController extends Controller
                 }
                 $item->save();
             }
-
             $orders_groupBy_product= Order::whereDate('created_at', '=', date('Y-m-d H:i:s', strtotime($date_report)))->groupBy($group_product)->selectRaw($group_in_product)
             ->orderByRaw('sum DESC')
             ->where([
@@ -693,9 +696,14 @@ class AdminController extends Controller
                 ->get()
             ;
 
-            
-            
-            return view('admins.reports.orders.daily', compact('orders', 'date_report', 'orders_groupBy_product'));
+            $orders_groupBy_supplier= Order::whereDate('created_at', '=', date('Y-m-d H:i:s', strtotime($date_report)))->groupBy($group_supplier)->selectRaw($group_in_supplier)
+            ->orderByRaw('sum DESC')
+            ->where([
+                ['status', 'paid']])
+                ->get()
+            ;
+
+            return view('admins.reports.orders.daily', compact('orders', 'date_report', 'orders_groupBy_product', 'orders_groupBy_supplier'));
         }elseif ($category == 'revenue') {
             $invoices = Invoice::whereDate('created_at', '=', date('Y-m-d H:i:s', strtotime($date_report)))->get()->sortByDesc('created_at');
 
@@ -722,10 +730,64 @@ class AdminController extends Controller
         }
     }
 
+    public function report_daily_supplier_order(Request $request)
+    {
+        $supplier_id = $request->business_id;
+        $date_report =  $request->date_report;
+
+        $group_supplier = 'business_id';
+
+        $group_in_supplier = 'sum(price) as sum,sum(quantity) as quantity,'.$group_supplier;
+        
+           
+            $supplier = Business::where('category', "supplier")->with("order")->get();
+
+            $table_product = DB::table('products')->select('id','name')->get();
+            $table_business = DB::table('businesses')->where('category', 'supplier')->select('id','name','category')->get();
+            $table_order = DB::table('orders')->where('status', 'paid')->select('id','status','quantity','price')->get();
+            
+            $orders_groupBy_supplier= Order::whereDate('created_at', '=', date('Y-m-d H:i:s', strtotime($date_report)))->groupBy($group_supplier)->selectRaw($group_in_supplier)
+            ->orderByRaw('sum DESC')
+            ->where([
+                ['status', 'paid'], ['supplier_id', $request->business_id]])
+                ->get()
+            ;
+            
+            return view('admins.reports.orders.daily_supplier', compact('supplier_id', 'date_report', 'orders_groupBy_supplier'));
+    }
+
+    public function report_daily_supplier_order_cooperative(Request $request)
+    {
+        $supplier_id = $request->supplier_id;
+        $business_id = $request->business_id;
+        $date_report =  $request->date_report;
+
+        $group_product = 'product_id';
+
+        $group_in_product = 'sum(price) as sum,sum(quantity) as quantity,'.$group_product;
+        
+           
+            $supplier = Business::where('category', "supplier")->with("order")->get();
+
+            $table_product = DB::table('products')->select('id','name')->get();
+            $table_business = DB::table('businesses')->where('category', 'supplier')->select('id','name','category')->get();
+            $table_order = DB::table('orders')->where('status', 'paid')->select('id','status','quantity','price')->get();
+            
+            $orders_groupBy_product= Order::whereDate('created_at', '=', date('Y-m-d H:i:s', strtotime($date_report)))->groupBy($group_product)->selectRaw($group_in_product)
+            ->orderByRaw('sum DESC')
+            ->where([
+                ['status', 'paid'], ['supplier_id', $request->supplier_id], ['business_id', $request->business_id]])
+                ->get()
+            ;
+            
+            return view('admins.reports.orders.daily_supplier_cooperative', compact('supplier_id', 'business_id', 'date_report', 'orders_groupBy_product'));
+    }
+
+    
+
     public function report_weekly(Request $request)
     {
 
-        // return $request->date_report;
         $date_report = $request->date_report;
         $day_request = date("d", strtotime($date_report));
         $week_request = date("W", strtotime($date_report));
@@ -736,15 +798,16 @@ class AdminController extends Controller
         $month = (int)$month_request;
         $year = (int)$year_request;
 
-
-        
         $date_report_start = Carbon\Carbon::createFromDate($year_request, $month_request, $day_request)->startOfWeek()->toDateString();
         $date_report_end = Carbon\Carbon::createFromDate($year_request, $month_request, $day_request)->endOfWeek()->toDateString();
 
         $group_user = 'user_id';
         $group_product = 'product_id';
+        $group_supplier = 'supplier_id';
+
             $group_in_user = 'sum(amount) as sum,'.$group_user;
             $group_in_product = 'sum(price) as sum,sum(quantity) as quantity,'.$group_product;
+            $group_in_supplier = 'sum(price) as sum,sum(quantity) as quantity,'.$group_supplier;
         
         
         $category = $request->category;
@@ -773,12 +836,75 @@ class AdminController extends Controller
                 ['status', 'paid']])
                 ->get()
             ;
+
+            $orders_groupBy_supplier= Order::whereDate('created_at', '>=', date('Y-m-d H:i:s', strtotime($date_report_start)))->whereDate('created_at', '<=', date('Y-m-d H:i:s', strtotime($date_report_end)))->groupBy($group_supplier)->selectRaw($group_in_supplier)
+            ->orderByRaw('sum DESC')
+            ->where([
+                ['status', 'paid']])
+                ->get()
+            ;
             
-            return view('admins.reports.orders.periodic', compact('orders', 'date_report_start', 'date_report_end','orders_groupBy_product'));
+            return view('admins.reports.orders.periodic', compact('orders', 'date_report_start', 'date_report_end','orders_groupBy_product', 'orders_groupBy_supplier'));
         }elseif ($category == 'revenue') {
             $invoices = Invoice::whereDate('created_at', '>=', date('Y-m-d H:i:s', strtotime($date_report_start)))->whereDate('created_at', '<=', date('Y-m-d H:i:s', strtotime($date_report_end)))->get()->sortByDesc('created_at');
             return view('admins.reports.invoices.periodic', compact('invoices', 'date_report_start', 'date_report_end', 'invoices_groupBy_tenant'));
         }
+    }
+
+    public function report_periodic_supplier_order(Request $request)
+    {
+        $supplier_id = $request->business_id;
+
+        $date_report_start = $request->date_report_start;
+        $date_report_end = $request->date_report_end;
+
+        $group_supplier = 'business_id';
+
+        $group_in_supplier = 'sum(price) as sum,sum(quantity) as quantity,'.$group_supplier;
+        
+           
+            $supplier = Business::where('category', "supplier")->with("order")->get();
+
+            $table_product = DB::table('products')->select('id','name')->get();
+            $table_business = DB::table('businesses')->where('category', 'supplier')->select('id','name','category')->get();
+            $table_order = DB::table('orders')->where('status', 'paid')->select('id','status','quantity','price')->get();
+            
+            $orders_groupBy_supplier= Order::whereDate('created_at', '>=', date('Y-m-d H:i:s', strtotime($date_report_start)))->whereDate('created_at', '<=', date('Y-m-d H:i:s', strtotime($date_report_end)))->groupBy($group_supplier)->selectRaw($group_in_supplier)
+            ->orderByRaw('sum DESC')
+            ->where([
+                ['status', 'paid'], ['supplier_id', $request->business_id]])
+                ->get()
+            ;
+            
+            return view('admins.reports.orders.periodic_supplier', compact('supplier_id', 'date_report_start', 'date_report_end','orders_groupBy_supplier'));
+    }
+
+    public function report_periodic_supplier_order_cooperative(Request $request)
+    {
+        $supplier_id = $request->supplier_id;
+        $business_id = $request->business_id;
+        $date_report_start = $request->date_report_start;
+        $date_report_end = $request->date_report_end;
+
+        $group_product = 'product_id';
+
+        $group_in_product = 'sum(price) as sum,sum(quantity) as quantity,'.$group_product;
+        
+           
+            $supplier = Business::where('category', "supplier")->with("order")->get();
+
+            $table_product = DB::table('products')->select('id','name')->get();
+            $table_business = DB::table('businesses')->where('category', 'supplier')->select('id','name','category')->get();
+            $table_order = DB::table('orders')->where('status', 'paid')->select('id','status','quantity','price')->get();
+            
+            $orders_groupBy_product= Order::whereDate('created_at', '>=', date('Y-m-d H:i:s', strtotime($date_report_start)))->whereDate('created_at', '<=', date('Y-m-d H:i:s', strtotime($date_report_end)))->groupBy($group_product)->selectRaw($group_in_product)
+            ->orderByRaw('sum DESC')
+            ->where([
+                ['status', 'paid'], ['supplier_id', $request->supplier_id], ['business_id', $request->business_id]])
+                ->get()
+            ;
+            
+            return view('admins.reports.orders.periodic_supplier_cooperative', compact('supplier_id', 'business_id',  'date_report_start', 'date_report_end', 'orders_groupBy_product'));
     }
 
     public function report_monthly(Request $request)
@@ -850,17 +976,11 @@ class AdminController extends Controller
 
         $year_report =  $request->year_report;
         
-        // $monthNum  = $month_report;
-        // $dateObj   = DateTime::createFromFormat('!m', $monthNum);
-        // $monthName = $dateObj->format('F');
-        
-        
         if ($category == 'order') {
             $orders = Order::whereMonth('created_at', '=', $month_report)->whereYear('created_at', '=', $year_report)->get()->sortByDesc('created_at');
             
 
 
-            // return $subgroup;
             return view('admins.reports.orders.yearly', compact('orders', 'month_report', 'year_report', 'monthName', 'subgroup'));
         }elseif ($category == 'revenue') {
             $invoices = Invoice::whereYear('created_at', '=', $year_report)->get()->sortByDesc('created_at');
@@ -883,7 +1003,6 @@ class AdminController extends Controller
                 ['status', 'paid']])
             ->whereYear('created_at', '=', $year_report)
             ->pluck('sum',$group);
-            // return $subgroup;
 
             return view('admins.reports.invoices.yearly', compact('invoices', 'month_report', 'year_report', 'monthName', 'subgroup', 'invoices_groupBy_tenant'));
         }
@@ -912,18 +1031,14 @@ class AdminController extends Controller
                 }
                 $item->save();
             }
-            // $orders = Order::whereDate('created_at', '>=', date('Y-m-d H:i:s', strtotime($date_report_start)))->whereDate('created_at', '<=', date('Y-m-d H:i:s', strtotime($date_report_end)))->where([
-            //     ['status', 'paid']])->get()->sortByDesc('created_at');
-            // return $orders;
+           
             foreach ($orders as $item) {
                 if($item->product_id>2000){
                     $item->product_id = Product::where('unique_id', $item->product_id)->first()->id;
                 }
                 $item->save();
             }
-            // return $orders;
-
-            // return $date_report_start;
+            
             
             $orders_groupBy_product= Order::whereDate('created_at', '>=', date('Y-m-d H:i:s', strtotime($date_report_start)))->whereDate('created_at', '<=', date('Y-m-d H:i:s', strtotime($date_report_end)))->groupBy($group_product)
             ->selectRaw($group_in_product)
@@ -946,6 +1061,4 @@ class AdminController extends Controller
             return view('admins.reports.invoices.periodic', compact('invoices', 'date_report_start', 'date_report_end', 'invoices_groupBy_tenant'));
         }
     }
-
-
 }

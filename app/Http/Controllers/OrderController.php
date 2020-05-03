@@ -235,6 +235,9 @@ class OrderController extends Controller
             $order->user_id = $request->checkoutInput["user_id"];
             $order->business_id = $request->checkoutInput["business_id"];
 
+            //owner of product ordered (supplier)
+            $order->supplier_id = $product->business_id;
+
             //invoice
             $order->invoice_id = $invoice->id;
 
