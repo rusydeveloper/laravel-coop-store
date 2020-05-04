@@ -473,7 +473,7 @@ class ApiController extends Controller
 
     public function campaigns()
     {
-        $campaigns = Campaign::with(['product', 'business', 'user'])->get(); 
+        $campaigns = Campaign::with(['product', 'business', 'user'])->where('status', 'active')->get(); 
         return response()->json($campaigns);
     }
 

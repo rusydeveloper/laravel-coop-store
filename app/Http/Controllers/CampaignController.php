@@ -93,15 +93,15 @@ class CampaignController extends Controller
         $campaign = Campaign::where('unique_id', $request->unique_id)->first();
         $campaign->status = "active";
         $campaign->save();
-        return redirect()->route('admin_campaign')->with('status', 'Product berhasil di aktivasi.');
+        return redirect()->route('admin_campaign')->with('status', 'Campaign berhasil di aktivasi.');
     }
 
     public function campaign_deactivate(Request $request)
     {
-        $product = Product::where('unique_id', $request->unique_id)->first();
-        $product->status = "non active";
-        $product->save();
-        return redirect()->route('admin_product')->with('status', 'Product berhasil di non aktifkan.');
+        $campaign = Campaign::where('unique_id', $request->unique_id)->first();
+        $campaign->status = "non active";
+        $campaign->save();
+        return redirect()->route('admin_campaign')->with('status', 'Campaign berhasil di non aktifkan.');
     }
 
     public function campaign_update(Request $request)
