@@ -63,6 +63,19 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="unit" class="col-md-4 col-form-label text-md-right">Satuan</label>
+                            <div class="col-md-6">
+                                <input id="unit" type="text"
+                                    class="form-control{{ $errors->has('unit') ? ' is-invalid' : '' }}" name="unit"
+                                    value="{{ old('unit') }}">
+                                @if ($errors->has('unit'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('unit') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="title" class="col-md-4 col-form-label text-md-right">Judul</label>
                             <div class="col-md-6">
                                 <input id="title" type="text"

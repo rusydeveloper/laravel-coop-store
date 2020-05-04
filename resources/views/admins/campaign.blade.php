@@ -39,7 +39,8 @@
                         </tr>
                         <tr>
                             <th>Judul</th>
-                            <th>status</th>
+                            <th>Status</th>
+                            <th>Satuan</th>
                             <th>Periode</th>
                             <th>Harga Awal</th>
                             <th>Harga Tiering</th>
@@ -69,6 +70,7 @@
                                     <span class="badge badge-danger">{{$item->status}}</span>
                                     @endif
                                 </td>
+                                <td>{{$item->unit}}</td>
                                 <td><b>{{date('d M Y g:i', strtotime($item->start_at))}} s.d
                                         {{date('d M Y G:i', strtotime($item->end_at))}}</b>
                                 </td>
