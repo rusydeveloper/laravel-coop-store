@@ -40,7 +40,8 @@
                         <tr>
                             <th>Picture</th>
                             <th>Name</th>
-                            <th>Price</th>
+                            <th>Supplier Price</th>
+                            <th>Product Price</th>
                             <th>Status</th>
                             <th>Owner</th>
                             <th>Action</th>
@@ -61,6 +62,7 @@
                                 </td>
                                 <td>{{$item->name}}</td>
                                 <td>{{number_format($item->buying_price,0,",",".")}}</td>
+                                <td>{{number_format($item->price,0,",",".")}}</td>
                                 <td>
                                     @if($item->status == 'active')
                                     <span class="badge badge-success">{{$item->status}}</span>

@@ -368,7 +368,7 @@ class AdminController extends Controller
     public function product_create()
     {
         $businesses = Business::All();
-        $categories = Category::All();
+        $categories = Category::where('parent','!=' ,0)->get();
         return view('admins.products.create', compact('businesses', 'categories'));
     }
 
@@ -386,8 +386,9 @@ class AdminController extends Controller
         $product->user_id = $business->user->id;
         $product->category_id = $category->id;
         $product->name = $request->name;
+        $product->buying_price = $request->buying_price;
         $product->price = $request->price;
-        $product->category = $request->category;
+        $product->category_id = $request->subcategory;
         $product->subcategory = $request->subcategory;
         $product->status = $request->status;
         $product->description = $request->description;
@@ -468,6 +469,7 @@ class AdminController extends Controller
         $product->name = $request->name;
         $product->business_id = $request->owner;
         $product->user_id = $business->user_id;
+        $product->buying_price = $request->buying_price;
         $product->price = $request->price;
         $product->category_id = $request->subcategory;
         $product->subcategory = $request->subcategory;

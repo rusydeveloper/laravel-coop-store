@@ -76,6 +76,20 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="buying_price" class="col-md-4 col-form-label text-md-right">Supplier
+                                Price</label>
+                            <div class="col-md-6">
+                                <input id="buying_price" type="text"
+                                    class="form-control{{ $errors->has('buying_price') ? ' is-invalid' : '' }}"
+                                    name="buying_price" value="{{$product->buying_price}}" required>
+                                @if ($errors->has('buying_price'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('buying_price') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="price" class="col-md-4 col-form-label text-md-right">Product Price</label>
                             <div class="col-md-6">
                                 <input id="price" type="text"
