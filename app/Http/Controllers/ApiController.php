@@ -74,11 +74,7 @@ class ApiController extends Controller
 
     public function product()
     {
-        $products = Product::paginate(50);
-        // $products = Product::All()->first()->picture->first();
-
-        
-
+        $products = Product::where('status', 'active')->paginate(50);
         return response()->json($products);
     }
 
@@ -91,7 +87,7 @@ class ApiController extends Controller
 
     public function productSearch($search)
     {
-        $products = Product::where('name', 'LIKE', "%{$search}%")->paginate(50);
+        $products = Product::where('name', 'LIKE', "%{$search}%")->where('status', 'active')->paginate(50);
 
         return response()->json($products);
     }
