@@ -51,6 +51,8 @@ Route::get('/product/search/{search}', 'ApiController@productSearch')->name('api
 
 Route::get('/category', 'ApiController@category')->name('api_category');
 Route::get('/campaigns', 'ApiController@campaigns');
+Route::get('/campaign/search/{search}', 'ApiController@campaignSearch')->name('api_campaign_search');
+Route::get('/campaign/category/{id}', 'ApiController@campaignCategory')->name('api_campaign_category');
 
 Route::get('/invoice', 'ApiController@invoice')->name('api_invoice');
 Route::get('/invoice/user/{user_id}', 'ApiController@invoiceUser')->name('api_invoice_user');

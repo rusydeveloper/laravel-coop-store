@@ -80,7 +80,14 @@ class ApiController extends Controller
 
     public function productCategory($id)
     {
-        $products = Product::where('category', $id)->where('status', 'active')->paginate(50);
+         $categories = Category::where('parent', $id)->get();
+         $subcategory_ids = array();
+        foreach ($categories as $item) {
+            array_push($subcategory_ids,$item->id);
+            }
+
+            // return $subcategory_ids;
+        $products = Product::whereIn('category_id', $subcategory_ids)->where('status', 'active')->paginate(50);
 
         return response()->json($products);
     }
@@ -97,6 +104,34 @@ class ApiController extends Controller
         $categories = Category::where('parent', '0')->orderBy("id")->get();
 
         return response()->json($categories);
+    }
+
+    public function campaigns()
+    {
+        $campaigns = Campaign::with('product')->where('status', 'active')->get(); 
+        return response()->json($campaigns);
+    }
+
+    public function campaignSearch($search)
+    {
+        $campaigns = Campaign::whereHas('product', function ($query) use($search){
+            $query->where('name', 'LIKE', "%{$search}%");
+        })->with('product')->where('status', 'active')->get();
+        return response()->json($campaigns);
+    }
+
+    public function campaignCategory($id)
+    {
+        $categories = Category::where('parent', $id)->get();
+        $subcategory_ids = array();
+        foreach ($categories as $item) {
+            array_push($subcategory_ids,$item->id);
+            }
+            // return $subcategory_ids;
+        $campaigns = Campaign::whereHas('product', function ($query) use($id, $subcategory_ids){
+            $query->whereIn('category_id', $subcategory_ids);
+        })->with('product')->where('status', 'active')->get();
+        return response()->json($campaigns);
     }
 
     public function tenantProduct(Product $product, $unique_id)
@@ -467,11 +502,7 @@ class ApiController extends Controller
         return response()->json($invoices);
     }
 
-    public function campaigns()
-    {
-        $campaigns = Campaign::with(['product', 'business', 'user'])->where('status', 'active')->get(); 
-        return response()->json($campaigns);
-    }
+   
 
 
     public function invoice()
