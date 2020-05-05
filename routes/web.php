@@ -121,14 +121,18 @@ Route::group(['middleware' => ['auth']], function () {
 			Route::post('/report/daily', 'AdminController@report_daily')->name('report_daily');
 			Route::post('report/order/daily/supplier', 'AdminController@report_daily_supplier_order')->name('report_daily_supplier');
 			Route::post('report/order/daily/supplier/cooperative', 'AdminController@report_daily_supplier_order_cooperative')->name('report_daily_supplier_cooperative');
+			Route::post('report/order/daily/cooperative', 'AdminController@report_daily_cooperative_order')->name('report_daily_cooperative');
 			Route::post('/report/weekly', 'AdminController@report_weekly')->name('report_weekly');
 			
 			Route::post('/report/monthly', 'AdminController@report_monthly')->name('report_monthly');
 			Route::post('/report/yearly', 'AdminController@report_yearly')->name('report_yearly');
-			Route::post('/report/periodic', 'AdminController@report_periodic')->name('report_periodic');
 
+
+			Route::post('/report/periodic', 'AdminController@report_periodic')->name('report_periodic');
 			Route::post('report/order/periodic/supplier', 'AdminController@report_periodic_supplier_order')->name('report_periodic_supplier');
 			Route::post('report/order/periodic/supplier/cooperative', 'AdminController@report_periodic_supplier_order_cooperative')->name('report_periodic_supplier_cooperative');
+			Route::post('report/order/periodic/cooperative', 'AdminController@report_periodic_cooperative_order')->name('report_daily_cooperative');
+
 		});
 
 });
