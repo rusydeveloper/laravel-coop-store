@@ -28,8 +28,10 @@ class AuthController extends Controller
             'name' => 'required|string',
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string|confirmed',
-            'phone' => 'required|string'
+            'phone' => 'required|string',
+            'tnc' => 'required'
         ]);
+        
         $user = new User([
             'name' => $request->name,
             'email' => $request->email,
@@ -38,6 +40,7 @@ class AuthController extends Controller
             'phone' => $request->phone,
             'unique_id' => $unix_timestamp,
         ]);
+        $user->isagree = $request->tnc;
         $user->save();
 
         $business = New Business;
