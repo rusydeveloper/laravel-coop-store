@@ -80,7 +80,7 @@ class ApiController extends Controller
 
     public function productCategory($id)
     {
-        $products = Product::where('category', $id)->paginate(50);
+        $products = Product::where('category', $id)->where('status', 'active')->paginate(50);
 
         return response()->json($products);
     }
