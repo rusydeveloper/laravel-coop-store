@@ -785,7 +785,7 @@ class AdminController extends Controller
                 ->get()
             ;
 
-            // return $orders_groupBy_product;
+            
         
            
             
@@ -904,9 +904,9 @@ class AdminController extends Controller
         $date_report_start =  $request->date_report_start;
         $date_report_end =  $request->date_report_end;
 
-        $group_product = 'product_id';
+        $group_product = ['product_id','campaign_id'];
 
-        $group_in_product = 'sum(price) as sum,sum(quantity) as quantity,'.$group_product;
+        $group_in_product = 'sum(price) as sum,sum(quantity) as quantity, product_id, campaign_id';
 
         $orders_groupBy_product= Order::whereDate('created_at', '>=', date('Y-m-d H:i:s', strtotime($date_report_start)))->whereDate('created_at', '<=', date('Y-m-d H:i:s', strtotime($date_report_end)))->groupBy($group_product)->selectRaw($group_in_product)
             ->orderByRaw('sum DESC')

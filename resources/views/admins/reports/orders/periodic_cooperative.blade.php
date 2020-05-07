@@ -31,17 +31,48 @@
             <thead>
               <tr class="text-center">
                 <th>Produk</th>
+                <th>Harga Satuan</th>
                 <th>Kuantitas Produk Dipesan</th>
                 <th>Total Transaksi</th>
+                <th class="text-red">Aggregat Pesanan</th>
+                <th class="text-red">Kuota Tiering 1</th>
+                <th>Harga Tiering 1</th>
+                <th class="text-red">Kuota Tiering 2</th>
+                <th>Harga Tiering 2</th>
+                <th class="text-red">Kuota Tiering 3</th>
+                <th>Harga Tiering 3</th>
               </tr>
             </thead>
             <tbody>
               @forelse($orders_groupBy_product as $item)
               <tr>
                 <td>{{App\Product::find($item->product_id)->name}}</td>
+                <td style="text-align: right">{{number_format($item->sum/$item->quantity,0,",",".")}}</td>
                 <td style="text-align: center">
                   {{number_format($item->quantity,0,",",".")}}</td>
                 <td style="text-align: right">Rp {{number_format($item->sum,0,",",".")}}</td>
+                <td style="text-align: center">
+                  {{App\Campaign::find($item->campaign_id)->quantity_ordered}}
+                </td>
+                <td style="text-align: center">
+                  {{App\Campaign::find($item->campaign_id)->product_tiering_quota_1}}
+                </td>
+                <td style="text-align: right">
+                  {{number_format(App\Campaign::find($item->campaign_id)->product_tiering_price_1,0,",",".")}}
+
+                </td>
+                <td style="text-align: center">
+                  {{App\Campaign::find($item->campaign_id)->product_tiering_quota_2}}
+                </td>
+                <td style="text-align: right">
+                  {{number_format(App\Campaign::find($item->campaign_id)->product_tiering_price_2,0,",",".")}}
+                </td>
+                <td style="text-align: center">
+                  {{App\Campaign::find($item->campaign_id)->product_tiering_quota_3}}
+                </td>
+                <td style="text-align: right">
+                  {{number_format(App\Campaign::find($item->campaign_id)->product_tiering_price_3,0,",",".")}}
+                </td>
               </tr>
               @empty
               <tr>
