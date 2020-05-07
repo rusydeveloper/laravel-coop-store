@@ -134,6 +134,10 @@
             margin: 5px;
             text-align: center;
         }
+
+        .text-red {
+            color: red
+        }
     </style>
 </head>
 

@@ -772,9 +772,9 @@ class AdminController extends Controller
         $business_id = $request->business_id;
         $date_report =  $request->date_report;
 
-        $group_product = 'product_id';
+        $group_product = ['product_id','campaign_id'];
 
-        $group_in_product = 'sum(price) as sum,sum(quantity) as quantity,'.$group_product;
+        $group_in_product = 'sum(price) as sum,sum(quantity) as quantity, product_id, campaign_id';
 
         
 
@@ -784,6 +784,8 @@ class AdminController extends Controller
                 ['status', 'paid'], ['business_id', $business_id]])
                 ->get()
             ;
+
+            // return $orders_groupBy_product;
         
            
             
