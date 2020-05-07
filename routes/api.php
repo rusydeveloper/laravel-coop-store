@@ -88,6 +88,7 @@ Route::group([
 });
 
 Route::post('order/submit', 'OrderController@submit');
+Route::post('order/email', 'OrderController@email');
 Route::get('order/test', 'OrderController@test');
 
 Route::get('logout', 'AuthController@logout');

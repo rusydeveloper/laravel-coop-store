@@ -9,6 +9,11 @@ use App\Business;
 use App\Wallet;
 use App\WalletHistory;
 use App\Test;
+use Mail;
+use App\Mail\UserRegistration;
+
+use App\Mail\EmailTest;
+
 class AuthController extends Controller
 {
     /**
@@ -42,6 +47,12 @@ class AuthController extends Controller
         ]);
         $user->isagree = $request->tnc;
         $user->save();
+
+        
+        
+
+        
+        
 
         $business = New Business;
         $business->user_id = $user->id;
@@ -105,6 +116,17 @@ class AuthController extends Controller
         $walletHistory->save();
 
         $wallet = Wallet::where('business_id', $business->id)->first();
+
+        // $messageBody = "Terdapat pendaftar baru:".$request->name.", ".$request->email.", ".$request->phone;
+        // Mail::raw($messageBody, function ($message) {
+        //     $message->from('rusy@nectico.com', 'Admin Belanja Bersama Koperasi');
+        //     $message->to('koperasi@nectico.com');
+        //     $message->subject('Pendaftar Baru');
+        // });
+
+        $data = ['cooperative' => $request->cooperative,'name' => $request->name, 'phone' => $request->phone, 'address' => $request->address, 'email' => $request->email];
+
+        Mail::to('koperasi@nectico.com')->send(new UserRegistration($data));
 
         
         return response()->json([

@@ -4,10 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use App\Invoice;
+use App\User;
+use App\Business;
 use App\Product;
 use App\Test;
 use App\Wallet;
 use App\WalletHistory;
+use App\Mail\TestEmail;
+use App\Mail\UserRegistration;
+use App\Mail\OrderSubmit;
+
+use Mail;
 
 
 use Cart;
@@ -25,7 +32,23 @@ class OrderController extends Controller
 
         return view('orders.index', compact('order'));
     }
+    public function email(Request $request)
+    {
+        // $messageBody = "test message body";
+        // Mail::raw($messageBody, function ($message) {
+        //     $message->from('rusy@nectico.com', 'Content test email');
+        //     $message->to('koperasi@nectico.com');
+        //     $message->subject('Test email');
+        // });
+    // $data = ['message' => 'This is a test!'];
+    // Mail::to('rusy@nectico.com')->send(new TestEmail($data));
 
+    $data = ['cooperative' => 'Koperasi Test','name' => 'Pak Asep', 'phone' => '0811111111', 'address' => 'Jalan Jalan', 'email' => 'test@gmail.com'];
+
+    Mail::to('koperasi@nectico.com')->send(new UserRegistration($data));
+
+    return 'success';
+    }
 
     public function create()
     {
@@ -261,7 +284,6 @@ class OrderController extends Controller
         $wallet->save();
 
         //Record wallet transaction
-        
         $walletHistory = new WalletHistory;
         $walletHistory->unique_id = $unix_timestamp;
         $walletHistory->business_id = $request->checkoutInput["business_id"];
@@ -272,6 +294,15 @@ class OrderController extends Controller
         $walletHistory->amount = $request->walletBalance;
         $walletHistory->description = "Pembayaran belanja online";
         $walletHistory->save();
+
+        $user = User::where('id', $request->checkoutInput["user_id"])->first();
+        $business = Business::where('user_id', $request->checkoutInput["user_id"])->first();
+
+        
+        $data = ['cooperative' => $business->name,'name' => $user->name, 'phone' => $user->phone, 'address' => $business->address, 'email' => $user->email, 'order' => $invoice_description];
+
+        Mail::to('koperasi@nectico.com')->send(new OrderSubmit($data));
+       
 
         return response()->json([
             'message' => 'success '
