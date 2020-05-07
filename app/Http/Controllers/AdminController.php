@@ -386,6 +386,10 @@ class AdminController extends Controller
         $product->user_id = $business->user->id;
         $product->category_id = $category->id;
         $product->name = $request->name;
+        $product->variation = $request->variation;
+        $product->retail_unit = $request->retail_unit;
+        $product->bulk_unit = $request->bulk_unit;
+        $product->bulk_to_retail = $request->bulk_to_retail;
         $product->buying_price = $request->buying_price;
         $product->price = $request->price;
         $product->category_id = $request->subcategory;
@@ -467,6 +471,10 @@ class AdminController extends Controller
         $business = Business::where('id', $request->owner)->first();
         
         $product->name = $request->name;
+        $product->variation = $request->variation;
+        $product->retail_unit = $request->retail_unit;
+        $product->bulk_unit = $request->bulk_unit;
+        $product->bulk_to_retail = $request->bulk_to_retail;
         $product->business_id = $request->owner;
         $product->user_id = $business->user_id;
         $product->buying_price = $request->buying_price;

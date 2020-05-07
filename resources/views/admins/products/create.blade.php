@@ -85,6 +85,59 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="variation" class="col-md-4 col-form-label text-md-right">Variation</label>
+                            <div class="col-md-6">
+                                <input id="variation" type="text"
+                                    class="form-control{{ $errors->has('variation') ? ' is-invalid' : '' }}"
+                                    name="variation" value="{{ old('variation') }}" required>
+                                @if ($errors->has('variation'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('variation') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="retail_unit" class="col-md-4 col-form-label text-md-right">Retail Unit</label>
+                            <div class="col-md-6">
+                                <input id="retail_unit" type="text"
+                                    class="form-control{{ $errors->has('retail_unit') ? ' is-invalid' : '' }}"
+                                    name="retail_unit" value="{{ old('retail_unit') }}" required>
+                                @if ($errors->has('retail_unit'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('retail_unit') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="bulk_unit" class="col-md-4 col-form-label text-md-right">Bulk Unit</label>
+                            <div class="col-md-6">
+                                <input id="bulk_unit" type="text"
+                                    class="form-control{{ $errors->has('bulk_unit') ? ' is-invalid' : '' }}"
+                                    name="bulk_unit" value="{{ old('bulk_unit') }}" required>
+                                @if ($errors->has('bulk_unit'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('bulk_unit') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="bulk_to_retail" class="col-md-4 col-form-label text-md-right">Bulk to Retail
+                                Unit</label>
+                            <div class="col-md-6">
+                                <input id="bulk_to_retail" type="text"
+                                    class="form-control{{ $errors->has('bulk_to_retail') ? ' is-invalid' : '' }}"
+                                    name="bulk_to_retail" value="{{ old('bulk_to_retail') }}" required>
+                                @if ($errors->has('bulk_to_retail'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('bulk_to_retail') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="buying_price" class="col-md-4 col-form-label text-md-right">Supplier
                                 Price</label>
                             <div class="col-md-6">
