@@ -32,43 +32,6 @@ class ApiController extends Controller
     public function login(Request $request){
 
         return 'success';
-
-        // $content = $request->getContent();
-
-
-        // $array = explode('&', $content);
-        // $content_all = "";
-        // foreach ($array as $item) {
-        //     $content_item = explode('=', $item);
-        //     $format_key = str_replace("%20"," ",$content_item[0]);
-        //     $format_key = str_replace("%40","@",$format_key);
-
-        //     $format_value = str_replace("%20"," ",$content_item[1]);
-        //     $format_value = str_replace("%40","@",$format_value);
-
-        //     $content_all .= '"'.$format_key.'":"'.$format_value.'",';
-        // }
-
-        // $content_all = substr($content_all, 0, -1);
-        // $content_all = '{'.$content_all.'}';
-
-        // $content_json =json_decode($content_all);
-        // // return response()->json($content_json);
-
-
-        // $user = User::where('email', $content_json->email)->first();
-
-        // if ($user === null) {
-        //     // return response()->json($user);
-        //     return response()->json(null);
-        // }else{
-
-        //     if (Hash::check($content_json->password, $user->password)) {
-        //         return response()->json($user);
-        //     }else{
-        //         return response()->json(null);
-        //     }
-        // }
     }
 
 
@@ -86,7 +49,6 @@ class ApiController extends Controller
             array_push($subcategory_ids,$item->id);
             }
 
-            // return $subcategory_ids;
         $products = Product::whereIn('category_id', $subcategory_ids)->where('status', 'active')->paginate(50);
 
         return response()->json($products);
