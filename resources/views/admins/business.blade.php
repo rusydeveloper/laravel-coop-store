@@ -25,8 +25,11 @@
                     <table class="table table-striped table-hover  table-responsive" style="font-size: 10pt">
                         <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>Nama Koperasi</th>
+                                <th>User Pemilik</th>
                                 <th>Status</th>
+                                <th>Email</th>
+                                <th>Alamat</th>
                                 <th>Owner</th>
                                 <th>Category</th>
                                 <th>Action</th>
@@ -36,6 +39,7 @@
                             @forelse($businesses as $item)
                             <tr>
                                 <td>{{$item->name}}</td>
+                                <td>{{$item->user->name}}</td>
                                 <td>
                                     @if($item->status == 'active')
                                     <span class="badge badge-success">{{$item->status}}</span>
@@ -43,7 +47,9 @@
                                     <span class="badge badge-danger">{{$item->status}}</span>
                                     @endif
                                 </td>
-                                <td>{{$item->user->name}}</td>
+                                <td>{{$item->user->email}}</td>
+                                <td>{{$item->address}}</td>
+                                <td>{{$item->user->phone}}</td>
                                 <td>{{$item->category}}</td>
                                 <td>
                                     <div class="flex-container">
