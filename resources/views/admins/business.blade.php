@@ -30,7 +30,7 @@
                                 <th>Status</th>
                                 <th>Email</th>
                                 <th>Alamat</th>
-                                <th>Owner</th>
+                                <th>No Handphone</th>
                                 <th>Category</th>
                                 <th>Action</th>
                             </tr>
