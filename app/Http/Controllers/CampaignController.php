@@ -72,6 +72,40 @@ class CampaignController extends Controller
         $campaign->product_tiering_max = $request->product_tiering_max;
         $campaign->start_at = $request->start_at;
         $campaign->end_at = $request->end_at;
+
+        //=====UPLOADING IMAGE=====
+        // CHECK IF FILE GALLERY IS EXIST
+        if ($request->hasFile('picture_file')) {
+            $date = date_create();
+            $unix_timestamp = date_timestamp_get($date);
+
+        // PICTURES
+            $extension_bp = $request->picture_file->extension();
+
+        // CHECK IF FILE IS A PICTURE
+            if ($extension_bp ==='jpeg' || $extension_bp ==='jpg' || $extension_bp ==='JPG' || $extension_bp ==='JPEG' || $extension_bp ==='PNG' || $extension_bp ==='png') {
+
+        //FILE NAMING AND SAVING SETTINGS
+               
+                $file_name_custom_bp = $request->picture_file->getClientOriginalName();
+        // SAVING PROFILE PICTURE FILES
+                $path_bp = $request->file('picture_file')->storeAs('public/campaigns', $file_name_custom_bp);
+                
+
+                $picture = new Picture;
+                $picture->user_id = $product->user_id;
+                $picture->product_id = $product->id;
+                $picture->category = 'campaign picture';
+                $picture->name = $file_name_custom_bp;
+                $picture->save();
+                $campaign->image = "storage/campaigns/".$file_name_custom_bp;
+
+            }else{
+                return redirect()->route('admin_campaign')->with('error', 'File Gambar Product Anda Bukan Berupa Gambar.', 'Silahkan ulangi tambah product!');
+                
+            }
+        }
+
         $campaign->save();
         
         return redirect()->route('admin_campaign')->with('status', 'Campaign berhasil dibuat.');
@@ -128,6 +162,39 @@ class CampaignController extends Controller
 
         if($request->end_at != ""){
             $campaign->end_at = $request->end_at;
+        }
+
+        //=====UPLOADING IMAGE=====
+        // CHECK IF FILE GALLERY IS EXIST
+        if ($request->hasFile('picture_file')) {
+            $date = date_create();
+            $unix_timestamp = date_timestamp_get($date);
+
+        // PICTURES
+            $extension_bp = $request->picture_file->extension();
+
+        // CHECK IF FILE IS A PICTURE
+            if ($extension_bp ==='jpeg' || $extension_bp ==='jpg' || $extension_bp ==='JPG' || $extension_bp ==='JPEG' || $extension_bp ==='PNG' || $extension_bp ==='png') {
+
+        //FILE NAMING AND SAVING SETTINGS
+               
+                $file_name_custom_bp = $request->picture_file->getClientOriginalName();
+        // SAVING PROFILE PICTURE FILES
+                $path_bp = $request->file('picture_file')->storeAs('public/campaigns', $file_name_custom_bp);
+                
+
+                $picture = new Picture;
+                $picture->user_id = $product->user_id;
+                $picture->product_id = $product->id;
+                $picture->category = 'campaign picture';
+                $picture->name = $file_name_custom_bp;
+                $picture->save();
+                $campaign->image = "storage/campaigns/".$file_name_custom_bp;
+
+            }else{
+                return redirect()->route('admin_campaign')->with('error', 'File Gambar Product Anda Bukan Berupa Gambar.', 'Silahkan ulangi tambah product!');
+                
+            }
         }
         
         $campaign->save();

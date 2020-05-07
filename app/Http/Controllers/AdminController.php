@@ -397,7 +397,6 @@ class AdminController extends Controller
         $product->status = $request->status;
         $product->description = $request->description;
         $product->unique_id = $unix_timestamp;
-        $product->save();
 
         //=====UPLOADING IMAGE=====
         // CHECK IF FILE GALLERY IS EXIST
@@ -415,21 +414,23 @@ class AdminController extends Controller
                 // $file_name_custom_bp = 'warman_bp_'.$product->user_id.'_'.$product->id.'_'.$unix_timestamp.'.'.$extension_bp;
                 $file_name_custom_pp = $request->picture_file->getClientOriginalName();
         // SAVING PROFILE PICTURE FILES
-                $path_bp = $request->file('picture_file')->storeAs('public/products', $file_name_custom_bp);
+                $path_bp = $request->file('picture_file')->storeAs('public/products', $file_name_custom_pp);
                 
 
                 $picture = new Picture;
                 $picture->user_id = $product->user_id;
                 $picture->product_id = $product->id;
                 $picture->category = 'product picture';
-                $picture->name = $file_name_custom_bp;
+                $picture->name = $file_name_custom_pp;
                 $picture->save();
+                $product->image = "storage/products/".$file_name_custom_pp;
 
             }else{
                 return redirect()->route('admin_product')->with('error', 'File Gambar Product Anda Bukan Berupa Gambar.', 'Silahkan ulangi tambah product!');
                 
             }
         }
+        $product->save();
         
         return redirect()->route('admin_product')->with('status', 'Product berhasil dibuat.');
     }
@@ -514,22 +515,15 @@ class AdminController extends Controller
                 $picture->category = 'product picture';
                 $picture->name = $file_name_custom_pp;
                 $picture->save();
+                $product->image = "storage/products/".$file_name_custom_pp;
 
             }else{
                 return redirect()->route('admin_product')->with('error', 'File Gambar Product Anda Bukan Berupa Gambar.', 'Silahkan ulangi edit produk!');
                 
             }
         }
-        // $product->image = base64_encode(File::get($path_pp));
-        // $product->image = base64_encode(File::get("http://127.0.0.1:8000/storage/products/".$file_name_custom_pp));
-        // $product->image = base64_encode("http://127.0.0.1:8000/storage/products/".$file_name_custom_pp);
-        // $product->image = "storage/products/".$file_name_custom_pp;
-
-
-        
 
         $product->save();
-
         
         return redirect()->route('admin_product')->with('status', 'Product berhasil diedit.');
     }

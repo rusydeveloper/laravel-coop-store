@@ -52,6 +52,7 @@
                                 <td>
                                     @if(!empty($item->image))
                                     <img src="/{{$item->image}}" alt="no picture" width="75" height="75">
+
                                     @else
                                     <img src="{{asset('storage/products/product_default.jpg')}}" alt="no picture"
                                         width="75" height="75">

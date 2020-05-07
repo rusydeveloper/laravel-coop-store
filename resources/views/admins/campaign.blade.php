@@ -52,13 +52,16 @@
                         <tbody>
                             @forelse($campaigns as $item)
                             <tr>
-                                <td>
+                                <td>@if(!empty($item->image))
+                                    <img src="/{{$item->image}}" alt="no picture" width="75" height="75">
+                                    @else
                                     @if(!empty($item->product["image"]))
                                     <img src="/{{$item->product["image"]}}" alt="no picture" width="75" height="75">
                                     @else
                                     <img src="{{asset('storage/products/product_default.jpg')}}" alt="no picture"
                                         width="75" height="75">
 
+                                    @endif
                                     @endif
                                     <br>
                                     {{$item->product["name"]}} <b>{{$item->business["name"]}}</b>

@@ -93,6 +93,20 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">Display Picture</label>
+                            <div class="col-md-6" style="text-align: center">
+                                <div class="img-container" style="padding:20px">
+                                    <input type="file" name="picture_file" value="">
+                                </div>
+                                <span><img width="300px" src="/{{$campaign->image}}" /></span>
+                                <div>
+                                    <p>Default Picture</p>
+                                    <img src="{{asset('storage/products/product_default.jpg')}}" alt="no picture"
+                                        width="200">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="product_initial_price" class="col-md-4 col-form-label text-md-right">Harga
                                 Awal</label>
                             <div class="col-md-6">
