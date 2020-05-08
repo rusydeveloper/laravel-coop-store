@@ -20,9 +20,49 @@ use App\Test;
 use Response;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Zendesk;
 
 class ApiController extends Controller
 {
+
+    public function getTicket()
+    {
+       // Get all tickets
+        $tickets = Zendesk::tickets()->findAll();
+        return response()->json($tickets);
+        
+    }
+
+    public function createTicket()
+    {
+       /// Create a new ticket
+        Zendesk::tickets()->create([
+            'subject' => 'Subject',
+            'comment' => [
+                'body' => 'Ticket content.'
+            ],
+            'priority' => 'normal'
+        ]);
+        return "success";
+    }
+
+    public function updateTicket()
+    {
+        // Update multiple tickets
+        Zendesk::ticket([123, 456])->update([
+            'status' => 'urgent'
+        ]);
+        return "success";
+    }
+
+    public function deleteTicket()
+    {
+        // Update multiple tickets
+        // Delete a ticket
+        Zendesk::ticket(123)->delete();
+        return "success";
+    }
+
     public function user()
     {
         $users = User::all(); 
@@ -71,7 +111,7 @@ class ApiController extends Controller
     public function campaigns()
     {
         $now = Carbon::now();
-        
+
         $campaigns = Campaign::with('product')->where("end_at",">=", $now)->where('status', 'active')->get(); 
         return response()->json($campaigns);
     }

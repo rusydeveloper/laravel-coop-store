@@ -13,6 +13,7 @@ use Mail;
 use App\Mail\UserRegistration;
 
 use App\Mail\EmailTest;
+use Zendesk;
 
 class AuthController extends Controller
 {
@@ -126,7 +127,17 @@ class AuthController extends Controller
 
         $data = ['cooperative' => $request->cooperative,'name' => $request->name, 'phone' => $request->phone, 'address' => $request->address, 'email' => $request->email];
 
+        $body_zendesk = "<table><tr><td>Nama pendaftar</td><td>".$request->name."</td></tr><tr><td>Nama Koperasi</td><td>".$request->cooperative."</td></tr><tr><td>Nomor HP</td><td>".$request->phone."</td></tr><tr><td>Alamat Koperasi</td><td>".$request->address."</td></tr><tr><td>Email</td><td>".$request->email."</td></tr></table>";
+
         Mail::to('koperasi@nectico.com')->send(new UserRegistration($data));
+        Zendesk::tickets()->create([
+            'subject' => 'Pendaftaran Koperasi',
+            "tag" => "pendaftaran",
+            'comment' => [
+                'html_body' => $body_zendesk
+            ],
+            'priority' => 'normal'
+        ]);
 
         
         return response()->json([

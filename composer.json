@@ -12,6 +12,7 @@
         "barryvdh/laravel-cors": "^0.11.2",
         "darryldecode/cart": "^4.1",
         "fideloper/proxy": "^4.0",
+        "huddledigital/zendesk-laravel": "^3.3",
         "laravel/framework": "6.*",
         "laravel/helpers": "^1.2",
         "laravel/passport": "^7.0",

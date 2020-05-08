@@ -20,6 +20,7 @@ use Carbon\Carbon;
 use Cart;
 
 use Illuminate\Http\Request;
+use Zendesk;
 
 class OrderController extends Controller
 {
@@ -223,6 +224,7 @@ class OrderController extends Controller
          };
 
         $invoice_description = '';
+        $zendesk_description = '';
 
         $finalInvoiceAmount = $request->totalAmount + $request->uniqueNumber-$request->walletBalance;
 
@@ -275,6 +277,7 @@ class OrderController extends Controller
             $order->unique_id = $unix_timestamp; 
             $order->save();
             $invoice_description .=$item["name"]." ".$item["totalSubitem"]." pcs x Rp ".$item["buying_price"]." = Rp ".$item["totalSubamount"]."; ";
+            $zendesk_description .=$item["name"]." ".$item["totalSubitem"]." pcs x Rp ".$item["buying_price"]." = Rp ".$item["totalSubamount"]."; <br/>";
         }
         $invoice->description = $invoice_description;
         $invoice->save();
@@ -303,6 +306,19 @@ class OrderController extends Controller
         $data = ['cooperative' => $business->name,'name' => $user->name, 'phone' => $user->phone, 'address' => $business->address, 'email' => $user->email, 'order' => $invoice_description];
 
         Mail::to('koperasi@nectico.com')->send(new OrderSubmit($data));
+
+        
+
+        $body_zendesk = "<table><tr><td>Nama pemesan</td><td>".$user->name."</td></tr><tr><td>Nama Koperasi</td><td>".$business->name."</td></tr><tr><td>Nomor HP</td><td>".$user->phone."</td></tr><tr><td>Alamat Koperasi</td><td>".$business->address."</td></tr><tr><td>Email</td><td>".$user->email."</td></tr><tr><td>Daftar Pesanan</td><td>".$zendesk_description."</td></tr></table>";
+
+        Zendesk::tickets()->create([
+            'subject' => 'Pesanan Koperasi',
+            "tag" => "pesanan",
+            'comment' => [
+                'html_body' => $body_zendesk
+            ],
+            'priority' => 'normal'
+        ]);
        
 
         return response()->json([

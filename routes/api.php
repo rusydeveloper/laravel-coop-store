@@ -91,5 +91,8 @@ Route::post('order/submit', 'OrderController@submit');
 Route::post('order/email', 'OrderController@email');
 Route::get('order/test', 'OrderController@test');
 
+Route::get('tickets/', 'ApiController@getTicket');
+Route::post('tickets/create', 'ApiController@createTicket');
+
 Route::get('logout', 'AuthController@logout');
 Route::get('user', 'AuthController@user');
