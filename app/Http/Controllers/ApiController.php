@@ -70,7 +70,9 @@ class ApiController extends Controller
 
     public function campaigns()
     {
-        $campaigns = Campaign::with('product')->where('status', 'active')->get(); 
+        $now = Carbon::now();
+        
+        $campaigns = Campaign::with('product')->where("end_at",">=", $now)->where('status', 'active')->get(); 
         return response()->json($campaigns);
     }
 

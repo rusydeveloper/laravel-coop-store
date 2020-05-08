@@ -44,6 +44,7 @@
                                             <th>Kode Invoice</th>
                                             <th>Customer</th>
                                             <th>Created At</th>
+                                            <th>Max Payment</th>
                                             <th>Kode Booking</th>
                                             <th>Status</th>
                                             <th>Amount</th>
@@ -62,6 +63,7 @@
                                                 {{$item->customer_name}}<br />{{$item->customer_phone}}<br />{{$item->customer_address}}
                                             </td>
                                             <td>{{date('d-M-Y H:i:s', strtotime($item->created_at))}}</td>
+                                            <td>{{date('d-M-Y H:i:s', strtotime($item->max_payment))}}</td>
                                             <td>{{$item->booking_id}}</td>
                                             <td>
                                                 @if($item->status == 'unpaid')

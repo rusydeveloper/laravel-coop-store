@@ -15,7 +15,7 @@ use App\Mail\UserRegistration;
 use App\Mail\OrderSubmit;
 
 use Mail;
-
+use Carbon\Carbon;
 
 use Cart;
 
@@ -239,6 +239,7 @@ class OrderController extends Controller
         $invoice->business_id = $request->checkoutInput["business_id"];
         $invoice->unique_id = $unix_timestamp;
         $invoice->booking_id = $booking_code;
+        $invoice->max_payment = Carbon::now()->addHour(6);
         
         $invoice->save();
 
