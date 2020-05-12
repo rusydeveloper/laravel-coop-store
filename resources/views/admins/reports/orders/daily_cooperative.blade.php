@@ -51,26 +51,39 @@
                   {{number_format($item->quantity,0,",",".")}}</td>
                 <td style="text-align: right">{{number_format($item->sum,0,",",".")}}</td>
                 <td style="text-align: center">
+                  @if($item->campaign_id != null || $item->campaign_id != 0 )
                   {{App\Campaign::find($item->campaign_id)->quantity_ordered}}
+                  @endif
                 </td>
                 <td style="text-align: center">
+                  @if($item->campaign_id != null || $item->campaign_id != 0 )
                   {{App\Campaign::find($item->campaign_id)->product_tiering_quota_1}}
+                  @endif
                 </td>
                 <td style="text-align: right">
+                  @if($item->campaign_id != null || $item->campaign_id != 0 )
                   {{number_format(App\Campaign::find($item->campaign_id)->product_tiering_price_1,0,",",".")}}
-
+                  @endif
                 </td>
                 <td style="text-align: center">
+                  @if($item->campaign_id != null || $item->campaign_id != 0 )
                   {{App\Campaign::find($item->campaign_id)->product_tiering_quota_2}}
+                  @endif
                 </td>
                 <td style="text-align: right">
+                  @if($item->campaign_id != null || $item->campaign_id != 0 )
                   {{number_format(App\Campaign::find($item->campaign_id)->product_tiering_price_2,0,",",".")}}
+                  @endif
                 </td>
                 <td style="text-align: center">
+                  @if($item->campaign_id != null || $item->campaign_id != 0 )
                   {{App\Campaign::find($item->campaign_id)->product_tiering_quota_3}}
+                  @endif
                 </td>
                 <td style="text-align: right">
+                  @if($item->campaign_id != null || $item->campaign_id != 0 )
                   {{number_format(App\Campaign::find($item->campaign_id)->product_tiering_price_3,0,",",".")}}
+                  @endif
                 </td>
 
               </tr>
