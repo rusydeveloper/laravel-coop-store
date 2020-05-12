@@ -7,20 +7,27 @@
             <div class="card">
                 <div class="card-header">
                     <span class="fa fa-tasks"></span> Campaign
-                    <form action="/admin/campaign/search" method="POST" role="search">
-                        {{ csrf_field() }}
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="q" placeholder="Cari Program Bullk Buying">
-                            <span class="input-group-btn">
-                                <button type="submit" class="btn btn-default">
-                                    <span class="fa fa-search"></span> Cari
-                                </button>
-                            </span>
+                    <div class="flex-container full-width">
+                        <div>
+                            <form action="/admin/campaign/search" method="POST" role="search">
+                                {{ csrf_field() }}
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="q"
+                                        placeholder="Cari Program Bullk Buying">
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-default">
+                                            <span class="fa fa-search"></span> Cari
+                                        </button>
+                                    </span>
+                                </div>
+                            </form>
                         </div>
-                    </form>
-                    <a href="/admin/campaign/create">
-                        <button class="btn btn-primary btn-md pull-right">+ Tambah</button>
-                    </a>
+                        <div><a href="/admin/campaign/create">
+                                <button class="btn btn-primary btn-md pull-right">+ Tambah</button>
+                            </a></div>
+                    </div>
+
+
                 </div>
 
                 <div class="card-body">
@@ -39,14 +46,7 @@
                         </tr>
                         <tr>
                             <th>Judul</th>
-                            <th>Status</th>
-                            <th>Satuan</th>
-                            <th>Periode</th>
-                            <th>Harga Awal</th>
-                            <th>Harga Tiering</th>
-                            <th>Jumlah Terbeli</th>
-                            <th>Kuota Tiering</th>
-                            <th>Total Transaksi</th>
+                            <th>Harga</th>
                             <th>Action</th>
                         </tr>
                         <tbody>
@@ -60,38 +60,58 @@
                                     @else
                                     <img src="{{asset('storage/products/product_default.jpg')}}" alt="no picture"
                                         width="75" height="75">
-
                                     @endif
                                     @endif
                                     <br>
                                     {{$item->product["name"]}} <b>{{$item->business["name"]}}</b>
-                                    {{$item->user["name"]}}</td>
-                                <td>
+                                    {{$item->user["name"]}}
+                                    <br />
                                     @if($item->status == 'active')
                                     <span class="badge badge-success">{{$item->status}}</span>
                                     @else
                                     <span class="badge badge-danger">{{$item->status}}</span>
                                     @endif
-                                </td>
-                                <td>{{$item->unit}}</td>
-                                <td><b>{{date('d M Y g:i', strtotime($item->start_at))}} s.d
+                                    <hr />
+                                    <b>{{date('d M Y g:i', strtotime($item->start_at))}} s.d
                                         {{date('d M Y G:i', strtotime($item->end_at))}}</b>
+                                    <hr />
+                                    <b>Pemesanan</b><br />
+                                    {{number_format($item->quantity_ordered,0,",",".")}} <span
+                                        class="text-red">{{$item->unit}}</span><br />
+
+                                    [Rp {{number_format($item->amount_ordered,0,",",".")}}]
                                 </td>
-                                <td>{{number_format($item->product_initial_price,0,",",".")}}</td>
+
+
+
 
                                 <td>
-                                    {{number_format($item->product_tiering_price_1,0,",",".")}}
+                                    <b>Harga Awal</b><br />
+                                    Rp {{number_format($item->product_initial_price,0,",",".")}}
+                                    <hr />
+                                    <b>Tiering 1</b><br />
+                                    Rp {{number_format($item->product_tiering_price_1,0,",",".")}} untuk minimal
+                                    {{number_format($item->product_tiering_quota_1,0,",",".")}} pesanan
+                                    <hr />
+                                    <b>Tiering 2</b><br />
+                                    @if($item->product_tiering_quota_2>0)
+                                    Rp {{number_format($item->product_tiering_price_2,0,",",".")}} untuk minimal
+                                    {{number_format($item->product_tiering_quota_2,0,",",".")}} pesanan
+                                    <hr />
+                                    @else
+                                    Tidak Ada
+                                    <hr />
+                                    @endif
+                                    <b>Tiering 3</b><br />
+                                    @if($item->product_tiering_quota_3>0)
+                                    Rp {{number_format($item->product_tiering_price_3,0,",",".")}} untuk minimal
+                                    {{number_format($item->product_tiering_quota_3,0,",",".")}} pesanan
+                                    @else
+                                    Tidak Ada
+                                    @endif
+
                                 </td>
-                                <td>
-                                    {{number_format($item->quantity_ordered,0,",",".")}}
-                                </td>
-                                <td>
-                                    {{number_format($item->quantity_ordered,0,",",".")}}/
-                                    {{number_format($item->product_tiering_quota_1,0,",",".")}}
-                                </td>
-                                <td>
-                                    {{number_format($item->amount_ordered,0,",",".")}}
-                                </td>
+
                                 <td>
                                     <div class="flex-container">
                                         <div>

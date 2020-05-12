@@ -28,7 +28,7 @@
                             <label for="product_id" class="col-md-4 col-form-label text-md-right">Product</label>
                             <div class="col-md-6">
                                 <select id="product_id" name="product_id"
-                                    class="form-control{{ $errors->has('product_id') ? ' is-invalid' : '' }}">
+                                    class="form-control{{ $errors->has('product_id') ? ' is-invalid' : '' }} js-example-basic-single">
                                     <option value="" selected>Kosong
                                     </option>
                                     @forelse($products as $item)
@@ -117,7 +117,7 @@
                         </div>
                         <div class="form-group row">
                             <label for="product_tiering_price_1" class="col-md-4 col-form-label text-md-right">Harga
-                                Tiering</label>
+                                Tiering 1</label>
                             <div class="col-md-6">
                                 <input id="product_tiering_price_1" type="text"
                                     class="form-control{{ $errors->has('product_tiering_price_1') ? ' is-invalid' : '' }}"
@@ -131,8 +131,38 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="product_tiering_price_2" class="col-md-4 col-form-label text-md-right">Harga
+                                Tiering 2</label>
+                            <div class="col-md-6">
+                                <input id="product_tiering_price_2" type="text"
+                                    class="form-control{{ $errors->has('product_tiering_price_2') ? ' is-invalid' : '' }}"
+                                    name="product_tiering_price_2" value="{{ old('product_tiering_price_2') }}"
+                                    required>
+                                @if ($errors->has('product_tiering_price_2'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('product_tiering_price_2') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="product_tiering_price_3" class="col-md-4 col-form-label text-md-right">Harga
+                                Tiering 3</label>
+                            <div class="col-md-6">
+                                <input id="product_tiering_price_3" type="text"
+                                    class="form-control{{ $errors->has('product_tiering_price_3') ? ' is-invalid' : '' }}"
+                                    name="product_tiering_price_3" value="{{ old('product_tiering_price_3') }}"
+                                    required>
+                                @if ($errors->has('product_tiering_price_3'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('product_tiering_price_3') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="product_tiering_quota_1" class="col-md-4 col-form-label text-md-right">Kuota
-                                Tiering</label>
+                                Tiering 1</label>
                             <div class="col-md-6">
                                 <input id="product_tiering_quota_1" type="text"
                                     class="form-control{{ $errors->has('product_tiering_quota_1') ? ' is-invalid' : '' }}"
@@ -141,6 +171,36 @@
                                 @if ($errors->has('product_tiering_quota_1'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('product_tiering_quota_1') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="product_tiering_quota_2" class="col-md-4 col-form-label text-md-right">Kuota
+                                Tiering 2</label>
+                            <div class="col-md-6">
+                                <input id="product_tiering_quota_2" type="text"
+                                    class="form-control{{ $errors->has('product_tiering_quota_2') ? ' is-invalid' : '' }}"
+                                    name="product_tiering_quota_2" value="{{ old('product_tiering_quota_2') }}"
+                                    required>
+                                @if ($errors->has('product_tiering_quota_2'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('product_tiering_quota_2') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="product_tiering_quota_3" class="col-md-4 col-form-label text-md-right">Kuota
+                                Tiering 3</label>
+                            <div class="col-md-6">
+                                <input id="product_tiering_quota_3" type="text"
+                                    class="form-control{{ $errors->has('product_tiering_quota_3') ? ' is-invalid' : '' }}"
+                                    name="product_tiering_quota_3" value="{{ old('product_tiering_quota_3') }}"
+                                    required>
+                                @if ($errors->has('product_tiering_quota_3'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('product_tiering_quota_3') }}</strong>
                                 </span>
                                 @endif
                             </div>

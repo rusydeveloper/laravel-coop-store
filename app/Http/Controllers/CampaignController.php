@@ -69,6 +69,10 @@ class CampaignController extends Controller
         $campaign->product_initial_price = $request->product_initial_price;
         $campaign->product_tiering_price_1 = $request->product_tiering_price_1;
         $campaign->product_tiering_quota_1 = $request->product_tiering_quota_1;
+        $campaign->product_tiering_price_2 = $request->product_tiering_price_2;
+        $campaign->product_tiering_quota_2 = $request->product_tiering_quota_2;
+        $campaign->product_tiering_price_3 = $request->product_tiering_price_3;
+        $campaign->product_tiering_quota_3 = $request->product_tiering_quota_3;
         $campaign->product_tiering_max = $request->product_tiering_max;
         $campaign->start_at = $request->start_at;
         $campaign->end_at = $request->end_at;
@@ -153,6 +157,10 @@ class CampaignController extends Controller
         $campaign->product_initial_price = $request->product_initial_price;
         $campaign->product_tiering_price_1 = $request->product_tiering_price_1;
         $campaign->product_tiering_quota_1 = $request->product_tiering_quota_1;
+        $campaign->product_tiering_price_2 = $request->product_tiering_price_2;
+        $campaign->product_tiering_quota_2 = $request->product_tiering_quota_2;
+        $campaign->product_tiering_price_3 = $request->product_tiering_price_3;
+        $campaign->product_tiering_quota_3 = $request->product_tiering_quota_3;
         $campaign->product_tiering_max = $request->product_tiering_max;
 
         if($request->start_at != ""){
