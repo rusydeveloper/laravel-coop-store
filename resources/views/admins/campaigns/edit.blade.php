@@ -50,6 +50,34 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="priority" class="col-md-4 col-form-label text-md-right">Prioritas</label>
+                            <div class="col-md-6">
+
+                                <select id="priority" name="priority"
+                                    class="form-control{{ $errors->has('priority') ? ' is-invalid' : '' }}">
+                                    <option value="">Kosong
+                                    </option>
+                                    <option value="1">1
+                                    </option>
+                                    <option value="2">2
+                                    </option>
+                                    <option value="3">3
+                                    </option>
+                                    <option value="4">4
+                                    </option>
+                                    <option value="5">5
+                                    </option>
+
+                                </select>
+
+                                @if ($errors->has('owner'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('owner') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="status" class="col-md-4 col-form-label text-md-right">Status</label>
                             <div class="col-md-6">
                                 <select id="status" name="status"

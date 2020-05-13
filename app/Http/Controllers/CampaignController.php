@@ -154,6 +154,7 @@ class CampaignController extends Controller
         $campaign->title = $request->title;
         $campaign->status = $request->status;
         $campaign->unit = $request->unit;
+        $campaign->priority = $request->priority;
         $campaign->product_initial_price = $request->product_initial_price;
         $campaign->product_tiering_price_1 = $request->product_tiering_price_1;
         $campaign->product_tiering_quota_1 = $request->product_tiering_quota_1;
