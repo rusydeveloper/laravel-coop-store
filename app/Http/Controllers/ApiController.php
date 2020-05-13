@@ -112,7 +112,7 @@ class ApiController extends Controller
     {
         $now = Carbon::now();
 
-        $campaigns = Campaign::with('product')->where("end_at",">=", $now)->where('status', 'active')->sortByDesc('priority')->get(); 
+        $campaigns = Campaign::with('product')->where("end_at",">=", $now)->where('status', 'active')->get()->sortByDesc('priority'); 
         return response()->json($campaigns);
     }
 
