@@ -24,7 +24,7 @@
                 <div class="card-body">
                     <form method="POST" action="/admin/campaign/update" enctype="multipart/form-data">
                         {{ csrf_field() }}
-                        <input type="hidden" name="unique_id" value="{{$campaign->unique_id}}">
+                        <input type="hidden" name="id" value="{{$campaign->id}}">
                         <div class="form-group row">
                             <label for="product_id" class="col-md-4 col-form-label text-md-right">Campaign</label>
                             <div class="col-md-6">

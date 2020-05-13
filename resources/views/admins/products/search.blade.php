@@ -51,11 +51,13 @@
                   <img src="{{asset('storage/products/'.$item->picture->first()->name)}}" alt="no picture" width="75"
                     height="75">
                   <img src="{{asset('storage/products/'.$item->image)}}" alt="no picture" width="75" height="75">
+
                   @else
                   <img src="{{asset('storage/products/product_default.jpg')}}" alt="no picture" width="75" height="75">
 
                   @endif
-
+                  <img src="{{asset('/'.$item->image)}}" alt="no picture" width="75" height="75">
+                  {{$item->image}}
                 </td>
                 <td>{{$item->name}}</td>
                 <td>{{number_format($item->buying_price,0,",",".")}}</td>
@@ -74,20 +76,20 @@
                 <td>
                   <form method="POST" action="/admin/product/edit" enctype="multipart/form-data">
                     {{ csrf_field() }}
-                    <input type="hidden" name="unique_id" value="{{$item->unique_id}}">
+                    <input type="hidden" name="id" value="{{$item->id}}">
                     <button class="btn btn-warning btn-sm btn-space" style="float: left;">edit</button>
                   </form>
                   @if($item->status == 'active')
                   <form method="POST" action="/admin/product/deactivate" enctype="multipart/form-data">
                     {{ csrf_field() }}
-                    <input type="hidden" name="unique_id" value="{{$item->unique_id}}">
+                    <input type="hidden" name="id" value="{{$item->id}}">
                     <button class="btn btn-danger btn-sm btn-space" style="float: left;">non
                       aktifkan</button>
                   </form>
                   @else
                   <form method="POST" action="/admin/product/activate" enctype="multipart/form-data">
                     {{ csrf_field() }}
-                    <input type="hidden" name="unique_id" value="{{$item->unique_id}}">
+                    <input type="hidden" name="id" value="{{$item->id}}">
                     <button class="btn btn-success btn-sm btn-space" style="float: left;">aktivasi</button>
                   </form>
                   @endif

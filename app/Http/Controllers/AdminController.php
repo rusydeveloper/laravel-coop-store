@@ -439,7 +439,7 @@ class AdminController extends Controller
     {
         $businesses = Business::where('category','supplier')->get();
         $categories = Category::where('parent','!=' ,0)->get();
-        $product = Product::where('unique_id', $request->unique_id)->first();
+        $product = Product::where('id', $request->id)->first();
         
         $users = User::where('role','supplier')->get(); 
         $pictures = Picture::where('product_id', $product->id)->get();
@@ -451,7 +451,7 @@ class AdminController extends Controller
 
     public function product_activate(Request $request)
     {
-        $product = Product::where('unique_id', $request->unique_id)->first();
+        $product = Product::where('id', $request->id)->first();
         $product->status = "active";
         $product->save();
         return redirect()->route('admin_product')->with('status', 'Product berhasil di aktivasi.');
@@ -459,7 +459,7 @@ class AdminController extends Controller
 
     public function product_deactivate(Request $request)
     {
-        $product = Product::where('unique_id', $request->unique_id)->first();
+        $product = Product::where('id', $request->id)->first();
         $product->status = "non active";
         $product->save();
         return redirect()->route('admin_product')->with('status', 'Product berhasil di non aktifkan.');
@@ -468,7 +468,7 @@ class AdminController extends Controller
     public function product_update(Request $request)
     {
 
-        $product = Product::where('unique_id', $request->unique_id)->first();
+        $product = Product::where('id', $request->id)->first();
         $business = Business::where('id', $request->owner)->first();
         
         $product->name = $request->name;
@@ -531,7 +531,7 @@ class AdminController extends Controller
     public function product_delete(Product $product, Request $request)
     {
 
-        Product::where('unique_id', $request->unique_id)->delete();
+        Product::where('id', $request->id)->delete();
 
         return redirect()->route('admin_product')->with('danger', 'Product berhasil didelete.');
     }

@@ -121,7 +121,7 @@ class CampaignController extends Controller
         // return $request->unique_id;
         $businesses = Business::All();
         $products = Product::All();
-        $campaign = Campaign::where('unique_id', $request->unique_id)->first();
+        $campaign = Campaign::where('id', $request->id)->first();
         // return $campaign;
         
         return view('admins.campaigns.edit', compact('campaign','businesses', 'products'));
@@ -129,7 +129,7 @@ class CampaignController extends Controller
 
     public function campaign_activate(Request $request)
     {
-        $campaign = Campaign::where('unique_id', $request->unique_id)->first();
+        $campaign = Campaign::where('id', $request->id)->first();
         $campaign->status = "active";
         $campaign->save();
         return redirect()->route('admin_campaign')->with('status', 'Campaign berhasil di aktivasi.');
@@ -137,7 +137,7 @@ class CampaignController extends Controller
 
     public function campaign_deactivate(Request $request)
     {
-        $campaign = Campaign::where('unique_id', $request->unique_id)->first();
+        $campaign = Campaign::where('id', $request->id)->first();
         $campaign->status = "non active";
         $campaign->save();
         return redirect()->route('admin_campaign')->with('status', 'Campaign berhasil di non aktifkan.');
@@ -146,7 +146,7 @@ class CampaignController extends Controller
     public function campaign_update(Request $request)
     {
         $product = Product::where('unique_id', $request->product_id)->first();
-        $campaign = Campaign::where('unique_id', $request->unique_id)->first();
+        $campaign = Campaign::where('id', $request->id)->first();
 
         $campaign->product_id = $product->id;
         $campaign->user_id = $product->user["id"];
