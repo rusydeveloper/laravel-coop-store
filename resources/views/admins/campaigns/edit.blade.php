@@ -31,7 +31,7 @@
 
                                 <select id="product_id" name="product_id"
                                     class="form-control{{ $errors->has('product_id') ? ' is-invalid' : '' }}">
-                                    <option value="{{$campaign->product['unique_id']}}" selected>
+                                    <option value="{{$campaign->product['id']}}" selected>
                                         {{$campaign->product["name"]}}
                                     </option>
                                     @forelse($products as $item)

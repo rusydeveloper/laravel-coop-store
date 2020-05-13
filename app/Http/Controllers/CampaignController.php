@@ -145,7 +145,7 @@ class CampaignController extends Controller
 
     public function campaign_update(Request $request)
     {
-        $product = Product::where('unique_id', $request->product_id)->first();
+        $product = Product::where('id', $request->product_id)->first();
         $campaign = Campaign::where('id', $request->id)->first();
 
         $campaign->product_id = $product->id;
