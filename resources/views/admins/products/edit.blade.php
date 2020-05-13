@@ -76,6 +76,19 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="barcode" class="col-md-4 col-form-label text-md-right">Product BARCODE</label>
+                            <div class="col-md-6">
+                                <input id="barcode" type="text"
+                                    class="form-control{{ $errors->has('barcode') ? ' is-invalid' : '' }}"
+                                    name="barcode" value="{{$product->barcode}}" required>
+                                @if ($errors->has('barcode'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('barcode') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="variation" class="col-md-4 col-form-label text-md-right">Variation</label>
                             <div class="col-md-6">
                                 <input id="variation" type="text"

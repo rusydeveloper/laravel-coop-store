@@ -386,6 +386,7 @@ class AdminController extends Controller
         $product->user_id = $business->user->id;
         $product->category_id = $category->id;
         $product->name = $request->name;
+        $product->barcode = $request->barcode;
         $product->variation = $request->variation;
         $product->retail_unit = $request->retail_unit;
         $product->bulk_unit = $request->bulk_unit;
@@ -472,6 +473,7 @@ class AdminController extends Controller
         $business = Business::where('id', $request->owner)->first();
         
         $product->name = $request->name;
+        $product->barcode = $request->barcode;
         $product->variation = $request->variation;
         $product->retail_unit = $request->retail_unit;
         $product->bulk_unit = $request->bulk_unit;
