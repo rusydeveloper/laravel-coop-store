@@ -24,7 +24,7 @@
                 <div class="card-body">
                     <form method="POST" action="/admin/product/update" enctype="multipart/form-data">
                         {{ csrf_field() }}
-                        <input type="hidden" name="unique_id" value="{{$product->unique_id}}">
+                        <input type="hidden" name="id" value="{{$product->id}}">
                         <div class="form-group row">
                             <label for="owner" class="col-md-4 col-form-label text-md-right">Product Owner</label>
                             <div class="col-md-6">
