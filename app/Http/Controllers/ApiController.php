@@ -118,14 +118,16 @@ class ApiController extends Controller
 
     public function campaignSearch($search)
     {
+        $now = Carbon::now();
         $campaigns = Campaign::whereHas('product', function ($query) use($search){
             $query->where('name', 'LIKE', "%{$search}%");
-        })->with('product')->where('status', 'active')->get();
+        })->with('product')->where("end_at",">=", $now)->where('status', 'active')->get();
         return response()->json($campaigns);
     }
 
     public function campaignCategory($id)
     {
+        $now = Carbon::now();
         $categories = Category::where('parent', $id)->get();
         $subcategory_ids = array();
         foreach ($categories as $item) {
@@ -133,7 +135,7 @@ class ApiController extends Controller
             }
         $campaigns = Campaign::whereHas('product', function ($query) use($id, $subcategory_ids){
             $query->whereIn('category_id', $subcategory_ids);
-        })->with('product')->where('status', 'active')->get();
+        })->with('product')->where("end_at",">=", $now)->where('status', 'active')->get();
         return response()->json($campaigns);
     }
 
