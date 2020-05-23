@@ -83,7 +83,12 @@ class InventoryController extends Controller
         $inventoryHistory->user_id = $user->id;
         $inventoryHistory->inventory_id = $inventory->id;
         $inventoryHistory->status = "success";
-        $inventoryHistory->type = "NEW";
+        if($request->inventory_id === "new"){
+            $inventoryHistory->type = "NEW";
+        }else{
+        $inventoryHistory->type = "ADDED";
+
+        }
         $inventoryHistory->quantity = $request->quantity;
         $inventoryHistory->price = $request->price;
         $inventoryHistory->recorded_date = $request->recorded_date;
