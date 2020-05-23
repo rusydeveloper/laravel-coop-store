@@ -15,6 +15,10 @@ use App\Report;
 use App\Picture;
 use App\Invoice;
 use App\Wallet;
+use App\Inventory;
+use App\InventoryHistory;
+
+
 
 use App\Test;
 use Response;
@@ -527,6 +531,26 @@ class ApiController extends Controller
     $wallet = Wallet::where('user_id', $user_id)->first();
     return response()->json($wallet);
     }
+
+    public function inventory(Inventory $Inventory, $user_id)
+    {   
+    $inventory = Inventory::where('user_id', $user_id)->get();
+    return response()->json($inventory);
+    }
+
+    public function inventoryHistory(InventoryHistory $InventoryHistory, $user_id)
+    {   
+    $inventoryHistory = InventoryHistory::where('user_id', $user_id)->where('product_id', $product_id)->get();
+    return response()->json($inventoryHistory);
+    }
+
+    public function inventoryHistoryReport(InventoryHistoryReport $InventoryHistoryReport, $user_id, $product_id)
+    {   
+    $inventoryHistoryReport = InventoryHistory::where('user_id', $user_id)->where('product_id', $product_id)->get();
+    return response()->json($inventoryHistoryReport);
+    }
+
+    
 
 
 // =====================UNUSED=============UNUSED==============UNUSED=============UNUSED=============

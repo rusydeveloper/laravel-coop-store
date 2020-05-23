@@ -586,6 +586,14 @@ class AdminController extends Controller
         return redirect()->route('admin_invoice')->with('danger', 'Invoice berhasil di paid.');
     }
 
+
+    public function inventory()
+    {
+        $inventories = Inventory::orderBy('created_at','DESC')->paginate(50);
+
+        return view('admins.inventory', compact('inventories'));
+    }
+
     public function admin_invoice_discount()
     {
         $invoices = Invoice::where('status','waiting approval')->orderBy('created_at','DESC')->get();

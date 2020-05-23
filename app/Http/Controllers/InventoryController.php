@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Inventory;
+use App\InventoryHistory;
+use App\User;
+use App\Business;
+
 use Illuminate\Http\Request;
 
 class InventoryController extends Controller
@@ -40,10 +44,17 @@ class InventoryController extends Controller
         $date = date_create();
         $unix_timestamp = date_timestamp_get($date);
 
-        $user = User::where('user_id', $request->user_id)->first();
+        
+        $user = User::where('id', $request->user_id)->first();
+
+        // return response()->json([
+        //     'message' => $user
+        // ]);
+
         $business = Business::where('user_id', $request->user_id)->first();
 
         //Create inventory
+        if($request->inventory_id === "new"){
         $inventory = New Inventory;
         $inventory->unique_id = $unix_timestamp;
         $inventory->business_id = $business->id;
@@ -51,9 +62,17 @@ class InventoryController extends Controller
         $inventory->name = $request->name;
         $inventory->brand = $request->brand;
         $inventory->unit = $request->unit;
+        
         $inventory->status = "active";
         $inventory->balance = $request->quantity;
         $inventory->save();
+    }else{
+        $inventory = Inventory::where('id', $request->inventory_id)->first();
+
+        $inventory->balance = $inventory->balance+$request->quantity;
+        $inventory->save();
+
+    }
 
         //Create inventory history
         $amount = $request->quantity*$request->price;
@@ -65,11 +84,20 @@ class InventoryController extends Controller
         $inventoryHistory->inventory_id = $inventory->id;
         $inventoryHistory->status = "success";
         $inventoryHistory->type = "NEW";
-        $inventoryHistory->amount = $request->quantity;
+        $inventoryHistory->quantity = $request->quantity;
+        $inventoryHistory->price = $request->price;
+        $inventoryHistory->recorded_date = $request->recorded_date;
+        $inventoryHistory->amount = $amount;
         $inventoryHistory->description = "Pembuatan Awal Persediaan";
         $inventoryHistory->save();
 
-        $inventory = Inventory::where('user_id', $request->user_id)->first();
+        $inventoryList = Inventory::where('user_id', $request->user_id)->get();
+
+        return response()->json([
+            'inventory' => $inventory,
+            'history' => $inventoryHistory,
+            'inventoryList' => $inventoryList,
+        ]);
     }
 
     /**
