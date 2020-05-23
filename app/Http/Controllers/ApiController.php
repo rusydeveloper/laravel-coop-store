@@ -21,6 +21,7 @@ use App\InventoryHistory;
 
 
 use App\Test;
+use DB;
 use Response;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -538,15 +539,23 @@ class ApiController extends Controller
     return response()->json($inventory);
     }
 
-    public function inventoryHistory(InventoryHistory $InventoryHistory, $user_id)
+    public function inventoryHistory(InventoryHistory $InventoryHistory, $user_id, $product_id)
     {   
-    $inventoryHistory = InventoryHistory::where('user_id', $user_id)->where('product_id', $product_id)->get();
+    $inventoryHistory = InventoryHistory::where('user_id', $user_id)->where('inventory_id', $product_id)->orderBy('created_at','DESC')->get();
     return response()->json($inventoryHistory);
     }
 
-    public function inventoryHistoryReport(InventoryHistoryReport $InventoryHistoryReport, $user_id, $product_id)
+    public function inventoryHistoryReport(InventoryHistory $InventoryHistory, $user_id, $product_id)
     {   
-    $inventoryHistoryReport = InventoryHistory::where('user_id', $user_id)->where('product_id', $product_id)->get();
+    // $inventoryHistoryReport = InventoryHistory::where('user_id', $user_id)->where('inventory_id', $product_id)->get();
+    $inventoryHistoryReport = InventoryHistory::where('user_id', $user_id)->where('inventory_id', $product_id)->select(
+        DB::raw('sum(quantity) as quantity'), 
+        DB::raw('sum(amount)/sum(quantity) as average_price'),
+        DB::raw('sum(amount) as amount'), 
+        DB::raw("recorded_date as date")
+)
+->groupBy('date')
+->get();
     return response()->json($inventoryHistoryReport);
     }
 
