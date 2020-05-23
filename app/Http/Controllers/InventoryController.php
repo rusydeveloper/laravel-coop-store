@@ -68,7 +68,9 @@ class InventoryController extends Controller
         $inventory->save();
     }else{
         $inventory = Inventory::where('id', $request->inventory_id)->first();
-
+        $inventory->name = $request->name;
+        $inventory->brand = $request->brand;
+        $inventory->unit = $request->unit;
         $inventory->balance = $inventory->balance+$request->quantity;
         $inventory->save();
 
@@ -86,7 +88,7 @@ class InventoryController extends Controller
         if($request->inventory_id === "new"){
             $inventoryHistory->type = "NEW";
         }else{
-        $inventoryHistory->type = "ADDED";
+        $inventoryHistory->type = "BUY";
 
         }
         $inventoryHistory->quantity = $request->quantity;
