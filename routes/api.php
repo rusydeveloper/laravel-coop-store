@@ -97,6 +97,7 @@ Route::post('tickets/create', 'ApiController@createTicket');
 Route::post('inventory/store', 'InventoryController@store');
 
 Route::get('inventory/user/{user_id}', 'ApiController@inventory');
+Route::get('inventory/product/{product_id}', 'InventoryController@show');
 Route::get('inventory/history/user/{user_id}/product/{product_id}', 'ApiController@inventoryHistory');
 Route::get('inventory/history/user/{user_id}/product/{product_id}/report', 'ApiController@inventoryHistoryReport');
 

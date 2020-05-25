@@ -113,9 +113,11 @@ class InventoryController extends Controller
      * @param  \App\Inventory  $inventory
      * @return \Illuminate\Http\Response
      */
-    public function show(Inventory $inventory)
+    public function show($product_id,Inventory $inventory)
     {
-        //
+        $inventory = Inventory::where('id', $product_id)->first();
+
+        return $inventory;
     }
 
     /**
