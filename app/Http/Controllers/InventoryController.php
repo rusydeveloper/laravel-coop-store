@@ -115,7 +115,7 @@ class InventoryController extends Controller
      */
     public function show($product_id,Inventory $inventory)
     {
-        $inventory = Inventory::where('id', $product_id)->first();
+        $inventory = Inventory::where('id', $product_id)->with("inventoryHistory")->first();
 
         return $inventory;
     }
