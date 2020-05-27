@@ -547,7 +547,7 @@ class ApiController extends Controller
 
     public function inventoryHistoryReport(InventoryHistory $InventoryHistory, $user_id, $product_id)
     {   
-    // $inventoryHistoryReport = InventoryHistory::where('user_id', $user_id)->where('inventory_id', $product_id)->get();
+    
     $inventoryHistoryReport = InventoryHistory::where('user_id', $user_id)->where('inventory_id', $product_id)->select(
         DB::raw('sum(quantity) as quantity'), 
         DB::raw('sum(amount)/sum(quantity) as average_price'),
@@ -556,7 +556,25 @@ class ApiController extends Controller
 )
 ->groupBy('date')
 ->get();
-    return response()->json($inventoryHistoryReport);
+
+$inventory = Inventory::where('id', $product_id)->first();
+
+$obj_html = (object) array('html' => true);
+
+$obj = (object) array('role' => 'tooltip', 'type' => "string", 'p' => $obj_html);
+
+$reportRespond = array (
+    array("tanggal","kuantitas", $obj),
+  );
+
+foreach($inventoryHistoryReport as $x => $x_value) {
+    $reportRespond[] = array(date('d M y',strtotime($x_value["date"])),intval($x_value["quantity"]), "<div class='chart-tooltip'><b>".date('d M y',strtotime($x_value["date"]))."</b><br/><b>Kuantitas:</b><br/>".number_format(intval($x_value["quantity"]),0,",",".")." ".$inventory->unit."<br/><b>Harga:</b><br/> Rp ".number_format(intval($x_value["average_price"]),0,",",".")."<br/> <b>Total:</b> <br/> Rp ".number_format(intval($x_value["amount"]),0,",",".")."</div>");
+    
+}
+
+return response()->json($reportRespond);
+
+    
     }
 
     
