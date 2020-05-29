@@ -110,7 +110,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="category" class="col-md-4 col-form-label text-md-right">Restaurant
+                            <label for="category" class="col-md-4 col-form-label text-md-right">Business
                                 Category</label>
 
                             <div class="col-md-6">
@@ -128,6 +128,7 @@
                                 @endif
                             </div>
                         </div>
+
 
                         <div class="form-group">
                             <label for="description" class="col-form-label text-md-right">Description</label>
@@ -907,6 +908,21 @@
                                     <option value="Papua Barat">Papua Barat</option>
                                     <option value="Papua">Papua</option>
                                 </select>
+                            </div>
+                            <hr />
+                            <div class="form-group row">
+                                <label for="minimum_order" class="col-md-4 col-form-label text-md-right">Minimum Order
+                                    (Jika Supplier)</label>
+                                <div class="col-md-6">
+                                    <input id="minimum_order" type="number"
+                                        class="form-control{{ $errors->has('minimum_order') ? ' is-invalid' : '' }}"
+                                        name="minimum_order" value="{{$business->minimum_order}}" required>
+                                    @if ($errors->has('minimum_order'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('minimum_order') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
                             </div>
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">

@@ -28,6 +28,7 @@
                                 <th>Nama Koperasi</th>
                                 <th>User Pemilik</th>
                                 <th>Status</th>
+                                <th>Minimal Order (Jika Supplier)</th>
                                 <th>Email</th>
                                 <th>Alamat</th>
                                 <th>No Handphone</th>
@@ -47,6 +48,7 @@
                                     <span class="badge badge-danger">{{$item->status}}</span>
                                     @endif
                                 </td>
+                                <td>{{$item->minimum_order}}</td>
                                 <td>{{$item->user["email"]}}</td>
                                 <td>{{$item->address}}</td>
                                 <td>{{$item->user["phone"]}}</td>

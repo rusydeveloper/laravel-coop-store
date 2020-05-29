@@ -227,6 +227,7 @@ class AdminController extends Controller
         $business->name = $request->name;
         $business->contact = $request->contact;
         $business->category = $request->category;
+        $business->minimum_order = $request->minimum_order;
         $business->status = $request->status;
         $business->description = $request->description;
         $business->address = $request->address;
