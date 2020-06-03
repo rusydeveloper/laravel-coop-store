@@ -138,14 +138,66 @@ class ApiController extends Controller
     public function campaignCategory($id)
     {
         $now = Carbon::now();
-        $categories = Category::where('parent', $id)->get();
         $subcategory_ids = array();
+
+        if($id == 2){
+            //BECAUSE ONLY WHO DOESNT HAVE SUBCATEGORY
+            $categories = 2;
+            array_push($subcategory_ids,$categories);
+        }else{
+            $categories = Category::where('parent', $id)->get();
         foreach ($categories as $item) {
             array_push($subcategory_ids,$item->id);
             }
+        }
         $campaigns = Campaign::whereHas('product', function ($query) use($id, $subcategory_ids){
             $query->whereIn('category_id', $subcategory_ids);
-        })->with('product')->where("end_at",">=", $now)->where('status', 'active')->get();
+        })->with(['product', 'business'])->where("end_at",">=", $now)->where('status', 'active')->get();
+        return response()->json($campaigns);
+    }
+
+    public function campaignsSelectedSupplier($unique_id)
+    {
+        $now = Carbon::now();
+
+        $campaigns = Campaign::whereHas('business', function ($query) use($unique_id){
+            $query->where('unique_id',  $unique_id);
+        })->orderBy('priority','DESC')->with(['product','business'])->where("end_at",">=", $now)->where('status', 'active')->get(); 
+        return response()->json($campaigns);
+    }
+
+    public function campaignSearchSelectedSupplier($search, $unique_id)
+    {
+        $now = Carbon::now();
+        $campaigns = Campaign::whereHas('business', function ($query) use($unique_id){
+            $query->where('unique_id',  $unique_id);
+        })->whereHas('product', function ($query) use($search){
+            $query->where('name', 'LIKE', "%{$search}%");
+        })->with(['product', 'business'])->where("end_at",">=", $now)->where('status', 'active')->get();
+        return response()->json($campaigns);
+    }
+
+    public function campaignCategorySelectedSupplier($id, $unique_id)
+    {
+        $now = Carbon::now();
+        $subcategory_ids = array();
+
+        if($id == 2){
+            //BECAUSE ONLY WHO DOESNT HAVE SUBCATEGORY
+            $categories = 2;
+            array_push($subcategory_ids,$categories);
+        }else{
+            $categories = Category::where('parent', $id)->get();
+        foreach ($categories as $item) {
+            array_push($subcategory_ids,$item->id);
+            }
+        }
+        
+        $campaigns = Campaign::whereHas('business', function ($query) use($unique_id){
+            $query->where('unique_id',  $unique_id);
+        })->whereHas('product', function ($query) use($id, $subcategory_ids){
+            $query->whereIn('category_id', $subcategory_ids);
+        })->with(['product', 'business'])->where("end_at",">=", $now)->where('status', 'active')->get();
         return response()->json($campaigns);
     }
 
