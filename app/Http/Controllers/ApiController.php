@@ -131,7 +131,7 @@ class ApiController extends Controller
         $now = Carbon::now();
         $campaigns = Campaign::whereHas('product', function ($query) use($search){
             $query->where('name', 'LIKE', "%{$search}%");
-        })->with('product')->where("end_at",">=", $now)->where('status', 'active')->get();
+        })->with(['product','business'])->where("end_at",">=", $now)->where('status', 'active')->get();
         return response()->json($campaigns);
     }
 
