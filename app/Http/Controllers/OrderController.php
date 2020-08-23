@@ -226,7 +226,7 @@ class OrderController extends Controller
         $invoice_description = '';
         $zendesk_description = '';
 
-        $finalInvoiceAmount = $request->totalAmount + $request->uniqueNumber-$request->walletBalance;
+        $finalInvoiceAmount = $request->totalAmount + $request->uniqueNumber-$request->walletBalance +($request->totalAmount*3/100);
 
         $invoice =  new Invoice;
         $invoice->status = 'unpaid';
