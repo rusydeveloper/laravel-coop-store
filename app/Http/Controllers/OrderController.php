@@ -305,7 +305,7 @@ class OrderController extends Controller
         
         $data = ['cooperative' => $business->name,'name' => $user->name, 'phone' => $user->phone, 'address' => $business->address, 'email' => $user->email, 'order' => $invoice_description];
 
-        Mail::to('koperasi@nectico.com')->send(new OrderSubmit($data));
+        // Mail::to('koperasi@nectico.com')->send(new OrderSubmit($data));
 
         
 
