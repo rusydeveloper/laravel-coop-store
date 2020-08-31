@@ -150,6 +150,22 @@ class CampaignController extends Controller
         return redirect()->route('admin_campaign')->with('status', 'Campaign berhasil di non aktifkan.');
     }
 
+    public function campaign_prioritize(Request $request)
+    {
+        $campaign = Campaign::where('id', $request->id)->first();
+        $campaign->priority = 1;
+        $campaign->save();
+        return redirect()->route('admin_campaign_all')->with('status', 'Campaign berhasil di prioritaskan.');
+    }
+
+    public function campaign_deprioritize(Request $request)
+    {
+        $campaign = Campaign::where('id', $request->id)->first();
+        $campaign->priority = null;
+        $campaign->save();
+        return redirect()->route('admin_campaign_all')->with('status', 'Campaign berhasil di non prioritaskan.');
+    }
+
     public function campaign_update(Request $request)
     {
         $product = Product::where('id', $request->product_id)->first();

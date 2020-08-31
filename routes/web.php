@@ -74,6 +74,8 @@ Route::group(['middleware' => ['auth']], function () {
 			Route::post('/campaign/delete', 'CampaignController@campaign_delete');
 			Route::post('/campaign/activate', 'CampaignController@campaign_activate');
 			Route::post('/campaign/deactivate', 'CampaignController@campaign_deactivate');
+			Route::post('/campaign/prioritize', 'CampaignController@campaign_prioritize');
+			Route::post('/campaign/deprioritize', 'CampaignController@campaign_deprioritize');
 //WALLET
 			Route::get('/wallet', 'WalletController@wallet')->name('admin_wallet');
 			Route::post('/wallet/edit', 'WalletController@wallet_edit');

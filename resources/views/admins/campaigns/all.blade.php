@@ -57,6 +57,10 @@
                   @else
                   <span class="badge badge-danger">{{$item->status}}</span>
                   @endif
+
+                  @if($item->priority == 1)
+                  <span class="badge badge-success">PRIORITAS</span>
+                  @endif
                   <hr />
                   <b>{{date('d M Y g:i', strtotime($item->start_at))}} s.d
                     {{date('d M Y G:i', strtotime($item->end_at))}}</b>
@@ -119,6 +123,20 @@
                         {{ csrf_field() }}
                         <input type="hidden" name="id" value="{{$item->id}}">
                         <button class="btn btn-success btn-sm btn-space" style="float: left;">aktivasi</button>
+                      </form>
+
+                      @endif</div>
+                    <div>@if($item->priority == null)
+                      <form method="POST" action="/admin/campaign/prioritize" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="id" value="{{$item->id}}">
+                        <button class="btn btn-success btn-sm btn-space" style="float: left;">Prioritaskan</button>
+                      </form>
+                      @else
+                      <form method="POST" action="/admin/campaign/deprioritize" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="id" value="{{$item->id}}">
+                        <button class="btn btn-danger btn-sm btn-space" style="float: left;">Non Prioritaskan</button>
                       </form>
 
                       @endif</div>
