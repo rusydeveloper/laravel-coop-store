@@ -31,6 +31,13 @@ class CampaignController extends Controller
         return view('admins.campaign', compact('campaigns'));
     }
 
+    public function campaign_all()
+    {
+        $campaigns = Campaign::orderBy('created_at','DESC')->get();
+
+        return view('admins.campaigns.all', compact('campaigns'));
+    }
+
     public function campaign_search(Request $request)
     {
         $q = $request->q;

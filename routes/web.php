@@ -65,6 +65,7 @@ Route::group(['middleware' => ['auth']], function () {
 			Route::post('/product/deactivate', 'AdminController@product_deactivate');
 //CAMPAIGN
 			Route::get('/campaign', 'CampaignController@campaign')->name('admin_campaign');
+			Route::get('/campaign/all', 'CampaignController@campaign_all')->name('admin_campaign_all');
 			Route::get('/campaign/create', 'CampaignController@campaign_create');
 			Route::post('/campaign/edit', 'CampaignController@campaign_edit');
 			Route::post('/campaign/search', 'CampaignController@campaign_search')->name('admin_campaign_search');
