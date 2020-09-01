@@ -129,7 +129,7 @@ class AuthController extends Controller
 
         $body_zendesk = "<table><tr><td>Nama pendaftar</td><td>".$request->name."</td></tr><tr><td>Nama Koperasi</td><td>".$request->cooperative."</td></tr><tr><td>Nomor HP</td><td>".$request->phone."</td></tr><tr><td>Alamat Koperasi</td><td>".$request->address."</td></tr><tr><td>Email</td><td>".$request->email."</td></tr></table>";
 
-        Mail::to('koperasi@nectico.com')->send(new UserRegistration($data));
+        // Mail::to('koperasi@nectico.com')->send(new UserRegistration($data));
         Zendesk::tickets()->create([
             'subject' => 'Pendaftaran Koperasi',
             "tag" => "pendaftaran",
