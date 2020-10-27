@@ -160,8 +160,9 @@ $(document).ready(function() {
             <div class="container">
                 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{ asset('/img/logo/logo-nectico.png') }}" height="30px" style="margin-left: 10px"
-                        id="logo-navbar">
+                    <img src="{{ asset('/img/logo/dinas.png') }}" height="70px" id="logo-navbar">
+                    <img src="{{ asset('/img/logo/sejuk.png') }}" height="50px" id="logo-navbar">
+                    <img src="{{ asset('/img/logo/logo-nectico-poweredby.png') }}" height="20px" id="logo-navbar">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -214,15 +215,15 @@ $(document).ready(function() {
         <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a href="{{route('admin_user')}}"><span class="fa fa-user"></span> Pengguna</a>
-            <a href="{{route('admin_business')}}"><span class="fa fa-briefcase"></span> Perusahaan</a>
-            <a href="{{route('admin_invoice_discount')}}"><span class="fa fa-percent"></span> Diskon</a>
+            <a href="{{route('admin_business')}}"><span class="fa fa-briefcase"></span> Koperasi</a>
+            {{-- <a href="{{route('admin_invoice_discount')}}"><span class="fa fa-percent"></span> Diskon</a>
             <a href="{{route('admin_category')}}"><span class="fa fa-circle-o"></span> Kategori</a>
             <a href="{{route('admin_product')}}"><span class="fa fa-cubes"></span> Produk</a>
             <a href="{{route('admin_campaign')}}"><span class="fa fa-tasks"></span> Campaign</a>
             <a href="{{route('admin_order')}}"><span class="fa fa-shopping-basket"></span> Pesanan</a>
             <a href="{{route('admin_invoice')}}"><span class="fa fa-clone"></span> Tagihan</a>
             <a href="{{route('admin_payment')}}"><span class="fa fa-credit-card"></span> Pembayaran</a>
-            <a href="{{route('admin_wallet')}}"><span class="fa fa-money"></span> Dompet</a>
+            <a href="{{route('admin_wallet')}}"><span class="fa fa-money"></span> Dompet</a> --}}
             <a href="{{route('admin_report')}}"><span class="fa fa-pie-chart"></span> Laporan</a>
         </div>
 

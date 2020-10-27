@@ -87,7 +87,9 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{ asset('/img/logo/logo-nectico.png') }}" height="60px" id="logo-navbar">
+                    <img src="{{ asset('/img/logo/dinas.png') }}" height="70px" id="logo-navbar">
+                    <img src="{{ asset('/img/logo/sejuk.png') }}" height="50px" id="logo-navbar">
+                    <img src="{{ asset('/img/logo/logo-nectico-poweredby.png') }}" height="20px" id="logo-navbar">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
