@@ -215,7 +215,7 @@ $(document).ready(function() {
         <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a href="{{route('admin_user')}}"><span class="fa fa-user"></span> Pengguna</a>
-            <a href="{{route('admin_business')}}"><span class="fa fa-briefcase"></span> Koperasi</a>
+            <a href="{{route('admin_business')}}"><span class="fa fa-briefcase"></span> Koperasi - Perusahaan</a>
             {{-- <a href="{{route('admin_invoice_discount')}}"><span class="fa fa-percent"></span> Diskon</a>
             <a href="{{route('admin_category')}}"><span class="fa fa-circle-o"></span> Kategori</a>
             <a href="{{route('admin_product')}}"><span class="fa fa-cubes"></span> Produk</a>
